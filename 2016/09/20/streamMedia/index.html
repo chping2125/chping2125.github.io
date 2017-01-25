@@ -1,0 +1,1080 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/libs/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="认识系列,流媒体," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="随着现代技术的发展，网络带给人们形式多样的信息，从第一张图片出现在网络上到如今各种形式的网络视频和三维动画，网络让人们的视听觉得到了很大的满足。然而在流媒体技术出现之前，人们必须要先下载这些多媒体内容到本地计算机，在漫长的等待之后（因为受限于带宽，下载通常要花上较长的时间），才可以看到或听到媒体传达的信息。令人欣慰的是，在流媒体技术出现之后，人们便无需再等待媒体完全下载完成了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="认识一下流媒体这个概念">
+<meta property="og:url" content="https://chping2125.github.io/2016/09/20/streamMedia/index.html">
+<meta property="og:site_name" content="前端小开发">
+<meta property="og:description" content="随着现代技术的发展，网络带给人们形式多样的信息，从第一张图片出现在网络上到如今各种形式的网络视频和三维动画，网络让人们的视听觉得到了很大的满足。然而在流媒体技术出现之前，人们必须要先下载这些多媒体内容到本地计算机，在漫长的等待之后（因为受限于带宽，下载通常要花上较长的时间），才可以看到或听到媒体传达的信息。令人欣慰的是，在流媒体技术出现之后，人们便无需再等待媒体完全下载完成了。">
+<meta property="og:updated_time" content="2016-09-22T04:09:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="认识一下流媒体这个概念">
+<meta name="twitter:description" content="随着现代技术的发展，网络带给人们形式多样的信息，从第一张图片出现在网络上到如今各种形式的网络视频和三维动画，网络让人们的视听觉得到了很大的满足。然而在流媒体技术出现之前，人们必须要先下载这些多媒体内容到本地计算机，在漫长的等待之后（因为受限于带宽，下载通常要花上较长的时间），才可以看到或听到媒体传达的信息。令人欣慰的是，在流媒体技术出现之后，人们便无需再等待媒体完全下载完成了。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6257465157467768000,
+      author: '彬仔'
+    }
+  };
+</script>
+
+  <title> 认识一下流媒体这个概念 | 前端小开发 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c8027b8ba4beebe6ebe89d22781de0a1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">前端小开发</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随笔 分享 笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                认识一下流媒体这个概念
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-20T19:55:08+08:00" content="2016-09-20">
+              2016-09-20
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/相关技术点/" itemprop="url" rel="index">
+                    <span itemprop="name">相关技术点</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/相关技术点/流媒体/" itemprop="url" rel="index">
+                    <span itemprop="name">流媒体</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/20/streamMedia/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/20/streamMedia/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/20/streamMedia/" class="leancloud_visitors" data-flag-title="认识一下流媒体这个概念">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>随着现代技术的发展，网络带给人们形式多样的信息，从第一张图片出现在网络上到如今各种形式的网络视频和三维动画，网络让人们的视听觉得到了很大的满足。然而在<strong>流媒体技术</strong>出现之前，人们必须要先下载这些多媒体内容到本地计算机，在漫长的等待之后（因为受限于带宽，下载通常要花上较长的时间），才可以看到或听到媒体传达的信息。令人欣慰的是，在<strong>流媒体技术</strong>出现之后，人们便无需再等待媒体完全下载完成了。<br><a id="more"></a><br>传统下载方式的时延很大，因为音视频文件一般都较大，需要的存储容量也较大，同时受到网络带宽的限制，下载一个文件很耗时，根据文件的大小，可能往往需要几分钟甚至几小时。这种方式不但浪费下载时间、硬盘空间，重要的是使用起来非常不方便。</p>
+<p>流媒体技术出现后，人们能够“即点即看”了，多媒体文件一边被下载一边被播放，不仅使启动延时大大缩短，而且不需要太大的缓存容量，极大地减少了用户在线等待的时间，而且也提升了互动性。</p>
+<h1 id="流媒体在传输中的问题"><a href="#流媒体在传输中的问题" class="headerlink" title="流媒体在传输中的问题"></a>流媒体在传输中的问题</h1><h2 id="技术方面解决的问题"><a href="#技术方面解决的问题" class="headerlink" title="技术方面解决的问题"></a>技术方面解决的问题</h2><p>在网上进行流媒体传输，所传输的文件必须制作成适合流媒体传输的流媒体格式文件。用通常格式存储的多媒体文件容量十分大，若要在现有的窄带网络上传输则需要花费十分长的时间，若遇网络繁忙，还将造成传输中断。另外，通常格式的流媒体也不能按流媒体传输协议进行传输。因此，对需要进行流媒体格式传输的文件应进行预处理，将文件压缩生成流媒体格式文件。</p>
+<p>这里应注意两点：一是选用适当的压缩算法进行压缩，这样生成的文件容量较小。二是需要向文件中添加流式信息。</p>
+<h2 id="传输方面需解决的问题"><a href="#传输方面需解决的问题" class="headerlink" title="传输方面需解决的问题"></a>传输方面需解决的问题</h2><p>流媒体的传输需要合适的传输协议，在internet上的文件传输大部分都是建立在TCP协议的基础上，也有一些是以ftp传输协议的方式进行传输，但采用这些传输协议都不能实现实时方式的传输。随着流媒体技术的深入研究，比较成熟的流媒体传输一般都是采用建立在UDP协议上的rtp/rtsp实时传输协议。</p>
+<p>为何要在UDP协议而不在TCP协议上进行实时数据的传输呢？<br>这是因为UDP和TCP协议在实现数据传输时的可靠性有很大的区别:</p>
+<ol>
+<li>TCP协议中包含了专门的数据传送校验机制，当数据接受方收到数据后，将自动向发送方发出确认信息，发送方在接收到确认信息后才继续传送数据，否则将一直处于等待状态。</li>
+<li>而UDP协议则不同，UDP协议本身并不能做任何校验。由此可以看出，TCP协议注重传输质量，而UDP协议则注重传输速度。因此，对于对传输质量要求不是很高，而对传输速度则有很高的要求的视音频流媒体文件来说，采用UDP协议则更合适。</li>
+</ol>
+<h2 id="传输过程中需要的支持"><a href="#传输过程中需要的支持" class="headerlink" title="传输过程中需要的支持"></a>传输过程中需要的支持</h2><p>因为internet是以包为单位进行异步传输的，因此多媒体数据在传输中要被分解成许多包，由于网络传输的不稳定性，各个包选择的路由不同，所以到达客户端的时间次序可能发生改变，甚至产生丢包的现象。为此，必须采用缓存技术来纠正由于数据到达次序发生改变而产生的混乱状况，利用缓存对到达的数据包进行正确排序，从而使视音频数据能连续正确地播放。<br>缓存中存储的是某一段时间内的数据，数据在缓存中存放的时间是暂时的，缓存中的数据也是动态的，不断更新的。流媒体在播放时不断读取缓存中的数据进行播放，播放完后该数据便被立即清除，新的数据将存入到缓存中。因此，在播放流媒体文件时并不需占用太大的缓存空间。</p>
+<h2 id="播放方面需解决的问题"><a href="#播放方面需解决的问题" class="headerlink" title="播放方面需解决的问题"></a>播放方面需解决的问题</h2><p>流媒体播放需要浏览器的支持。通常情况下，浏览器是采用MIME来识别各种不同的简单文件格式，所有的Web浏览器都是基于HTTP协议，而HTTP协议都内建有MIME。所以Web浏览器能够通过HTTP协议中内建的MIME来标记Web上众多的多媒体文件格式，包括各种流媒体格式。</p>
+<h1 id="流媒体传输的过程"><a href="#流媒体传输的过程" class="headerlink" title="流媒体传输的过程"></a>流媒体传输的过程</h1><ol>
+<li>用户选择某一流媒体服务（比如：在线看电影）后，Web浏览器与Web服务器之间使用HTTP/TCP交换控制信息，以便把需要传输的实时数据从原始信息中检索出来；</li>
+<li>然后客户机上的Web浏览器启动A/V Helper程序，使用HTTP从Web服务器检索相关参数对Helper程序初始化。这些参数可能包括目录信息、A/V数据的编码类型或与A/V检索相关的服务器地址。</li>
+<li>A/V Helper程序及A/V服务器运行实时流控制协议（RTSP），以交换A/V传输所需的控制信息。与CD播放机或VCRs所提供的功能相似，RTSP提供了操纵播放、快进、快倒、暂停及录制等命令的方法。A/V服务器使用RTP/UDP协议将A/V数据传输给A/V客户程序（一般可认为客户程序等同于Helper程序），一旦A/V数据抵达客户端，A/V客户程序即可播放输出。</li>
+</ol>
+<p>需要说明的是，在流媒体传输中。使用RTP/UDP和RTSP/TCP两种不同的通信协议与A/V服务器建立联系，是为了能够把服务器的输出重定向到一个不同于运行A/V Helper程序所在客户机的目的地址。实现流媒体传输一般都需要专用服务器和播放器。</p>
+<h1 id="流媒体分类"><a href="#流媒体分类" class="headerlink" title="流媒体分类"></a>流媒体分类</h1><p>流式传输技术又分两种，一种是<strong>顺序</strong>流式传输，另一种是<strong>实时</strong>流式传输。</p>
+<p>顺序流式传输是顺序下载，在下载文件的同时用户可以观看，但是，用户的观看与服务器上的传输并不是同步进行的，用户是在一段延时后才能看到服务器上传出来的信息，或者说用户看到的总是服务器在若干时间以前传出来的信息。在这过程中，用户只能观看已下载的那部分，而不能要求跳到还未下载的部分。顺序流式传输比较适合高质量的短片段，因为它可以较好地保证节目播放的最终质量。它适合于在网站上发布的供用户点播的音视频节目。</p>
+<p>在实时流式传输中，音视频信息可被实时观看到。在观看过程中用户可快进或后退以观看前面或后面的内容，但是在这种传输方式中，如果网络传输状况不理想，则收到的信号效果比较差。</p>
+<h1 id="流媒体技术的音视频文件"><a href="#流媒体技术的音视频文件" class="headerlink" title="流媒体技术的音视频文件"></a>流媒体技术的音视频文件</h1><p>在运用流媒体技术时，音视频文件要采用相应的格式，不同格式的文件需要用不同的播放器软件来播放，所谓“一把钥匙开一把锁”。采用流媒体技术的音视频文件主要有三大“流派”。</p>
+<h2 id="微软的ASF"><a href="#微软的ASF" class="headerlink" title="微软的ASF"></a>微软的ASF</h2><p>ASF（Advanced Stream Format）这类文件的后缀是.asf和.wmv，与它对应的播放器是微软公司的 “Media Player”。用户可以将图形、声音和动画数据组合成一个ASF格式的文件，也可以将其他格式的视频和音频转换为ASF格式，而且用户还可以通过声卡和视频捕获卡将诸如麦克风、录像机等外设的数据保存为ASF格式。</p>
+<h2 id="RealMedia"><a href="#RealMedia" class="headerlink" title="RealMedia"></a>RealMedia</h2><p>RealMedia是RealNetworks公司的，它包括RealAudio、RealVideo和RealFlash三类文件，其中RealAudio用来传输接近CD音质的音频数据，RealVideo用来传输不间断的视频数据，RealFlash则是RealNetworks公司与Macromedia公司联合推出的一种高压缩比的动画格式，这类文件的后缀是.rm，文件对应的播放器是“RealPlayer”。</p>
+<h2 id="QuickTime"><a href="#QuickTime" class="headerlink" title="QuickTime"></a>QuickTime</h2><p>QuickTime是苹果公司的，这类文件扩展名通常是 .mov，它所对应的播放器是“QuickTime。”</p>
+<p>此外，MPEG、AVI、DVI、SWF等都是适用于流媒体技术的文件格式。</p>
+<h1 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h1><p>流媒体技术 包含了从服务器构架到网络协议等一系列技术，目前这些技术还在不断发展和完善中，同时各运营商也正在探索合适的商业模式。尽管如此，流媒体技术转变了传统 互联网限于文本和图片的二维呆板的内容表现形式，是宽带应用的发展方向。同时流媒体能够广泛应用于VOD、远程教学、网络广告、交互视频游戏等，大大拓宽 服务范围，因此各电信运营商都看好流媒体业务，并希望能够以此带动宽带产业进入高速发展的时期。可以预见，流媒体业务将成为宽带网络上的主流信息业务。</p>
+<blockquote>
+<p>本文总结自<br><a href="http://www.cnblogs.com/robertfang/articles/1222598.html" target="_blank" rel="external">http://www.cnblogs.com/robertfang/articles/1222598.html</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>测试功能而已，你非要赏点我就没办法了...</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.JPG" alt="彬仔 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.JPG" alt="彬仔 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/认识系列/" rel="tag">#认识系列</a>
+          
+            <a href="/tags/流媒体/" rel="tag">#流媒体</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/18/spdy/" rel="next" title="SPDY基本认识">
+                <i class="fa fa-chevron-left"></i> SPDY基本认识
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/21/animation/" rel="prev" title="认识一下动画系统">
+                认识一下动画系统 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/20/streamMedia/"
+     data-title="认识一下流媒体这个概念"
+     data-content=""
+     data-url="https://chping2125.github.io/2016/09/20/streamMedia/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/20/streamMedia/"
+           data-title="认识一下流媒体这个概念" data-url="https://chping2125.github.io/2016/09/20/streamMedia/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="彬仔" />
+          <p class="site-author-name" itemprop="name">彬仔</p>
+          <p class="site-description motion-element" itemprop="description">分享前端技术 整理学习笔记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chengping2125" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chping2125" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/" title="阮一峰" target="_blank">阮一峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/TomXu/" title="汤姆大叔" target="_blank">汤姆大叔</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.haorooms.com/" title="Aaron" target="_blank">Aaron</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://segmentfault.com/a/1190000007062464" title="前端资源" target="_blank">前端资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laod.cn/hosts/2016-google-hosts.html" title="老D翻墙" target="_blank">老D翻墙</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanterncn.cn/down" title="蓝灯工作站" target="_blank">蓝灯工作站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#流媒体在传输中的问题"><span class="nav-number">1.</span> <span class="nav-text">流媒体在传输中的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#技术方面解决的问题"><span class="nav-number">1.1.</span> <span class="nav-text">技术方面解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输方面需解决的问题"><span class="nav-number">1.2.</span> <span class="nav-text">传输方面需解决的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#传输过程中需要的支持"><span class="nav-number">1.3.</span> <span class="nav-text">传输过程中需要的支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#播放方面需解决的问题"><span class="nav-number">1.4.</span> <span class="nav-text">播放方面需解决的问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流媒体传输的过程"><span class="nav-number">2.</span> <span class="nav-text">流媒体传输的过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流媒体分类"><span class="nav-number">3.</span> <span class="nav-text">流媒体分类</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流媒体技术的音视频文件"><span class="nav-number">4.</span> <span class="nav-text">流媒体技术的音视频文件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#微软的ASF"><span class="nav-number">4.1.</span> <span class="nav-text">微软的ASF</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RealMedia"><span class="nav-number">4.2.</span> <span class="nav-text">RealMedia</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#QuickTime"><span class="nav-number">4.3.</span> <span class="nav-text">QuickTime</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结束语"><span class="nav-number">5.</span> <span class="nav-text">结束语</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彬仔</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/libs/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/libs/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/libs/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/libs/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8oHQTcoEX25FOPclwvl0Fh2A-gzGzoHsz", "QFHjBCnX5GEB8TGU5B6prx90");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

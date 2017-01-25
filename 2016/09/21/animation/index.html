@@ -1,0 +1,1132 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/libs/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="动画系统,认识系列," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="动画，顾名思义，就是能“动”的画。人的眼睛对图像有短暂的记忆效应，所以当眼睛看到多张图片连续快速的切换时，就会被认为是一段连续播放的动画了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="认识一下动画系统">
+<meta property="og:url" content="https://chping2125.github.io/2016/09/21/animation/index.html">
+<meta property="og:site_name" content="前端小开发">
+<meta property="og:description" content="动画，顾名思义，就是能“动”的画。人的眼睛对图像有短暂的记忆效应，所以当眼睛看到多张图片连续快速的切换时，就会被认为是一段连续播放的动画了。">
+<meta property="og:image" content="https://chping2125.github.io/images/animation/img1.gif">
+<meta property="og:image" content="https://chping2125.github.io/images/rander.png">
+<meta property="og:updated_time" content="2016-09-22T04:09:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="认识一下动画系统">
+<meta name="twitter:description" content="动画，顾名思义，就是能“动”的画。人的眼睛对图像有短暂的记忆效应，所以当眼睛看到多张图片连续快速的切换时，就会被认为是一段连续播放的动画了。">
+<meta name="twitter:image" content="https://chping2125.github.io/images/animation/img1.gif">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6257465157467768000,
+      author: '彬仔'
+    }
+  };
+</script>
+
+  <title> 认识一下动画系统 | 前端小开发 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c8027b8ba4beebe6ebe89d22781de0a1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">前端小开发</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随笔 分享 笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                认识一下动画系统
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-21T08:41:28+08:00" content="2016-09-21">
+              2016-09-21
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/相关技术点/" itemprop="url" rel="index">
+                    <span itemprop="name">相关技术点</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/相关技术点/动画系统/" itemprop="url" rel="index">
+                    <span itemprop="name">动画系统</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/21/animation/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/21/animation/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/21/animation/" class="leancloud_visitors" data-flag-title="认识一下动画系统">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>动画，顾名思义，就是能“动”的画。<br>人的眼睛对图像有短暂的记忆效应，所以当眼睛看到多张图片连续快速的切换时，就会被认为是一段连续播放的动画了。<br><a id="more"></a><br>比如，中国古代的“走马灯”，就是用的这个原理。<br>有些人还会在一个本子每页上手绘一些漫画，当快速翻页的时候，也会看到动画的效果，比如：<br><img src="/images/animation/img1.gif" alt="走马灯"></p>
+<h1 id="计算机动画的实现方式"><a href="#计算机动画的实现方式" class="headerlink" title="计算机动画的实现方式"></a>计算机动画的实现方式</h1><p>动画是由一张张图片组成的，在计算机中，我们称每一张图片为<strong>一帧画面</strong>。</p>
+<p>如果我们想实现这么一个动画：一个水杯放在桌子的左边，移动到右边，那么我们实际操作的，只是水杯。<br>所以动画的实现，只是对运动变化了的部分的处理。</p>
+<blockquote>
+<p>我们一般在计算机上用 FPS ( Frames Per Second) ，即 每秒的帧数 来表示动画的刷新速度，基于屏幕的刷新率等其他原因，在计算机上一般采用 60 FPS。<br>如果运动变化幅度较缓，减半到 30 FPS 时，我们肉眼也是可接受的。<br>较低的 FPS 会让我们有“卡顿”的感觉。</p>
+</blockquote>
+<h1 id="逐帧动画和关键帧动画"><a href="#逐帧动画和关键帧动画" class="headerlink" title="逐帧动画和关键帧动画"></a>逐帧动画和关键帧动画</h1><p>从帧速率区分动画的话，一般来说我们常见的动画都是属于<strong>关键帧动画(Keyframe Animation)</strong>，而<strong>逐帧动画(Frame By Frame)</strong>是一帧一幅画，从词语来说意味着全片每一秒都是<strong>标准24帧</strong>逐帧纯手的(在Flash的区分是逐帧动画与<strong>动作补间动画</strong>，还有分为<strong>全动画</strong>和<strong>半动画</strong>。)。</p>
+<blockquote>
+<p>简单介绍一下这几个概念，想详细了解，可以自取百度或者Google。<br><strong>动作补间动画</strong>：做flash动画时，在两个关键帧中间需要做“补间动画”，才能实现图画的运动；插入补间动画后两个关键帧之间的插补帧是由计算机自动运算而得到的。<br><strong>全动画</strong>：为追求画面完美和动作流畅，按照24帧／s制作动画。<br><strong>半动画</strong>：又名“有限动画”，为追求经济效益，以6帧／s制作动画。</p>
+</blockquote>
+<h2 id="逐帧动画"><a href="#逐帧动画" class="headerlink" title="逐帧动画"></a>逐帧动画</h2><p>逐帧动画是一种在连续的关键帧中分解动画动作，即在时间轴的每一帧上绘制不同内容并使之连续播放成动画的一种常见的动画形式。</p>
+<p>类似于上面提到的手绘翻页方式，我们可以将这个水杯在每帧画面中的位置一一找出来，这样实现动画的方式就叫作逐帧动画，我们需要处理动画中的每一帧。<br>逐帧动画是最直接的，但要处理的帧数太多，所以实现过程是会麻烦。<br>计算机的工作就是来完成重复单调的工作的，所以，有些工作是可以考虑让计算机来完成的。</p>
+<p>了解更多关于逐帧动画在电影和动漫上的应用可以<a href="https://zhuanlan.zhihu.com/p/19855108" target="_blank" rel="external">点这里</a></p>
+<h2 id="关键帧动画"><a href="#关键帧动画" class="headerlink" title="关键帧动画"></a>关键帧动画</h2><p>上面的例子，可以变成一个涉及数学和物理的问题：一个杯子初始位置在左边，n秒后匀速运动到右边，那么在每 1/60 秒的时候，这个杯子的位置显然是可以计算出来的了。<br>所以，我们其实只需要指定一些 关键 信息就能让计算机自己计算出每一帧杯子的位置了：</p>
+<ul>
+<li>起始位置，比如一个坐标 (0,0)</li>
+<li>结束位置，再比如一个坐标 (100,0)</li>
+<li>动画总时间，比如 0.25 秒</li>
+<li>匀速运动</li>
+</ul>
+<p>这种方式就称之为关键帧动画。即我们只需要给定几个关键帧的画面信息，关键帧与关键帧之间的过渡帧都将由计算机自动生成。</p>
+<blockquote>
+<p>这里说的 关键帧动画，是指的广义上的一种动画制作方式，并不仅指 CAKeyframeAnimation，CABasicAnimation的实现方式也属于 关键帧动画</p>
+</blockquote>
+<h2 id="两者的对比"><a href="#两者的对比" class="headerlink" title="两者的对比"></a>两者的对比</h2><p>关键帧动画的实现方式，只需要修改某个属性值就可以了，简单方便，但涉及的深层次内容较多，需要更多的理解和练习。</p>
+<p>采用逐帧动画的实现方式，实现原理简单，但绘制动画的过程要复杂。如果动画过程处理的事情较多，也会带来较大的开销，就有可能造成动画帧数的下降，出现卡顿的现象，因此需要较多的测试和调试。<br>动画绘制的过程中，会要求较多的数学、物理等知识来计算中间态的数据。</p>
+<p>但这两种方式也不是绝对分离开的。<br>关键帧动画实现方式，一般只能对系统实现了可动画的属性做动画处理，但其实也是允许实现自定义属性的动画处理的。<br>这就需要自己来实现系统中自动计算过渡帧的操作了，也就是逐帧实现动画的方式了。</p>
+<h1 id="前端高性能动画"><a href="#前端高性能动画" class="headerlink" title="前端高性能动画"></a>前端高性能动画</h1><p>何为高性能动画？让人感觉流程顺滑即可。24fps的电影就能让人感觉到流畅，但是游戏却要60fps以上才能让人感觉到流畅。分析原因，我们得出如下结论：</p>
+<ol>
+<li>视频的每一帧记录的是一段时间段(1/24s)的信息，而游戏的每一帧都由显卡绘制，它只能生成一个时间点的信息;</li>
+<li>视频的帧率是稳定的，而在系统负载不平稳时，显卡很难保证游戏帧率的稳定性；<br>前端动画与游戏的原理类似，我们设计高性能动画的基本思路就是<strong>提高帧率</strong>和<strong>稳定帧率</strong>。让我们首先一起了解一下浏览器渲染页面的基本过程。</li>
+</ol>
+<h2 id="理解浏览器渲染流水线"><a href="#理解浏览器渲染流水线" class="headerlink" title="理解浏览器渲染流水线"></a>理解浏览器渲染流水线</h2><p>渲染的基本流程是：扫描HTML文档结构、计算对应的CSS样式并生成RenderTree，然后根据RenderTree进行布局和绘制，基本过程示意图如下：<br><img src="/images/rander.png" alt="渲染主流程"><br>可以简单的描述为以下四部分：</p>
+<ol>
+<li>解析HTML以构建DOM树 </li>
+<li>构建render树</li>
+<li>布局render树 </li>
+<li>绘制render树</li>
+</ol>
+<p>但实际上渲染的过程是这样的：</p>
+<ol>
+<li>在浏览器进行渲染的时候，渲染引擎首先会解析HTML代码，然后将标签转化为<strong>DOM树</strong>上的一个个对应节点（我们可以在chorme的Elements面板中查看到）。</li>
+<li>接着，渲染引擎解析外部CSS文件及style标签中的样式信息。这些样式信息以及HTML中的可见性指令将被用来构建另一棵树—<strong>render树</strong>。Render树由一些包含有颜色和大小等属性的矩形组成，它们将被按照正确的顺序显示到屏幕上。</li>
+<li>Render树构建好了之后，将会执行布局过程，它将确定每个节点在屏幕上的确切坐标。</li>
+<li>然后就是绘制，即遍历render树，并使用UI后端层绘制每个节点。</li>
+</ol>
+<p>值得注意的是，这个过程是逐步完成的，为了更好的用户体验，渲染引擎将会尽可能早的将内容呈现到屏幕上，并不会等到所有的html都解析完成之后再去构建和布局render树。它是解析完一部分内容就显示一部分内容，同时，可能还在通过网络下载其余内容。</p>
+<p>另外我们应该知道，在执行某些CSS、JS操作时可能会造成浏览器的<a href="http://www.zhangxinxu.com/wordpress/2010/01/%E5%9B%9E%E6%B5%81%E4%B8%8E%E9%87%8D%E7%BB%98%EF%BC%9Acss%E6%80%A7%E8%83%BD%E8%AE%A9javascript%E5%8F%98%E6%85%A2%EF%BC%9F/" target="_blank" rel="external">回流或者重绘</a>操作，导致浏览器重新渲染页面或者重新绘制页面的某一部分，这些都是很消耗性能的。所以我们在提高动画性能时要合理的考虑这些因素，尽量减少渲染或者重绘的次数。</p>
+<h2 id="提高动画性能指标"><a href="#提高动画性能指标" class="headerlink" title="提高动画性能指标"></a>提高动画性能指标</h2><p>上文提到过，动画的性能指标有两个，帧率数和帧率稳定性。我们分别从动画实现，节点的处理，属性的选择等方面讨论如何提高这两个动画性能指标。</p>
+<h3 id="选择稳定的实现方式"><a href="#选择稳定的实现方式" class="headerlink" title="选择稳定的实现方式"></a>选择稳定的实现方式</h3><p>css3动画使用起来非常简单，目前的浏览器支持率也不错，足以应对一般的交互需求，我们应该优先使用它。当浏览器不支持css3时，或动画场景过于复杂而仅凭css3无能为力时，就需要引入js来帮忙了。我们最常想到的js动画的实现方式，就是固定时间间隔修改元素的样式：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">setInterval(function()&#123;</div><div class="line">    var anmationNode = document.getElementById(&apos;animation-node&apos;); </div><div class="line">    //定期修改节点的样式</div><div class="line">&#125;, 100);</div></pre></td></tr></table></figure></p>
+<p>但这是一种非常粗暴的方式，其弱点是很明显的。浏览器的timer的触发时间点是不固定的，如果遇到比较长的同步任务，其触发时间点就会推迟，显然也就<strong>保证不了动画帧率的平稳性</strong>。HTML5为创建逐帧动画提供了一个新的API：<code>RequestAnimationFrame</code>，该方法在每次浏览器渲染时触发，其触发频率为60fps，我们可以通过这个函数来实现动画，而当动画中某些帧计算量太大无法在1/60s完成时，浏览器会将刷新评论降低到30fps，以保证帧率的稳定性。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function step()&#123;</div><div class="line">    //修改节点样式</div><div class="line">    RequestAnimationFrame(step);</div><div class="line">&#125;</div><div class="line">RequestAnimationFrame(step);</div></pre></td></tr></table></figure></p>
+<p>但是由于<code>RequestAnimationFrame</code>支持程度还不高(手机浏览器普遍不支持)，我们可以结合<code>RequestAnimationFrame</code>和<code>setInterval</code>实现一套逐渐增强和优雅降级的方案,下面是兼容各个浏览器的终极版本:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">function getAnimationFrame() &#123;</div><div class="line">    if (window.requestAnimationFrame) &#123; </div><div class="line">    //较新浏览器</div><div class="line">        return &#123;</div><div class="line">            request: requestAnimationFrame,</div><div class="line">            cancel: cancelAnimationFrame,</div><div class="line">        &#125;</div><div class="line">    &#125; else if (window.mozRequestAnimationFrame &amp;&amp; window.mozCancelAnimationFrame) &#123;</div><div class="line">    //firfox浏览器</div><div class="line">        return &#123;</div><div class="line">            request: mozRequestAnimationFrame,</div><div class="line">            cancel: mozCancelAnimationFrame</div><div class="line">        &#125;</div><div class="line">    &#125; else if (window.webkitRequestAnimationFrame &amp;&amp; webkitRequestAnimationFrame(String)) &#123;</div><div class="line">        return &#123;</div><div class="line">            request: function(callback) &#123;</div><div class="line">                return: window.webkitRequestAnimationFrame(function() &#123;</div><div class="line">                    return callback(new Date - 0); </div><div class="line">                    //修正部分webkit版本下没有给callback传time参数的bug</div><div class="line">                &#125;);</div><div class="line">            &#125;,</div><div class="line">            cancel: window.webkitCancelAnimationFrame || window.webkitCancelRequestAnimationFrame</div><div class="line">        &#125;</div><div class="line">    &#125; else &#123;</div></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">    	//用setInterval模拟requestAnimationFrame</div><div class="line">        var millisec = 25; //40fps;</div><div class="line">        var callbacks = [];</div><div class="line">        var id = 0,</div><div class="line">            cursor = 0;</div><div class="line">        var timerId = null;</div><div class="line"></div><div class="line">        function playAll() &#123;</div><div class="line">            var cloned = callbacks.slice(0);</div><div class="line">            cursor += callbacks.length;</div><div class="line">            callbacks.length = 0;</div><div class="line">            var hits = 0;</div><div class="line">            for (var i = 0, callback; callback = cloned[i++];) &#123;</div><div class="line">                if (callback !== &apos;cancelled&apos;) &#123;</div><div class="line">                    callback(new Data - 0);</div><div class="line">                    hits++;</div><div class="line">                &#125;</div><div class="line">            &#125;;</div><div class="line">            if (hits == cloned.length) &#123;</div><div class="line">                clearInterval(timerId);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        timerId = window.setInterval(playAll, millisec);</div><div class="line">        return &#123;</div><div class="line">            request: function(handler) &#123;</div><div class="line">                callbacks.push(handler);</div><div class="line">                return id++;</div><div class="line">            &#125;,</div><div class="line">            cancel: function() &#123;</div><div class="line">                callbacks[id - cursor] = &apos;cancelled&apos;;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="为动画节点创建新的渲染层"><a href="#为动画节点创建新的渲染层" class="headerlink" title="为动画节点创建新的渲染层"></a>为动画节点创建新的渲染层</h3><p>通过将动画节点与文档中的其他节点隔离开来，可以有效的减少重新布局(relayout)和重新绘制(repaint)的面积，从而提高页面的整体性能。隔离动画节点与文档中的其他节点方法通常是为动画节点创建新的渲染层(render layer)。下面是创建渲染层的常用方法：</p>
+<h4 id="使用3D变换"><a href="#使用3D变换" class="headerlink" title="使用3D变换"></a>使用3D变换</h4><p>大家一定经常看到网上的文章说使用<code>transform: translate3d(0, 0, 0)/translateZ(0)</code>(详细了解<a href="http://chping.website/2016/09/22/animation2/" target="_blank" rel="external">点击这里</a>)可以开启GPU加速，亲自试验以后发现其的确可以提高页面的渲染速度，我就曾经用它解决了一些低端机的闪烁问题。 那么其原理是什么呢？这种方式并非一定能够开启GPU加速。</p>
+<p>W3C标准是这么说的。</p>
+<blockquote>
+<p>Three-dimensional transforms can result in transformation matrices with a non-zero Z component (where the Z axis projects out of the plane of the screen). This can result in an element rendering on a different plane than that of its containing block. This may affect the front-to-back rendering order of that element relative to other elements, as well as causing it to intersect with other elements.</p>
+</blockquote>
+<p>其主要意思就是<strong>3D变换会创建新的渲染层，而不是与其父节点在同一个渲染层中</strong>。在新的渲染层中修改节点不会干扰到其他节点，防止了对其他节点的重新布局(relayout)和重新绘制(repaint)，自然也就加快了页面的渲染速度。除了transform: translate3d(0, 0, 0)/translateZ(0)，我们还可以使用will-change。</p>
+<h4 id="使用will-change"><a href="#使用will-change" class="headerlink" title="使用will-change"></a>使用will-change</h4><p>我们可以使用will-change让浏览器提前了解预期的元素变换，它允许浏览器提前做好适当的优化，使之最后能够快速和流畅的渲染。will-change: transform同样也会为节点创建新的渲染层。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">.animation-element&#123;</div><div class="line">     will-change: transform;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="选择高效的动画属性"><a href="#选择高效的动画属性" class="headerlink" title="选择高效的动画属性"></a>选择高效的动画属性</h3><p>修改节点的大部分属性都会引起重新绘制，甚至是重新布局。而理想情况下，我们应避免重新绘制和重新布局。幸运的当仅仅修改<code>transfrom</code>属性或<code>opacity</code>属性，可以做到不重新绘制。具体的思路是：为需要创建动画的节点创建新的渲染层，并且在新渲染层中只修改<code>transform</code>和<code>opacity</code>属性。<strong>只有做到以上两点才可以避免重新布局和重新绘制，真正使用GPU加速。</strong></p>
+<h3 id="避免引起多余的渲染"><a href="#避免引起多余的渲染" class="headerlink" title="避免引起多余的渲染"></a>避免引起多余的渲染</h3><p>我们在实现动画的过程中，经常需要获取某个元素的属性，然后对该属性做出修改：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function step()&#123;</div><div class="line">    var animationNode = doucment.getElementById(&apos;animation-node&apos;);</div><div class="line">    for(var i = 1; i &lt;= 20 ; i++)&#123;</div><div class="line">        animationNode.width = animationNode.width + 1；</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上述的for循环语句将导致浏览器进行20次多余的渲染，严重影响页面性能。通常来讲JS对页面样式的多次修改只会在页面下次刷新时渲染一次，而通过DOM API获取样式时，会强制页面完成一次渲染以体现最新修改后的值。上述例子就是这样导致浏览器多次渲染的。而正确的写法应该是读写分离。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">var animationNode = doucment.getElementById(&apos;animation-node&apos;);</div><div class="line">var initialWidth = animationNode.style.width;</div><div class="line">for(var i = 1; i &lt;= 20 ; i++)&#123;</div><div class="line">    initialWidth+=1；</div><div class="line">&#125;</div><div class="line">animationNode.style.width = initialWidth;</div></pre></td></tr></table></figure></p>
+<p>当我们在复杂页面上实现动画是，常常由于疏忽导致页面多余的渲染。这是我们可以借助fastdom来隔离对真实DOM的操作，fastdom将对节点样式的读写批量缓存、一次执行，防止多余的渲染。</p>
+<blockquote>
+<p>参考资源</p>
+<ol>
+<li>简书作者/胖花花的<a href="http://www.jianshu.com/p/13c231b76594#" target="_blank" rel="external">解析 iOS 动画原理与实现</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/19855108" target="_blank" rel="external">逐帧动画和关键帧动画</a></li>
+<li><a href="http://www.ituring.com.cn/article/214754" target="_blank" rel="external">前端高性能动画最佳实践</a></li>
+</ol>
+<p>本文只是将网络上对动画系统和设计前端的动画方面做了简单的整合。<br>其中在<a href="http://www.ituring.com.cn/article/214754" target="_blank" rel="external">前端高性能动画最佳实践</a>一文中的尾部有几篇参考资料非常的好，对于理解前端动画有很好的帮助，推荐一下：</p>
+<ol>
+<li><a href="http://matrix.h5jun.com/slide/show?id=117#/" target="_blank" rel="external">前端动画原理与实现</a>，这篇文章通过PPT的方式介绍了前端动画，页面做的不错。</li>
+<li><a href="http://taligarsiel.com/Projects/howbrowserswork1.htm" target="_blank" rel="external">How browsers work</a>，这篇文章介绍了浏览器的工作原理和流程，对于想深入了解浏览器工作原理和流程的同学可以一试。</li>
+<li><a href="http://www.infoq.com/cn/articles/javascript-high-performance-animation-and-page-rendering" target="_blank" rel="external">Javascript高性能动画与页面渲染</a>,这篇文章和<a href="http://www.ituring.com.cn/article/214754" target="_blank" rel="external">前端高性能动画最佳实践</a>一样，只不过是对于前端动画的另一个角度的解读，并且可能更详细。</li>
+</ol>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>测试功能而已，你非要赏点我就没办法了...</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.JPG" alt="彬仔 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.JPG" alt="彬仔 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/动画系统/" rel="tag">#动画系统</a>
+          
+            <a href="/tags/认识系列/" rel="tag">#认识系列</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/20/streamMedia/" rel="next" title="认识一下流媒体这个概念">
+                <i class="fa fa-chevron-left"></i> 认识一下流媒体这个概念
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/22/animation2/" rel="prev" title="用CSS开启硬件加速提高网站性能">
+                用CSS开启硬件加速提高网站性能 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/21/animation/"
+     data-title="认识一下动画系统"
+     data-content=""
+     data-url="https://chping2125.github.io/2016/09/21/animation/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/21/animation/"
+           data-title="认识一下动画系统" data-url="https://chping2125.github.io/2016/09/21/animation/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="彬仔" />
+          <p class="site-author-name" itemprop="name">彬仔</p>
+          <p class="site-description motion-element" itemprop="description">分享前端技术 整理学习笔记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chengping2125" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chping2125" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/" title="阮一峰" target="_blank">阮一峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/TomXu/" title="汤姆大叔" target="_blank">汤姆大叔</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.haorooms.com/" title="Aaron" target="_blank">Aaron</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://segmentfault.com/a/1190000007062464" title="前端资源" target="_blank">前端资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laod.cn/hosts/2016-google-hosts.html" title="老D翻墙" target="_blank">老D翻墙</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanterncn.cn/down" title="蓝灯工作站" target="_blank">蓝灯工作站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#计算机动画的实现方式"><span class="nav-number">1.</span> <span class="nav-text">计算机动画的实现方式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逐帧动画和关键帧动画"><span class="nav-number">2.</span> <span class="nav-text">逐帧动画和关键帧动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#逐帧动画"><span class="nav-number">2.1.</span> <span class="nav-text">逐帧动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关键帧动画"><span class="nav-number">2.2.</span> <span class="nav-text">关键帧动画</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两者的对比"><span class="nav-number">2.3.</span> <span class="nav-text">两者的对比</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前端高性能动画"><span class="nav-number">3.</span> <span class="nav-text">前端高性能动画</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#理解浏览器渲染流水线"><span class="nav-number">3.1.</span> <span class="nav-text">理解浏览器渲染流水线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提高动画性能指标"><span class="nav-number">3.2.</span> <span class="nav-text">提高动画性能指标</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#选择稳定的实现方式"><span class="nav-number">3.2.1.</span> <span class="nav-text">选择稳定的实现方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为动画节点创建新的渲染层"><span class="nav-number">3.2.2.</span> <span class="nav-text">为动画节点创建新的渲染层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#使用3D变换"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">使用3D变换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用will-change"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">使用will-change</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#选择高效的动画属性"><span class="nav-number">3.2.3.</span> <span class="nav-text">选择高效的动画属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#避免引起多余的渲染"><span class="nav-number">3.2.4.</span> <span class="nav-text">避免引起多余的渲染</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彬仔</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/libs/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/libs/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/libs/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/libs/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8oHQTcoEX25FOPclwvl0Fh2A-gzGzoHsz", "QFHjBCnX5GEB8TGU5B6prx90");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

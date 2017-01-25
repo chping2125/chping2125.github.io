@@ -1,0 +1,1117 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/libs/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="框架,前端,组件化," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="什么是前端组件化和模块化？这两天一直在思考这个问题，以前对这两个概念的理解很模糊。认为“模块化”是侧重于功能或者数据的封装，目的是为了解耦合；而“组件化”更关注的UI部分，如一个页面可以分为头部、底部和内容区域等等。
+这样的理解很明显是表层的简单的可能还是不正确的理解，最近反复阅读了苏宁前端“代码民工徐飞”关于组件化话的几篇文章，结合Angular1.x和Vue1.x的组件思想对组件化和模块化有了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="前端组件化的认识">
+<meta property="og:url" content="https://chping2125.github.io/2016/11/04/前端组件化的认识/index.html">
+<meta property="og:site_name" content="前端小开发">
+<meta property="og:description" content="什么是前端组件化和模块化？这两天一直在思考这个问题，以前对这两个概念的理解很模糊。认为“模块化”是侧重于功能或者数据的封装，目的是为了解耦合；而“组件化”更关注的UI部分，如一个页面可以分为头部、底部和内容区域等等。
+这样的理解很明显是表层的简单的可能还是不正确的理解，最近反复阅读了苏宁前端“代码民工徐飞”关于组件化话的几篇文章，结合Angular1.x和Vue1.x的组件思想对组件化和模块化有了">
+<meta property="og:image" content="https://raw.githubusercontent.com/xufei/blog/master/assets/ng/event.png">
+<meta property="og:image" content="https://raw.githubusercontent.com/xufei/blog/master/assets/ng/ng_event_bus.png">
+<meta property="og:updated_time" content="2016-11-09T03:15:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="前端组件化的认识">
+<meta name="twitter:description" content="什么是前端组件化和模块化？这两天一直在思考这个问题，以前对这两个概念的理解很模糊。认为“模块化”是侧重于功能或者数据的封装，目的是为了解耦合；而“组件化”更关注的UI部分，如一个页面可以分为头部、底部和内容区域等等。
+这样的理解很明显是表层的简单的可能还是不正确的理解，最近反复阅读了苏宁前端“代码民工徐飞”关于组件化话的几篇文章，结合Angular1.x和Vue1.x的组件思想对组件化和模块化有了">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/xufei/blog/master/assets/ng/event.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6257465157467768000,
+      author: '彬仔'
+    }
+  };
+</script>
+
+  <title> 前端组件化的认识 | 前端小开发 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c8027b8ba4beebe6ebe89d22781de0a1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">前端小开发</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随笔 分享 笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                前端组件化的认识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-04T09:13:29+08:00" content="2016-11-04">
+              2016-11-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/组件化/" itemprop="url" rel="index">
+                    <span itemprop="name">组件化</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/04/前端组件化的认识/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/04/前端组件化的认识/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/04/前端组件化的认识/" class="leancloud_visitors" data-flag-title="前端组件化的认识">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>什么是前端组件化和模块化？<br>这两天一直在思考这个问题，以前对这两个概念的理解很模糊。认为“模块化”是侧重于功能或者数据的封装，目的是为了解耦合；而“组件化”更关注的UI部分，如一个页面可以分为头部、底部和内容区域等等。</p>
+<p>这样的理解很明显是表层的简单的可能还是不正确的理解，最近反复阅读了苏宁前端“代码民工徐飞”关于组件化话的几篇文章，结合Angular1.x和Vue1.x的组件思想对组件化和模块化有了一些新的认识（原文链接在文末）。<br><a id="more"></a></p>
+<h1 id="什么是组件化"><a href="#什么是组件化" class="headerlink" title="什么是组件化"></a>什么是组件化</h1><p>组件化的概念在后端早已存在多年，只不过近几年随着前端的发展，这个概念在前端开始被频繁提及，特别是在MV*的框架中。</p>
+<p>前端中的“组件化”这个词，在UI这一层通常指“标签化”，也就是把大块的业务界面，拆分成若干小块，然后进行组装。</p>
+<p>狭义的组件化一般是指<strong>标签化</strong>，也就是以自定义标签（自定义属性）为核心的机制。</p>
+<p>广义的组件化包括<strong>对数据逻辑层业务梳理，形成不同层级的能力封装</strong>。</p>
+<h1 id="为什么要有组件化？"><a href="#为什么要有组件化？" class="headerlink" title="为什么要有组件化？"></a>为什么要有组件化？</h1><p>不管是前端组件化还是后端的组件化，我认为其目的无非就是为了<strong>提高开发效率和后期维护的效率</strong>。<br>在说的详细点，就是比如我想实现一个网站的头部，我可以把头部单独拿出来进行封装，根据不同页面或者说业务要求，可以灵活定制不同的头部（结构一致，颜色或展示等不同）。这样就可以在不同的页面进行灵活的复用，后期如果头部结构有大的变动，可以只修改该头部组件就好了。是不是这个概念很熟悉，其实你早就在这么干了，比如以前用jsp做静态页面生成的时候，就可以利用jsp的<code>&lt;jsp:include  page=&quot;xxx.jsp&quot;/&gt;</code>指令进行引入公共组件，可能也有人理解那是模板的概念。</p>
+<h1 id="MV-框架中的组件"><a href="#MV-框架中的组件" class="headerlink" title="MV*框架中的组件"></a>MV*框架中的组件</h1><p>大概了解了一下组件化的概念，我们来看看Vue和Angular中是怎样运用组件的思想的。</p>
+<h2 id="Vue中的组件"><a href="#Vue中的组件" class="headerlink" title="Vue中的组件"></a>Vue中的组件</h2><blockquote>
+<p>组件（Component）是 Vue.js 最强大的功能之一。组件可以扩展 HTML 元素，封装可重用的代码。在较高层面上，组件是自定义元素， Vue.js 的编译器为它添加特殊功能。在有些情况下，组件也可以是原生 HTML 元素的形式，以 is 特性扩展。</p>
+</blockquote>
+<p>以上是Vue官网对于Vue中组件的解释，其中在徐飞的<a href="https://github.com/xufei/blog/issues/3" target="_blank" rel="external">从HTML Components的衰落看Web Components的危机</a>一文中的评论部分，Vue的作者尤雨溪（github:<a href="https://github.com/yyx990803" target="_blank" rel="external">yyx990803</a>）发表了对民工叔叔（我只是小菜鸟，叫叔叔没啥问题，哈哈）文章的看法，其中也提到了他对于组件的认识。</p>
+<p><a href="https://vuefe.cn/guide/components.html" target="_blank" rel="external">Vue中关于组件</a>的介绍是Vue中的重点部分，从它在Vue官方文档中的篇幅就可以看出来。我认为组件中最重要的方面，到目前为止我能理解的就两部分：<strong>通讯</strong>和<strong>复用</strong>。接下来重点介绍一下Vue对于通讯的实现。</p>
+<p>结合尤雨溪在民工叔叔文章中评论那样，组件之间的通讯可分为<strong>从内向外</strong>和<strong>从外向内</strong>两种。Vue对于这两种通信时怎样解决的呢？文档中说的很详细了，<strong>events up</strong>和<strong>props down</strong>。</p>
+<h3 id="从外向内的“props-down”"><a href="#从外向内的“props-down”" class="headerlink" title="从外向内的“props down”"></a>从外向内的“props down”</h3><p>具体来说，就是当父组件向子组件传递信息的时候，采用的是在子组件的构造对象中显示的设置props属性进行数据的传输。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">  Vue.component(<span class="string">'child'</span>, &#123;</div><div class="line">    <span class="comment">// 声明 props</span></div><div class="line">    props: [<span class="string">'message'</span>],</div><div class="line">    <span class="comment">// 就像 data 一样，prop 可以用在模板内</span></div><div class="line">    <span class="comment">// 同样也可以在 vm 实例中像 “this.message” 这样使用</span></div><div class="line">    template: <span class="string">'&lt;span&gt;&#123;&#123; message &#125;&#125;&lt;/span&gt;'</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
+<p>然后向他传入一个普通字符串值：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;child message=<span class="string">"hello!"</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">child</span>&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>当然为了实现字面量语法或者动态语法，可以使用<code>v-bind</code>在父组件上来绑定数据，详细语法请参照<a href="https://vuefe.cn/guide/components.html#Props" target="_blank" rel="external">Vue文档</a>，本文不做详细介绍。</p>
+<p><strong>需要特别注意的是：</strong></p>
+<ol>
+<li>Vue默认的是<strong>单项数据流</strong>，当父组件的属性变化时，将传导给子组件，但是不会反过来。这是为了防止子组件无意修改了父组件的状态——这会让应用的数据流难以理解。</li>
+<li>另外，每次父组件更新时，子组件的所有 prop 都会更新为最新值。这意味着你不应该在子组件内部改变 prop 。如果你这么做了，Vue 会在控制台给出<strong>警告</strong>。</li>
+<li>注意在 JavaScript 中对象和数组是<strong>引用类型</strong>，指向同一个内存空间，如果 prop 是一个对象或数组，在子组件内部改变它会影响父组件的状态。<br>并且当props为应用类型的时候还可以为其<strong>添加验证</strong>。</li>
+</ol>
+<h3 id="从内向外的“events-up”"><a href="#从内向外的“events-up”" class="headerlink" title="从内向外的“events up”"></a>从内向外的“events up”</h3><p>Vue中默认的虽然是单项数据流，但还是可以实现子组件向父组件传输数据的，因为有些场景中，我们不可避免的会使用到。而Vue中向上传递数据采用的和Angular中一样的思想，通过<strong>自定义事件</strong>的方式实现。大体需要以下两步步：</p>
+<ol>
+<li><strong>使用 $emit(eventName)在子组件上触发事件</strong></li>
+<li><strong>使用 $on(eventName) 在父组件上（或者祖先组件）监听事件</strong></li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"counter-event-example"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; total &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">    //父组件监听事件</div><div class="line">    <span class="tag">&lt;<span class="name">button-counter</span> <span class="attr">v-on:increment</span>=<span class="string">"incrementTotal"</span>&gt;</span><span class="tag">&lt;/<span class="name">button-counter</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">button-counter</span> <span class="attr">v-on:increment</span>=<span class="string">"incrementTotal"</span>&gt;</span><span class="tag">&lt;/<span class="name">button-counter</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">Vue.component(&apos;button-counter&apos;, &#123;</div><div class="line">  template: &apos;&lt;button v-on:click=&quot;increment&quot;&gt;&#123;&#123; counter &#125;&#125;&lt;/button&gt;&apos;,</div><div class="line">  data: function () &#123;</div><div class="line">    return &#123;</div><div class="line">      counter: 0</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  methods: &#123;</div><div class="line">    increment: function () &#123;</div><div class="line">      this.counter += 1;</div><div class="line">      this.$emit(&apos;increment&apos;);//子组件触发事件</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">&#125;)</div><div class="line"></div><div class="line">new Vue(&#123;</div><div class="line">  el: &apos;#counter-event-example&apos;,</div><div class="line">  data: &#123;</div><div class="line">    total: 0</div><div class="line">  &#125;,</div><div class="line">  methods: &#123;</div><div class="line">    incrementTotal: function () &#123;</div><div class="line">      this.total += 1;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="中央事件总线"><a href="#中央事件总线" class="headerlink" title="中央事件总线"></a>中央事件总线</h3><p>有时候非父子关系的组件也需要通信。在简单的场景下，使用一个空的 Vue 实例作为中央事件总线：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> bus = <span class="keyword">new</span> Vue();</div></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 触发组件 A 中的事件</span></div><div class="line">bus.$emit(<span class="string">'id-selected'</span>, <span class="number">1</span>)</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 在组件 B 创建的钩子中监听事件</span></div><div class="line">bus.$on(<span class="string">'id-selected'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">id</span>) </span>&#123;</div><div class="line"><span class="comment">// ...</span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>在更多复杂的情况下，你应该考虑使用专门的 <a href="https://vuefe.cn/guide/state-management.html" target="_blank" rel="external">状态管理模式–Vuex</a></p>
+<p>另外Vue还可以<a href="https://vuefe.cn/guide/components.html#使用-Slots-分发内容" target="_blank" rel="external">使用slot分发内容</a>，具体实现和更多实现请参考<a href="https://vuefe.cn/guide/components.html#Props" target="_blank" rel="external">Vue文档</a>。</p>
+<p>简单描述了一下Vue的组件思想，主要目的是从民工叔叔的组件化文章中重新认识到了组件化的思想，结合Vue框架去理解，可能更容易明白民工叔叔的见解。</p>
+<h2 id="Angular中的组件"><a href="#Angular中的组件" class="headerlink" title="Angular中的组件"></a>Angular中的组件</h2><p>严格来说，Angular1.x中并没有明确提及组件的概念，只是我们可以使用<code>app.directive()</code>来实现自定义指令，我觉着这其实就是组件。</p>
+<p>而Angular中实现组件之间进行通信的方式主要有四种方式：</p>
+<h3 id="基于-rootScope的全局变量和-scope作用域的继承性"><a href="#基于-rootScope的全局变量和-scope作用域的继承性" class="headerlink" title="基于$rootScope的全局变量和$scope作用域的继承性"></a>基于$rootScope的全局变量和$scope作用域的继承性</h3><p>基于作用域的继承性来实现组件通信仅限于作用域链上的通信，需要对Angular的controller之间的作用域关系特别熟悉，详细可以参考民工叔叔的<a href="https://github.com/xufei/blog/issues/18" target="_blank" rel="external">AngularJS实例教程（二）——作用域与事件</a>。</p>
+<h3 id="利用事件-on-、-emit-、-broastcase-方式"><a href="#利用事件-on-、-emit-、-broastcase-方式" class="headerlink" title="利用事件$on()、$emit()、$broastcase()方式"></a>利用事件$on()、$emit()、$broastcase()方式</h3><p>先上一张图：<br><img src="https://raw.githubusercontent.com/xufei/blog/master/assets/ng/event.png" alt="$rootScope"><br>上图中清晰的展示了Angular中利用事件去上传数据和广播事件的关系图，于是我们就可以利用事件做点事情了。</p>
+<p>从作用域往上发送事件，使用scope.$emit<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$scope.$emit(&quot;someEvent&quot;, &#123;&#125;);</div></pre></td></tr></table></figure></p>
+<p>从作用域往下发送事件，使用scope.$broadcast<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$scope.$broadcast(&quot;someEvent&quot;, &#123;&#125;);</div></pre></td></tr></table></figure></p>
+<p>这两个方法的第二个参数是要随事件带出的数据。<br>注意，这两种方式传播事件，事件的发送方自己也会收到一份。</p>
+<h3 id="利用服务实现"><a href="#利用服务实现" class="headerlink" title="利用服务实现"></a>利用服务实现</h3><p>利用myApp.factory()生成一个需要共享数据的对象，然后在controller中注入，就可以是获取到共享数据了，并进行修改了。<br>直接上代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">var myApp = angular.module(&quot;myApp&quot;, []);</div><div class="line">myApp.factory(&apos;Data&apos;, function() &#123;</div><div class="line">  return &#123;</div><div class="line">    name: &quot;Ting&quot;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line">myApp.controller(&apos;FirstCtrl&apos;, function($scope, Data) &#123;</div><div class="line">  $scope.data = Data;</div><div class="line">  $scope.setName = function() &#123;</div><div class="line">    Data.name = &quot;Jack&quot;;</div><div class="line">   &#125;</div><div class="line">  &#125;);</div><div class="line">myApp.controller(&apos;SecondCtrl&apos;, function($scope, Data) &#123;</div><div class="line">  $scope.data = Data;</div><div class="line">  $scope.setName = function() &#123;</div><div class="line">    Data.name = &quot;Moby&quot;;</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h3 id="订阅发布模式"><a href="#订阅发布模式" class="headerlink" title="订阅发布模式"></a>订阅发布模式</h3><p>民工叔叔在<a href="https://github.com/xufei/blog/issues/18" target="_blank" rel="external">AngularJS实例教程（二）——作用域与事件</a>一文的末尾提出了利用订阅发布模式来通信，我觉着太经典了，接收方在这里订阅消息，发布方在这里发布消息。这个过程可以用这样的图形来表示：<br><img src="https://raw.githubusercontent.com/xufei/blog/master/assets/ng/ng_event_bus.png" alt="订阅发布模式通信"><br>代码写起来也很简单，把它做成一个公共模块，就可以被各种业务方调用了：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">app.factory(<span class="string">"EventBus"</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; </div><div class="line">  <span class="keyword">var</span> eventMap = &#123;&#125;; </div><div class="line">  <span class="keyword">var</span> EventBus = &#123; </div><div class="line">    <span class="attr">on</span> : <span class="function"><span class="keyword">function</span>(<span class="params">eventType, handler</span>) </span>&#123; </div><div class="line">      <span class="comment">//multiple event listener</span></div><div class="line">      <span class="keyword">if</span> (!eventMap[eventType]) &#123; </div><div class="line">        eventMap[eventType] = [];</div><div class="line">      &#125;</div><div class="line">      eventMap[eventType].push(handler);</div><div class="line">    &#125;, </div><div class="line">    <span class="attr">off</span> : <span class="function"><span class="keyword">function</span>(<span class="params">eventType, handler</span>) </span>&#123; </div><div class="line">      <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; eventMap[eventType].length; i++) &#123; </div><div class="line">        <span class="keyword">if</span> (eventMap[eventType][i] === handler) &#123; </div><div class="line">          eventMap[eventType].splice(i, <span class="number">1</span>); </div><div class="line">          <span class="keyword">break</span>; </div><div class="line">        &#125; </div><div class="line">      &#125; </div><div class="line">     &#125;, </div><div class="line">    <span class="attr">fire</span> : <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123; </div><div class="line">      <span class="keyword">var</span> eventType = event.type; </div><div class="line">      <span class="keyword">if</span> (eventMap &amp;&amp; eventMap[eventType]) &#123; </div><div class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; eventMap[eventType].length; i++) &#123; </div><div class="line">          eventMap[eventType][i](event); </div><div class="line">        &#125; </div><div class="line">      &#125; </div><div class="line">    &#125; </div><div class="line">  &#125;; </div><div class="line">  <span class="keyword">return</span> EventBus;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>事件订阅代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">EventBus.on(<span class="string">"someEvent"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123; </div><div class="line">  <span class="comment">// 这里处理事件 </span></div><div class="line">  <span class="keyword">var</span> c = event.data.a + event.data.b;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>事件发布代码：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">EventBus.fire(&#123;</div><div class="line">  <span class="attr">type</span>: <span class="string">"someEvent"</span>,</div><div class="line">  <span class="attr">data</span>: &#123; </div><div class="line">    <span class="attr">aaa</span>: <span class="number">1</span>, </div><div class="line">    <span class="attr">bbb</span>: <span class="number">2</span> </div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>注意，如果在复杂的应用中使用事件总线，需要慎重规划事件名，推荐使用业务路径，比如：”portal.menu.selectedMenuChange”，以避免事件冲突。</p>
+<p>非常经典的Angular组件之间通信的一种方式，我在解释一下，如果A组件中有值需要传递给B组件。那么在B组件Controller中通过<code>EventBus.on()</code>订阅事件：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">EventBus.on(<span class="string">"someEvent"</span>, <span class="function"><span class="keyword">function</span>(<span class="params">event</span>) </span>&#123; </div><div class="line">  <span class="comment">// 这里是B组件中对A组件传过来的值进行处理的回调函数</span></div><div class="line">  <span class="keyword">var</span> c = event.data.a + event.data.b;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>然后，在A组件Controller中将其中的值通过<code>EventBus.fire()</code>发布一下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">EventBus.fire(&#123;</div><div class="line">  <span class="attr">type</span>: <span class="string">"someEvent"</span>,</div><div class="line">  <span class="attr">data</span>: &#123; </div><div class="line">    <span class="attr">aaa</span>: <span class="number">1</span>, </div><div class="line">    <span class="attr">bbb</span>: <span class="number">2</span> </div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>这样B组件就可以拿到A组件中的数据值了。</p>
+<h1 id="组件化再思考"><a href="#组件化再思考" class="headerlink" title="组件化再思考"></a>组件化再思考</h1><p>简单了解了一下Vue和Angular中的组件思想，我们再来回想一下组件化的概念:</p>
+<blockquote>
+<p>狭义的组件化一般是指<strong>标签化</strong>，也就是以自定义标签（自定义属性）为核心的机制。<br>广义的组件化包括<strong>对数据逻辑层业务梳理，形成不同层级的能力封装</strong>。</p>
+</blockquote>
+<p>很明显，不管是Vue还是Angular，对组件的封装都是为了对数据逻辑业务的梳理，使得不同组件各司其职，当然这其中就包括了对HTML的组件化，CSS的组件化和JS的组件化。</p>
+<p>对于HTML的组件化可以理解为利用各种语义化标签或者自定义标签（Vue中的组件和Angular中的自定义指令等）对结构进行封装。而对于CSS的组件化，我们现在可以利用SASS或者LESS来实现，根据不同的功能对样式进行不同的封装，我觉着现在前端的一些UI框架就是对组件化的使用，去哪儿网杜瑶的<a href="https://github.com/doyoe/Yo" target="_blank" rel="external">Yo框架</a>就是一个很好的例子。</p>
+<p>至于对于JS的组件化运用，我个人觉着就是模块化。不管是CommonJS规范、AMD规范、CMD规范还是ES2015的模块机制目的都是对JS进行模块化开发，使得不同功能的逻辑或者业务分离开，每个模块专注自己的业务逻辑，这样不仅是开发的时候工作目录一目了然，后期维护的时候也能快速定位到各个业务逻辑模块。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>简单的对民工叔叔的几篇文章做了一下总结，其实还没有理解到位，每篇文章读了仅仅3-4遍，每读一遍都有不一样的感受，理解也不一样。可能等过段时间再去读又会颠覆我现在的认识，不管对于错，先记录一下现在的感受，后期有了新的认识再来补充或者修改。<br>下面推荐民工叔叔的对于组件化和Angular的一些文章，我做了少许<strong><a href="https://github.com/chping2125/blog" target="_blank" rel="external">整理</a></strong>，大家可以直接按照目录由浅至深的阅读原文。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>测试功能而已，你非要赏点我就没办法了...</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.JPG" alt="彬仔 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.JPG" alt="彬仔 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/框架/" rel="tag">#框架</a>
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+            <a href="/tags/组件化/" rel="tag">#组件化</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/10/18/gulp和webpack对比/" rel="next" title="Gulp和Webpack对比">
+                <i class="fa fa-chevron-left"></i> Gulp和Webpack对比
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/05/前后端联调的基本认识/" rel="prev" title="认识一下前后端联调">
+                认识一下前后端联调 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/04/前端组件化的认识/"
+     data-title="前端组件化的认识"
+     data-content=""
+     data-url="https://chping2125.github.io/2016/11/04/前端组件化的认识/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/04/前端组件化的认识/"
+           data-title="前端组件化的认识" data-url="https://chping2125.github.io/2016/11/04/前端组件化的认识/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="彬仔" />
+          <p class="site-author-name" itemprop="name">彬仔</p>
+          <p class="site-description motion-element" itemprop="description">分享前端技术 整理学习笔记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chengping2125" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chping2125" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/" title="阮一峰" target="_blank">阮一峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/TomXu/" title="汤姆大叔" target="_blank">汤姆大叔</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.haorooms.com/" title="Aaron" target="_blank">Aaron</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://segmentfault.com/a/1190000007062464" title="前端资源" target="_blank">前端资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laod.cn/hosts/2016-google-hosts.html" title="老D翻墙" target="_blank">老D翻墙</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanterncn.cn/down" title="蓝灯工作站" target="_blank">蓝灯工作站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是组件化"><span class="nav-number">1.</span> <span class="nav-text">什么是组件化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要有组件化？"><span class="nav-number">2.</span> <span class="nav-text">为什么要有组件化？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#MV-框架中的组件"><span class="nav-number">3.</span> <span class="nav-text">MV*框架中的组件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue中的组件"><span class="nav-number">3.1.</span> <span class="nav-text">Vue中的组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从外向内的“props-down”"><span class="nav-number">3.1.1.</span> <span class="nav-text">从外向内的“props down”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从内向外的“events-up”"><span class="nav-number">3.1.2.</span> <span class="nav-text">从内向外的“events up”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中央事件总线"><span class="nav-number">3.1.3.</span> <span class="nav-text">中央事件总线</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Angular中的组件"><span class="nav-number">3.2.</span> <span class="nav-text">Angular中的组件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基于-rootScope的全局变量和-scope作用域的继承性"><span class="nav-number">3.2.1.</span> <span class="nav-text">基于$rootScope的全局变量和$scope作用域的继承性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用事件-on-、-emit-、-broastcase-方式"><span class="nav-number">3.2.2.</span> <span class="nav-text">利用事件$on()、$emit()、$broastcase()方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#利用服务实现"><span class="nav-number">3.2.3.</span> <span class="nav-text">利用服务实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#订阅发布模式"><span class="nav-number">3.2.4.</span> <span class="nav-text">订阅发布模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件化再思考"><span class="nav-number">4.</span> <span class="nav-text">组件化再思考</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">5.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彬仔</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/libs/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/libs/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/libs/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/libs/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8oHQTcoEX25FOPclwvl0Fh2A-gzGzoHsz", "QFHjBCnX5GEB8TGU5B6prx90");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

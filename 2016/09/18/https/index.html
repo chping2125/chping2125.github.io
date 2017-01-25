@@ -1,0 +1,1135 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/libs/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="HTTP,HTTPS," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="HTTP协议中有可能存在信息窃听或者身份伪装等安全问题，使用HTTPS通信机制可以有效地防止这些问题。接下来简单的记录一下自己对于HTTPS工作流程的一个认识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTPS基本认识">
+<meta property="og:url" content="https://chping2125.github.io/2016/09/18/https/index.html">
+<meta property="og:site_name" content="前端小开发">
+<meta property="og:description" content="HTTP协议中有可能存在信息窃听或者身份伪装等安全问题，使用HTTPS通信机制可以有效地防止这些问题。接下来简单的记录一下自己对于HTTPS工作流程的一个认识。">
+<meta property="og:image" content="https://chping2125.github.io/images/http/img6.png">
+<meta property="og:updated_time" content="2016-09-22T04:10:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTPS基本认识">
+<meta name="twitter:description" content="HTTP协议中有可能存在信息窃听或者身份伪装等安全问题，使用HTTPS通信机制可以有效地防止这些问题。接下来简单的记录一下自己对于HTTPS工作流程的一个认识。">
+<meta name="twitter:image" content="https://chping2125.github.io/images/http/img6.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6257465157467768000,
+      author: '彬仔'
+    }
+  };
+</script>
+
+  <title> HTTPS基本认识 | 前端小开发 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c8027b8ba4beebe6ebe89d22781de0a1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">前端小开发</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随笔 分享 笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                HTTPS基本认识
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-18T20:01:28+08:00" content="2016-09-18">
+              2016-09-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/网络/" itemprop="url" rel="index">
+                    <span itemprop="name">网络</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/网络/网络基础/" itemprop="url" rel="index">
+                    <span itemprop="name">网络基础</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/18/https/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/18/https/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/18/https/" class="leancloud_visitors" data-flag-title="HTTPS基本认识">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>HTTP协议中有可能存在信息窃听或者身份伪装等安全问题，使用HTTPS通信机制可以有效地防止这些问题。接下来简单的记录一下自己对于HTTPS工作流程的一个认识。<br><a id="more"></a></p>
+<blockquote>
+<p>想了解HTTP相关内容，可以查看一下<a href="http://chping.website/2016/09/18/http/" target="_blank" rel="external">HTTP基本认识</a></p>
+</blockquote>
+<h1 id="HTTP的缺点"><a href="#HTTP的缺点" class="headerlink" title="HTTP的缺点"></a>HTTP的缺点</h1><p>我们都知道HTTP有相当优秀和方便的一面，然后HTTP并非只有好的一面，事物皆有两面性，它也有不足之处。<br><strong>HTTP主要不足</strong></p>
+<ol>
+<li><p>通信使用明文（不加密），内容可能被窃听。</p>
+</li>
+<li><p>不验证通信双方的身份，因此可能遭遇伪装。</p>
+</li>
+<li><p>无法证明报文的完整性，所以有可能已被篡改。</p>
+</li>
+</ol>
+<p>其实除此之外，HTTP本身还有很多缺点。</p>
+<h2 id="HTTP的缺点–明文通信"><a href="#HTTP的缺点–明文通信" class="headerlink" title="HTTP的缺点–明文通信"></a>HTTP的缺点–明文通信</h2><p>由于HTTP本身不具备加密的功能，所以无法做到对通信整体（使用HTTP协议通信的请求和响应的内容）进行加密，即HTTP报文使用明文（指未经过加密的报文）方式发送。这样就导致有可能报文在发送过程中被窃听的风险存在。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><p>针对明文通信的问题，有两种解决方案。一种是内容加密，一种是通信加密。<br><strong>通信加密</strong><br>HTTP协议中没有加密机制，但可以通过和SSL/TLS的组合使用，加密HTTP的通信过程（稍后详细说明）。</p>
+<p><strong>补充：SSL/TLS</strong><br>为了保证这些隐私数据能加密传输，于是网景公司设计了SSL（Secure Sockets Layer）协议用于对HTTP协议传输的数据进行加密，SSL是表示层的一个加密/解密协议。网景公司开发过SSL3.0之前的版本，目前主导权已转移到IETF（Internet 工程任务组）手中，IETF以SSL3.0位基准，后又制定了TLS1.0、TLS1.1、TLS1.2，实际上我们现在的HTTPS都是用的TLS协议，但是由于SSL出现的时间比较早，并且依旧被现在浏览器所支持，因此SSL依然是HTTPS的代名词，但无论是TLS还是SSL都是上个世纪的事情，SSL最后一个版本是3.0，今后TLS将会继承SSL优良血统继续为我们进行加密服务。</p>
+<p><strong>内容加密</strong><br>既然HTTP协议中没有加密机制，那么就对HTTP协议传输的内容本身加密。这样就要求要在客户端和服务端同时具备加密和解密的机制，由于它不同于SSL/TLS将整个通信线路加密处理，所以任存在被篡改的风险（稍后说明）。</p>
+<h2 id="HTTP的缺点–不验证身份"><a href="#HTTP的缺点–不验证身份" class="headerlink" title="HTTP的缺点–不验证身份"></a>HTTP的缺点–不验证身份</h2><p>HTTP协议中的请求和响应不会对通信方进行确认。也就是说存在“服务器是否就是发送请求中URI真正指定的主机，返回的响应是否真的返回到实际提出请求的客户端”等类似问题。</p>
+<h3 id="不验证身份的问题"><a href="#不验证身份的问题" class="headerlink" title="不验证身份的问题"></a>不验证身份的问题</h3><ol>
+<li><p>无法确定请求发送至目标的web服务器是否是按真实意图返回响应的那台服务器。有可能伪造web服务器。</p>
+</li>
+<li><p>无法确定响应返回到的客户端是否是按正式意图接受响应的那个客户端。有可能已伪造。</p>
+</li>
+<li><p>无法确定正在通信的对方是否具备权限。因为某些web服务器上保存着重要的信息，只能发给特定用户通信权限。</p>
+</li>
+<li><p>无法判定请求时来自何方、出自何手。</p>
+</li>
+<li><p>即时是无意义的请求也会照单全收。（DoS攻击）</p>
+</li>
+</ol>
+<h3 id="解决方案：证书机制"><a href="#解决方案：证书机制" class="headerlink" title="解决方案：证书机制"></a>解决方案：证书机制</h3><p>虽然使用HTTP协议无法确定通信方，但如果使用SSL则可以实现。SSL不但提供了加密处理，而且还使用了一种被称为证书的手段，用于确定通信方。</p>
+<p>证书是由值得信赖的第三方机构颁发，用以证明服务器和客户端是真实存在的。证书伪造是异常困难的。</p>
+<h2 id="HTTP的缺点–无法确定报文的完整性"><a href="#HTTP的缺点–无法确定报文的完整性" class="headerlink" title="HTTP的缺点–无法确定报文的完整性"></a>HTTP的缺点–无法确定报文的完整性</h2><p>由于HTTP协议无法证明通信的报文完整性，因此，在请求或者响应送出之后直到对方接受之前的这段时间内，即使请求或响应的内容遭到篡改，也没有办法获悉（像这样，请求或响应在传输过程中，遭攻击者拦截并篡改内容的攻击方式称为中间人攻击）。</p>
+<p>虽然有使用HTTP协议确定报文完整性的方法，但事实上并不便捷、可靠。其中常用的MD5和SHA-1等散列值校检的方法来确认文件的数字签名。但是MD5和SHA-1本身如果被改写就不行了。所以最终的解决方案就是HTTPS使用SSL提供的认证和加密处理及摘要功能来解决这个问题。</p>
+<h1 id="HTTPS出现"><a href="#HTTPS出现" class="headerlink" title="HTTPS出现"></a>HTTPS出现</h1><p>通过前面的介绍，我们可以得出以下几个结论：</p>
+<blockquote>
+<p><strong>1. HTTPS = HTTP + 加密 + 认证 + 完整性保护</strong><br><strong>2. HTTPS是身披SSL/TLS外壳的HTTP</strong></p>
+</blockquote>
+<p>原先的HTTP是http协议和tcp协议合作。现在的HTTPS是http协议先和ssl协议合作，ssl在和tcp协议合作。那就有一个问题出现了“他们是怎样合作的呢？”。</p>
+<h2 id="加密技术"><a href="#加密技术" class="headerlink" title="加密技术"></a>加密技术</h2><p>介绍HTTPS的工作流程前需要先介绍两种加密方法。</p>
+<p>公开密钥加密（非对称密钥加密）：加密和解密两个算法，前者公开，又称为公开密钥；后者保密，又称为私有密钥。<br>共享密钥加密（对称密钥加密）：加密和解密用听一个算法。</p>
+<p>SSL就是使用的公开密钥加密对通信线路进行加密。</p>
+<p><strong>两种加密方式的区别</strong></p>
+<ol>
+<li><p>两种加密都得把密钥发送给另一方才能进行加密解密通信。—&gt;（密钥咋安全的传给另一方，不被窃听或篡改？）</p>
+</li>
+<li><p>公开密钥加密比共享密钥加密更加的复杂，所以消耗CPU和内存要更加大，导致加密/解密速度也比较慢。</p>
+</li>
+</ol>
+<p>好的，介绍完两种加密解密算法，咱们再来看一下HTTPS是怎样工作的。</p>
+<h2 id="HTTPS的加密技术"><a href="#HTTPS的加密技术" class="headerlink" title="HTTPS的加密技术"></a>HTTPS的加密技术</h2><p><strong>HTTPS采用的是SSL的公开密钥加密和共享密钥加密两者并用的混合加密机制。</strong></p>
+<p>HTTPS充分利用两种加密算法的各自优势，将两种方法组合起来用于通信。在交换密钥阶段使用公开密钥加密方式，建立安全的通信线路，然后将共享密钥加密的密钥传给另一方，接下来就可以使用简单，快速的共享密钥加密了。<br><img src="/images/http/img6.png" alt="https"></p>
+<p>到目前为止我们已经知道了，HTTPS结合多种加密算法进行混合加密通信，但是遗憾的是公开密钥加密还有一个问题存在：</p>
+<blockquote>
+<p>使用公开密钥加密的时候怎样保证此公开密钥是正确的呢？比如：正准备和某服务器建立公开密钥加密方式下的通信时，如何证明收到的公开密钥就是原本预想的那台服务器发行的公开密钥。或许在公开密钥传输工程中，正真的密钥已经被攻击者替换掉了。</p>
+</blockquote>
+<p>为了解决这个问题，可以使用由数字证书认证机构和其他相关机关颁发的公开密钥证书。</p>
+<h2 id="HTTPS的通信郭晨"><a href="#HTTPS的通信郭晨" class="headerlink" title="HTTPS的通信郭晨"></a>HTTPS的通信郭晨</h2><p>于是现在我们可以看一下整个HTTPS的通信过程了：</p>
+<ol>
+<li>浏览器将自己支持的一套加密规则发送给网站服务器（通过公开密钥加密的方式）。</li>
+<li>网站服务器从中选出一组加密算法与HASH算法（也是一种加密算法，如前面提及过的MD5，SHA1等），并将自己的身份信息以证书的形式发回给浏览器。证书里面包含了网站地址，加密公开密钥，以及证书的颁发机构等信息。</li>
+<li>获得网站证书之后浏览器要做以下工作：<br> a) 验证证书的合法性（颁发证书的机构是否合法，证书中包含的网站地址是否与正在访问的地址一致等），如果证书受信任，则浏览器栏里面会显示一个小锁头，否则会给出证书不受信的提示。<br> b) 如果证书受信任，或者是用户接受了不受信的证书，浏览器会生成一串随机数的密码，并用证书中提供的公钥加密。<br> c) 使用约定好的HASH计算握手消息，并使用生成的随机数对消息进行加密，最后将之前生成的所有信息发送给网站服务器。</li>
+<li>网站接收浏览器发来的数据之后要做以下的操作：<br> a) 使用自己的私有密钥将信息解密取出密码，使用密码解密浏览器发来的握手消息，并验证HASH是否与浏览器发来的一致。<br> b) 使用密码加密一段握手消息，发送给浏览器。</li>
+<li>浏览器解密并计算握手消息的HASH，如果与服务端发来的HASH一致，此时握手过程结束，之后所有的通信数据将由之前浏览器生成的随机密码并利用共享加密算法进行加密。</li>
+</ol>
+<h1 id="后记"><a href="#后记" class="headerlink" title="后记"></a>后记</h1><p>只是大概的介绍了一下HTTPS的通信流程，并没有针对每个技术点进行展开介绍，想详细了解的可以参照本文借鉴的相关资料和推荐资料。</p>
+<blockquote>
+<p>本文借鉴资料：</p>
+<ol>
+<li>阮一峰的<a href="http://www.ruanyifeng.com/blog/2016/08/http.html" target="_blank" rel="external">HTTP 协议入门</a></li>
+<li><a href="https://book.douban.com/subject/25863515/" target="_blank" rel="external">《图解HTTTP》</a></li>
+<li><a href="https://book.douban.com/subject/10608238/" target="_blank" rel="external">《HTML5程序设计》(第二版)</a></li>
+<li><a href="http://www.guokr.com/post/114121/" target="_blank" rel="external">HTTPS那些事（一）HTTPS原理</a></li>
+</ol>
+<p>推荐阅读：</p>
+<ol>
+<li><a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="external">SSL/TLS协议运行机制的概述</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2011/02/seven_myths_about_https.html" target="_blank" rel="external">HTTPS的七个误解（译文）</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2016/08/migrate-from-http-to-https.html" target="_blank" rel="external">HTTPS 升级指南</a></li>
+<li><a href="http://www.ruanyifeng.com/blog/2014/09/ssl-latency.html" target="_blank" rel="external">SSL延迟有多大？</a></li>
+</ol>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>测试功能而已，你非要赏点我就没办法了...</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.JPG" alt="彬仔 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.JPG" alt="彬仔 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/HTTP/" rel="tag">#HTTP</a>
+          
+            <a href="/tags/HTTPS/" rel="tag">#HTTPS</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/18/http/" rel="next" title="HTTP基本认识">
+                <i class="fa fa-chevron-left"></i> HTTP基本认识
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/18/spdy/" rel="prev" title="SPDY基本认识">
+                SPDY基本认识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/18/https/"
+     data-title="HTTPS基本认识"
+     data-content=""
+     data-url="https://chping2125.github.io/2016/09/18/https/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/18/https/"
+           data-title="HTTPS基本认识" data-url="https://chping2125.github.io/2016/09/18/https/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="彬仔" />
+          <p class="site-author-name" itemprop="name">彬仔</p>
+          <p class="site-description motion-element" itemprop="description">分享前端技术 整理学习笔记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chengping2125" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chping2125" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/" title="阮一峰" target="_blank">阮一峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/TomXu/" title="汤姆大叔" target="_blank">汤姆大叔</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.haorooms.com/" title="Aaron" target="_blank">Aaron</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://segmentfault.com/a/1190000007062464" title="前端资源" target="_blank">前端资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laod.cn/hosts/2016-google-hosts.html" title="老D翻墙" target="_blank">老D翻墙</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanterncn.cn/down" title="蓝灯工作站" target="_blank">蓝灯工作站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTP的缺点"><span class="nav-number">1.</span> <span class="nav-text">HTTP的缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP的缺点–明文通信"><span class="nav-number">1.1.</span> <span class="nav-text">HTTP的缺点–明文通信</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">1.1.1.</span> <span class="nav-text">解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP的缺点–不验证身份"><span class="nav-number">1.2.</span> <span class="nav-text">HTTP的缺点–不验证身份</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#不验证身份的问题"><span class="nav-number">1.2.1.</span> <span class="nav-text">不验证身份的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案：证书机制"><span class="nav-number">1.2.2.</span> <span class="nav-text">解决方案：证书机制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP的缺点–无法确定报文的完整性"><span class="nav-number">1.3.</span> <span class="nav-text">HTTP的缺点–无法确定报文的完整性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTTPS出现"><span class="nav-number">2.</span> <span class="nav-text">HTTPS出现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#加密技术"><span class="nav-number">2.1.</span> <span class="nav-text">加密技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS的加密技术"><span class="nav-number">2.2.</span> <span class="nav-text">HTTPS的加密技术</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTPS的通信郭晨"><span class="nav-number">2.3.</span> <span class="nav-text">HTTPS的通信郭晨</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#后记"><span class="nav-number">3.</span> <span class="nav-text">后记</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彬仔</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/libs/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/libs/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/libs/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/libs/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8oHQTcoEX25FOPclwvl0Fh2A-gzGzoHsz", "QFHjBCnX5GEB8TGU5B6prx90");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

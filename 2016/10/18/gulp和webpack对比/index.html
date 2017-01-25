@@ -1,0 +1,1230 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/libs/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Gulp," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在现在的前端开发中，前后端分离、模块化开发、版本控制、文件合并与压缩、mock数据等等一些原本后端的思想开始逐渐渗透到“大前端”的开发中。前端开发过程越来越繁琐，当今越来越多的网站已经从网页模式进化到了 Webapp 模式。它们运行在现代的高级浏览器里，使用 HTML5、 CSS3、 ES6 等更新的技术来开发丰富的功能，网页已经不仅仅是完成浏览的基本需求，并且Webapp通常是一个单页面应用(S">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gulp和Webpack对比">
+<meta property="og:url" content="https://chping2125.github.io/2016/10/18/gulp和webpack对比/index.html">
+<meta property="og:site_name" content="前端小开发">
+<meta property="og:description" content="在现在的前端开发中，前后端分离、模块化开发、版本控制、文件合并与压缩、mock数据等等一些原本后端的思想开始逐渐渗透到“大前端”的开发中。前端开发过程越来越繁琐，当今越来越多的网站已经从网页模式进化到了 Webapp 模式。它们运行在现代的高级浏览器里，使用 HTML5、 CSS3、 ES6 等更新的技术来开发丰富的功能，网页已经不仅仅是完成浏览的基本需求，并且Webapp通常是一个单页面应用(S">
+<meta property="og:image" content="https://chping2125.github.io/images/gulp/what-is-webpack.png">
+<meta property="og:image" content="https://chping2125.github.io/images/gulp/4.png">
+<meta property="og:image" content="https://chping2125.github.io/images/gulp/2.png">
+<meta property="og:image" content="https://chping2125.github.io/images/gulp/1.png">
+<meta property="og:image" content="https://chping2125.github.io/images/gulp/3.png">
+<meta property="og:updated_time" content="2016-11-05T13:29:30.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gulp和Webpack对比">
+<meta name="twitter:description" content="在现在的前端开发中，前后端分离、模块化开发、版本控制、文件合并与压缩、mock数据等等一些原本后端的思想开始逐渐渗透到“大前端”的开发中。前端开发过程越来越繁琐，当今越来越多的网站已经从网页模式进化到了 Webapp 模式。它们运行在现代的高级浏览器里，使用 HTML5、 CSS3、 ES6 等更新的技术来开发丰富的功能，网页已经不仅仅是完成浏览的基本需求，并且Webapp通常是一个单页面应用(S">
+<meta name="twitter:image" content="https://chping2125.github.io/images/gulp/what-is-webpack.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6257465157467768000,
+      author: '彬仔'
+    }
+  };
+</script>
+
+  <title> Gulp和Webpack对比 | 前端小开发 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c8027b8ba4beebe6ebe89d22781de0a1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">前端小开发</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随笔 分享 笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Gulp和Webpack对比
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-18T11:38:08+08:00" content="2016-10-18">
+              2016-10-18
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/工具/Gulp/" itemprop="url" rel="index">
+                    <span itemprop="name">Gulp</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/18/gulp和webpack对比/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/18/gulp和webpack对比/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/10/18/gulp和webpack对比/" class="leancloud_visitors" data-flag-title="Gulp和Webpack对比">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在现在的前端开发中，前后端分离、模块化开发、版本控制、文件合并与压缩、mock数据等等一些原本后端的思想开始逐渐渗透到“大前端”的开发中。前端开发过程越来越繁琐，当今越来越多的网站已经从网页模式进化到了 Webapp 模式。它们运行在现代的高级浏览器里，使用 HTML5、 CSS3、 ES6 等更新的技术来开发丰富的功能，网页已经不仅仅是完成浏览的基本需求，并且Webapp通常是一个单页面应用(SPA)，每一个视图通过异步的方式加载，这导致页面初始化和使用过程中会加载越来越多的 JavaScript 代码，这给前端开发的流程和资源组织带来了巨大的挑战。</p>
+<p>前端开发和其他开发工作的主要区别，首先是前端是基于多语言、多层次的编码和组织工作，其次前端产品的交付是基于浏览器，这些资源是通过增量加载的方式运行到浏览器端，如何在开发环境组织好这些碎片化的代码和资源，并且保证他们在浏览器端快速、优雅的加载和更新，就需要一个模块化系统，这个理想中的模块化系统是前端工程师多年来一直探索的难题。<br><a id="more"></a></p>
+<blockquote>
+<p>本文需要有一定的<a href="http://www.ydcss.com/archives/18" target="_blank" rel="external">Gulp</a>和<a href="http://www.jianshu.com/p/42e11515c10f" target="_blank" rel="external">Webpack</a>的基本概念，对Gulp和Webpack的使用有一定的了解。<br>同时还需要对<a href="http://chping.website/2016/09/12/npm/" target="_blank" rel="external">npm</a>或者<a href="http://chping.website/2016/09/12/npm%E5%92%8Ccnpm/" target="_blank" rel="external">cnpm</a>有一定的的了解，对ComonJS、AMD规范有一定的的了解。</p>
+</blockquote>
+<h1 id="Gulp"><a href="#Gulp" class="headerlink" title="Gulp"></a>Gulp</h1><p><a href="https://github.com/gulpjs/gulp" target="_blank" rel="external">Gulp</a>就是为了规范前端开发流程，实现前后端分离、模块化开发、版本控制、文件合并与压缩、mock数据等功能的一个前端自动化构建工具。说的形象点，“Gulp就像是一个产品的流水线，整个产品从无到有，都要受流水线的控制，在流水线上我们可以对产品进行管理。”</p>
+<p>另外，Gulp是通过task对整个开发过程进行构建。</p>
+<h1 id="Webpack"><a href="#Webpack" class="headerlink" title="Webpack"></a>Webpack</h1><p><a href="https://github.com/webpack/webpack" target="_blank" rel="external">Webpack</a> 是当下最热门的前端资源模块化管理和打包工具。它可以将许多松散的模块按照依赖和规则打包成符合生产环境部署的前端资源。还可以将按需加载的模块进行代码分隔，等到实际需要的时候再异步加载。通过 loader的转换，任何形式的资源都可以视作模块，比如 CommonJs 模块、AMD 模块、ES6 模块、CSS、图片、JSON、Coffeescript、LESS 等。</p>
+<h1 id="Gulp和Webpack功能实现对比"><a href="#Gulp和Webpack功能实现对比" class="headerlink" title="Gulp和Webpack功能实现对比"></a>Gulp和Webpack功能实现对比</h1><p>简单介绍了一下Gulp和Webpack的概念性的问题和大环境，接下来进入本文的主题，对比一下Gulp和Webpack的优缺点。将从基本概念、启动本地Server、sass/less预编译、模块化开发、文件合并与压缩、mock数据、版本控制、组件控制八个方面对Gulp和Webpack进行对比。</p>
+<h2 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h2><p>首先从概念上，我们可以清楚的看出，Gulp和Webpack的侧重点是不同的。</p>
+<p>Gulp侧重于前端开发的<strong>整个过程</strong>的控制管理（像是流水线），我们可以通过给gulp配置不通的task（通过Gulp中的gulp.task()方法配置，比如启动server、sass/less预编译、文件的合并压缩等等）来让gulp实现不同的功能，从而构建整个前端开发流程。</p>
+<p>Webpack有人也称之为<strong>模块打包机</strong>，由此也可以看出Webpack更侧重于模块打包，当然我们可以把开发中的所有资源（图片、js文件、css文件等）都可以看成模块，最初Webpack本身就是为前端JS代码打包而设计的，后来被扩展到其他资源的打包处理。Webpack是通过loader（加载器）和plugins（插件）对资源进行处理的。</p>
+<p>另外我们知道Gulp是对整个过程进行控制，所以在其配置文件（gulpfile.js）中配置的每一个task对项目中<strong>该task配置路径下所有的资源</strong>都可以管理。<br>比如，对sass文件进行预编译的task可以对其配置路径下的所有sass文件进行预编译处理：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">gulp.task(<span class="string">'sass'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    gulp.src(<span class="string">'src/styles/*.scss'</span>)</div><div class="line">    .pipe(sass().on(<span class="string">'error'</span>,sass.logError))</div><div class="line">    .pipe(gulp.dest(<span class="string">'./build/prd/styles/'</span>));<span class="comment">//编译后的输出路径</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>上面这个task可以对<code>&#39;src/styles/*.scss&#39;</code>目录下的所有以<code>.scss</code>结尾的文件进行预处理。</p>
+<p>Webpack则不是这样管理资源的，它是根据模块的<strong>依赖关系</strong>进行静态分析，然后将这些模块按照指定的规则生成对应的静态资源(如下图)。<br><img src="/images/gulp/what-is-webpack.png" alt="webpack通过依赖关系静态分析"><br>通俗的说，Webpack就是需要通过其配置文件（webpack.config.js）中<code>entry</code>配置的一个入口文件（JS文件）,如下图<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">  entry: &#123;</div><div class="line">      <span class="attr">app</span>:__dirname + <span class="string">"/src/scripts/app.js"</span>,</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>然后Webpack进入该<code>app.js</code>文件进行解析，<code>app.js</code>文件如下图：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//引入scss文件</span></div><div class="line"><span class="keyword">import</span> <span class="string">'../style/app.scss'</span>;</div><div class="line"> </div><div class="line"><span class="comment">//引入依赖模块</span></div><div class="line"><span class="keyword">var</span> greeter = <span class="built_in">require</span>(<span class="string">'./Greeter.js'</span>);</div><div class="line"><span class="built_in">document</span>.getElementById(<span class="string">'root'</span>).appendChild(greeter());</div></pre></td></tr></table></figure></p>
+<p>解析过程中，发现一个<code>app.scss</code>文件，然后根据<code>webpack.config.js</code>配置文件中的<code>module.loaders</code>属性去查找处理<code>.scss</code>文件的loader进行处理，处理<code>app.scss</code>文件过程中，如果发现该文件还有其他依赖文件，则继续处理<code>app.scss</code>文件的依赖文件，直至处理完成该“链路”上的依赖文件，然后又遇到一个<code>Greeter.js</code>模块，于是像之前一样继续去查找对应的loader去处理…<br>所以，Webpack中对资源文件的处理是通过入口文件产生的依赖形成的，不会像Gulp那样，配置好路径后，该路径下所有规定的文件都会受影响。</p>
+<h2 id="模块化开发"><a href="#模块化开发" class="headerlink" title="模块化开发"></a>模块化开发</h2><p>所谓的前端模块化开发，我的理解就是，在开发的时候，把不通的资源文件按照他的具体用途进行分类管理，在使用的时候利用CommonJS、AMD、CMD等规范将这些资源文件引入到当前文件中。然后在测试或者最后上线的时候，将这些资源文件按照一定的要求进行压缩合并再加上版本控制处理。<br>可能这样的理解或者说法值得商榷，但是个人还是觉得模块化就是对内容的管理，是为了解耦合。</p>
+<p>首先从Gulp入手，看看在项目中，怎样利用模块化的思想进行开发。下面是一个gulp项目的目录结构：<br><img src="/images/gulp/4.png" alt="gulp项目目录结构"><br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">Gulp</div><div class="line"> |——build:  项目输出路径</div><div class="line"> |    |——prd:  css、js文件输出路径</div><div class="line"> |        |——scripts: js文件的输出路径</div><div class="line"> |        |——styles: css文件的输出路径</div><div class="line"> |    |——ver: 版本号相关文件</div><div class="line"> |    |——index.html: 编译后的index.html</div><div class="line"> |——images: 图片文件夹</div><div class="line"> |——mock: mock数据文件夹</div><div class="line"> |——node_modules: npm包管理文件夹</div><div class="line"> |——src: 工作目录</div><div class="line"> |    |——scripts</div><div class="line"> |        |——libs: 第三方依赖库（jQuery等）</div><div class="line"> |        |——tpls: 模板文件</div><div class="line"> |        |——utils: 工具类文件夹</div><div class="line"> |        |——views: 页面自定义js文件</div><div class="line"> |        |——app.js: index.html文件的入口js</div><div class="line"> |    |——styles：文件和scripts文件夹下基本一致（本例中我引用了第三方框架，目录更深，不在展示）</div><div class="line"> |——gulpfile.js: gulp的配置文件</div><div class="line"> |——index.html: 主页html文件</div><div class="line"> |——package.json: npm包管理配置文件</div></pre></td></tr></table></figure></p>
+<p>在实际开发过程中，在src目录下工作，html、js和css等文件通过gulp的task配置，执行合并和压缩后输出到build目录下（下面会详细介绍合并压缩的实现）。在详细一点就是：</p>
+<blockquote>
+<ol>
+<li>创建主页html文件</li>
+<li>创建与之对应的app.js入口文件和app.scss入口文件。这两个文件只通过CommonJS规范<strong>引入各自views文件中自定义的js(或scss)文件</strong>，具体逻辑不写此文件中。</li>
+<li>在views目录下编写js（或css）文件的逻辑代码，其中如果多个文件需要公共逻辑或者工具方法，就可以抽离出来在util文件夹下创建对应的公共方法，然后在views中需要的js（或css）文件中通过CommonJS规范引入使用。libs目录下的第三方库或框架也是这个思想去引用。</li>
+<li>scripts目录下的tpls文件是用来放置html模板的，引用方式和引用libs相同。</li>
+</ol>
+</blockquote>
+<p>大体介绍了一下我理解的模块化的思想，但是需要指出的是Gulp对js文件的模块化工作是通过Webpack实现的，具体来说是通过安装<strong>gulp-webpack</strong>模块和相关的<strong>loader</strong>模块进行js模块化管理的。具体步骤如下：</p>
+<ol>
+<li><p>在项目中通过npm安装一个<strong>gulp-webpack</strong>、<strong>vinyl-named</strong>、<strong>imports-loader</strong>和<strong>string-loader</strong>模块(压缩合并模块后面再介绍)</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install gulp-webpack vinyl-named -D</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在Gulp的配置文件gulpfile.js中通过CommonJs规范引入gulp-webpack 模块，并进行简单配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">   <span class="comment">//1.引入 gulp-webpack和vinyl-named模块</span></div><div class="line">  <span class="keyword">var</span> webpack= <span class="built_in">require</span>(<span class="string">'gulp-webpack'</span>);</div><div class="line">  <span class="keyword">var</span> webpack= <span class="built_in">require</span>(<span class="string">'vinyl-named'</span>);</div><div class="line"></div><div class="line">   <span class="comment">//2.js 模块化配置</span></div><div class="line">  <span class="keyword">var</span> jsFiles = [</div><div class="line">    <span class="string">'./src/scripts/*.js'</span>,</div><div class="line">  ];</div><div class="line">  gulp.task(<span class="string">'packjs'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    gulp.src(jsFiles)</div><div class="line">    .pipe(uglify().on(<span class="string">'error'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</div><div class="line">       <span class="built_in">console</span>.log(<span class="string">'\x07'</span>,err.lineNumber,err.message);</div><div class="line">       <span class="keyword">return</span> <span class="keyword">this</span>.end();</div><div class="line">     &#125;))</div><div class="line">    </div><div class="line">    <span class="comment">//Webpack 对js模块化部分 start</span></div><div class="line">    .pipe(webpack(&#123;</div><div class="line">        <span class="attr">output</span>:&#123;</div><div class="line">          <span class="attr">filename</span>:<span class="string">'[name].js'</span></div><div class="line">        &#125;,</div><div class="line">        <span class="attr">module</span>:&#123;</div><div class="line">            <span class="attr">loaders</span>:[&#123;</div><div class="line">              <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</div><div class="line">              <span class="attr">loader</span>:<span class="string">'imports?define=&gt;false'</span></div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">              <span class="attr">test</span>:<span class="regexp">/\.string$/</span>,</div><div class="line">              <span class="attr">loader</span>:<span class="string">'string'</span></div><div class="line">            &#125;</div><div class="line">          ]</div><div class="line">        &#125;</div><div class="line">      &#125;));</div><div class="line">      <span class="comment">//Webpack 对js模块化部分 end</span></div><div class="line">    .pipe(concat(<span class="string">'all.js'</span>))</div><div class="line">    .pipe(gulp.dest(<span class="string">'./build/prd/scripts/'</span>));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>对css文件我们也采用同js文件一样的模块化思想，利用sass进行模块化开发，至于对scss文件的合并压缩配置，下面还会详细介绍。</p>
+<p>接下来应该介绍一下Webpack的模块化实现了，其实也就没什么可以说的了，文件目录和Gulp的基本相同，只不过实现过程中使用到的插件或者说模块不同，配置不同而已。另外需要注意的是，Webpack对于资源文件的模块化打包处理都是按js文件的处理方式处理的，例如还是上一小节中，你可能发现了，我在<code>app.js</code>入口文件中有这样一行代码<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> <span class="string">'../style/app.scss'</span>;</div></pre></td></tr></table></figure></p>
+<p>你当时可能产生疑问，为什么在js文件中引入scss文件呢？<br>这是因为Webpack是通过依赖关系进行文件管理的，所以，想要对样式文件进行模块化管理则必须与<code>app.js</code>入口文件建立依赖关系，因此我们将样式文件的入口<code>app.scss</code>文件引入到了<code>app.js</code>中（其他资源想要被管理，也需要这样与<code>app.js</code>入口文件建立依赖关系）。<br>但是这样做很明显的就是样式文件通过<code>app.js</code>入口文件全部都合并压缩到js文件中了，这很显然不是我们想要的结果，所以我们需要将样式文件从js文件中剥离出来。</p>
+<ol>
+<li><p>在项目中通过npm安装一个<strong>extract-text-webpack-plugin</strong>的模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install  extract-text-webpack-plugin -D</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在Webpack的配置文件webpack.config.js中进行简单配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">//1.引入extract-text-webpack-plugin模块</span></div><div class="line"> <span class="keyword">var</span> Et = <span class="built_in">require</span>(<span class="string">'extract-text-webpack-plugin'</span>);</div><div class="line"></div><div class="line"> <span class="built_in">module</span>.exports = &#123;</div><div class="line">   <span class="comment">//source-map调试</span></div><div class="line">   devtool: <span class="string">'eval-source-map'</span>,</div><div class="line">   <span class="comment">//webpack入口文件配置</span></div><div class="line">   entry: &#123;</div><div class="line">   <span class="attr">app</span>:__dirname + <span class="string">"/src/scripts/app.js"</span>,</div><div class="line">   &#125;,</div><div class="line">   <span class="comment">//webpack出口文件配置</span></div><div class="line">   output: &#123;</div><div class="line">       <span class="attr">path</span>: __dirname + <span class="string">"/prd/scripts/"</span>,<span class="comment">//输出文件路径配置</span></div><div class="line">       filename: <span class="string">"bundle.js"</span><span class="comment">//输出文件名配置</span></div><div class="line">   &#125;,</div><div class="line">   <span class="attr">module</span>:&#123;</div><div class="line">       <span class="attr">loaders</span>:[</div><div class="line">         &#123;</div><div class="line">             <span class="attr">test</span>: <span class="regexp">/\.scss$/</span>,</div><div class="line">             <span class="attr">loader</span>: Et.extract(<span class="string">'style'</span>,<span class="string">'css!sass'</span>)<span class="comment">//从js中抽离scss文件</span></div><div class="line">         &#125;</div><div class="line">       ]</div><div class="line">    &#125;,</div><div class="line">   <span class="attr">plugins</span>: [</div><div class="line">       <span class="keyword">new</span> Et(<span class="string">'./styles/bundle.css'</span>),<span class="comment">//从js中抽离scss文件输出目录设置</span></div><div class="line">   ],</div><div class="line">   <span class="comment">//本地server配置</span></div><div class="line">   devServer: &#123;</div><div class="line">     <span class="attr">contentBase</span>:  __dirname + <span class="string">'/prd/'</span>,<span class="comment">//本地服务器所加载的页面所在的目录</span></div><div class="line">     port:<span class="number">8089</span>,<span class="comment">//本地服务端口配置</span></div><div class="line">     colors: <span class="literal">true</span>,<span class="comment">//终端中输出结果为彩色</span></div><div class="line">     historyApiFallback: <span class="literal">true</span>,<span class="comment">//不跳转</span></div><div class="line">     inline: <span class="literal">true</span><span class="comment">//实时刷新</span></div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>上面有些配置信息并不完全，下面的小节中会逐渐介绍到。这样我们就实现了将css文件从js文件中剥离出来的目的。Webpack不但可以对css文件可以进行模块化管理，还可以对图片进行模块管理，有兴趣的可以自己去尝试一下。</p>
+<h2 id="文件合并与压缩"><a href="#文件合并与压缩" class="headerlink" title="文件合并与压缩"></a>文件合并与压缩</h2><p>上面的模块化中，我们提到了模块化其实很大一部分是在做文件的合并与压缩操作，所以我们马上来看看Gulp和Webpack是怎样是想文件的合并和压缩的。</p>
+<p>先来看看大背景，由于现在前端越来越庞大，页面文件依赖也越来越多，所以对这些文件进行合理的合并和压缩就志在必得。根据前面的了解，Webpack应该比Gulp更擅长文件合并和压缩，毕竟人家被称为<strong>模块打包机</strong>吗。<br>结论是正确的，Gulp可以对css文件以及js文件进行合并压缩处理，而Webpack可以实现对css文件，js文件，html文件等进行合并压缩和图片的压缩，还可以对js文件进行编译（如es6–&gt;es5，react jsx）等等，这些都是通过Webpack的<strong>loader</strong>实现的，当然这些也可以加入到Gulp中，毕竟Gulp把Webpack当做一个模块，通过<strong>gulp-webpack</strong>都引入了。</p>
+<h3 id="Gulp合并压缩文件"><a href="#Gulp合并压缩文件" class="headerlink" title="Gulp合并压缩文件"></a>Gulp合并压缩文件</h3><h4 id="css的压缩"><a href="#css的压缩" class="headerlink" title="css的压缩"></a>css的压缩</h4><p> 要想实现Gulp对css文件的压缩只需要安装一个<strong>gulp-minify-css</strong>模块即可。</p>
+<ol>
+<li><p>在项目中通过npm安装一个<strong>gulp-minify-css</strong>的模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install gulp-minify-css -D</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在Gulp的配置文件gulpfile.js中通过CommonJs规范引入gulp-minify-css模块，并进行简单配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">//1.引入 gulp-minify-css模块</span></div><div class="line"><span class="keyword">var</span> minifyCSS = <span class="built_in">require</span>(<span class="string">'gulp-minify-css'</span>);</div><div class="line"></div><div class="line"><span class="comment">//2.css 预处理</span></div><div class="line"><span class="keyword">var</span> cssFiles = [</div><div class="line">  <span class="string">'./src/styles/usage/page/index.scss'</span></div><div class="line">]</div><div class="line">gulp.task(<span class="string">'sass'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    gulp.src(cssFiles)</div><div class="line">    .pipe(sass().on(<span class="string">'error'</span>,sass.logError))</div><div class="line">    .pipe(minifyCSS())<span class="comment">//执行压缩处理在一行</span></div><div class="line">    .pipe(gulp.dest(<span class="string">'./build/prd/styles/'</span>));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这样一个简单的css压缩就实现了。</p>
+<h4 id="js合并压缩"><a href="#js合并压缩" class="headerlink" title="js合并压缩"></a>js合并压缩</h4><p>要想实现Gulp对js文件的合并压缩需要安装一个<strong>gulp-uglify</strong>和<strong>gulp-concat</strong>两个模块，前者是用于压缩的模块，后者是一个合并的模块。</p>
+<ol>
+<li><p>在项目中通过npm安装<strong>gulp-uglify</strong>和<strong>gulp-concat</strong>模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install gulp-uglify gulp-concat -D</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在Gulp的配置文件gulpfile.js中通过CommonJs规范引入<strong>gulp-uglify</strong>和<strong>gulp-concat</strong>模块，并进行简单配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">//1.引入**gulp-uglify**和**gulp-concat**模块</span></div><div class="line"> <span class="keyword">var</span> uglify = <span class="built_in">require</span>(<span class="string">'gulp-uglify'</span>);</div><div class="line"> <span class="keyword">var</span> concat = <span class="built_in">require</span>(<span class="string">'gulp-concat'</span>);</div><div class="line"></div><div class="line"><span class="comment">//js 合并压缩</span></div><div class="line"> <span class="keyword">var</span> jsFiles = [</div><div class="line">    <span class="string">'./src/scripts/*.js'</span>,</div><div class="line">  ];</div><div class="line">  gulp.task(<span class="string">'packjs'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    gulp.src(jsFiles)</div><div class="line">    <span class="comment">//js文件的压缩</span></div><div class="line">    .pipe(uglify().on(<span class="string">'error'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</div><div class="line">       <span class="built_in">console</span>.log(<span class="string">'\x07'</span>,err.lineNumber,err.message);</div><div class="line">       <span class="keyword">return</span> <span class="keyword">this</span>.end();</div><div class="line">     &#125;))</div><div class="line">    .pipe(webpack(&#123;</div><div class="line">        <span class="attr">output</span>:&#123;</div><div class="line">          <span class="attr">filename</span>:<span class="string">'[name].js'</span></div><div class="line">        &#125;,</div><div class="line">        <span class="attr">module</span>:&#123;</div><div class="line">            <span class="attr">loaders</span>:[&#123;</div><div class="line">              <span class="attr">test</span>: <span class="regexp">/\.js$/</span>,</div><div class="line">              <span class="attr">loader</span>:<span class="string">'imports?define=&gt;false'</span></div><div class="line">            &#125;,</div><div class="line">            &#123;</div><div class="line">              <span class="attr">test</span>:<span class="regexp">/\.string$/</span>,</div><div class="line">              <span class="attr">loader</span>:<span class="string">'string'</span></div><div class="line">            &#125;</div><div class="line">          ]</div><div class="line">        &#125;</div><div class="line">      &#125;));</div><div class="line">    <span class="comment">//js文件的合并</span></div><div class="line">    .pipe(concat(<span class="string">'all.js'</span>))</div><div class="line">    .pipe(gulp.dest(<span class="string">'./build/prd/scripts/'</span>));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>js的文件合并压缩也完成了。我们再来看一下Webpack的合并压缩。</p>
+<h3 id="Webpack的合并压缩"><a href="#Webpack的合并压缩" class="headerlink" title="Webpack的合并压缩"></a>Webpack的合并压缩</h3><h4 id="压缩js和css"><a href="#压缩js和css" class="headerlink" title="压缩js和css"></a>压缩js和css</h4><p>针对js和css文件的压缩，Webpack已经内嵌了uglifyJS来完成对js与css的压缩混淆，无需引用额外的插件。我们只需要在Webpack配置文件中的plugins属性中做如下配置：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">  plugins: [</div><div class="line">    <span class="keyword">new</span> webpack.optimize.UglifyJsPlugin(&#123; <span class="comment">//压缩代码</span></div><div class="line">      compress: &#123;</div><div class="line">        <span class="attr">warnings</span>: <span class="literal">false</span></div><div class="line">      &#125;,</div><div class="line">      <span class="attr">except</span>: [<span class="string">'$super'</span>, <span class="string">'$'</span>, <span class="string">'exports'</span>, <span class="string">'require'</span>] <span class="comment">//排除关键字</span></div><div class="line">  &#125;)</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>需要注意的是：压缩的时候需要排除一些关键字，不能混淆，比如$或者require，如果混淆的话就会影响到代码的正常运行。</p>
+<h4 id="html的压缩"><a href="#html的压缩" class="headerlink" title="html的压缩"></a>html的压缩</h4><p>想要对html进行压缩，同样也是需要配置Webpack的配置文件，并且需要下载两个插件<strong>HtmlWebpackPlugin</strong>和<strong>html-minifier</strong>插件：<br>1.在项目中通过npm安装<strong>HtmlWebpackPlugin</strong>和<strong>html-minifier</strong>模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ npm install HtmlWebpackPlugin -D</div><div class="line">$ npm install html-minifier -D</div></pre></td></tr></table></figure></p>
+<p>2.然后在Webpack的配置文件webpack.config.js进行如下配置：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">plugins: [</div><div class="line">   <span class="keyword">new</span> HtmlWebpackPlugin(&#123; <span class="comment">//根据模板插入css/js等生成最终HTML</span></div><div class="line">       favicon:<span class="string">'./src/img/favicon.ico'</span>, <span class="comment">//favicon路径</span></div><div class="line">       filename:<span class="string">'/view/index.html'</span>, <span class="comment">//生成的html存放路径</span></div><div class="line">       template:<span class="string">'./src/view/index.html'</span>, <span class="comment">//html模板路径</span></div><div class="line">       inject:<span class="literal">true</span>, <span class="comment">//允许插件修改哪些内容，包括head与body</span></div><div class="line">      hash:<span class="literal">true</span>, <span class="comment">//为静态资源生成hash值</span></div><div class="line">      minify:&#123; <span class="comment">//压缩HTML文件</span></div><div class="line">          removeComments:<span class="literal">true</span>, <span class="comment">//移除HTML中的注释</span></div><div class="line">           collapseWhitespace:<span class="literal">true</span> <span class="comment">//删除空白符与换行符</span></div><div class="line">       &#125;</div><div class="line">  &#125;)</div><div class="line"> ]</div></pre></td></tr></table></figure></p>
+<p>HtmlWebpackPlugin插件在生成HTML时调用了 html-minifier 插件来完成对HTML的压缩，这里我们使用两个配置完成来移除HTML中的注释以及空白符达到压缩的效果。</p>
+<h2 id="sass-less预编译"><a href="#sass-less预编译" class="headerlink" title="sass/less预编译"></a>sass/less预编译</h2><p>我们再来看看sass/less预编译，其实就sass/less的预编译来说，两者区别不是很大。Gulp是通过<code>gulp-sass</code>、<code>gulp-less</code>模块进行预处理；而Webpack是通过<code>scss-loader</code>、<code>less-loader</code>加载器（loader）进行预处理。我们还是分别来看一下两者对此的实现。</p>
+<h3 id="Gulp预编译sass-less"><a href="#Gulp预编译sass-less" class="headerlink" title="Gulp预编译sass/less"></a>Gulp预编译sass/less</h3><p>以sass为例子：</p>
+<ol>
+<li><p>在项目中通过npm安装一个<strong>gulp-sass</strong>的模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install gulp-sass -D</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在Gulp的配置文件gulpfile.js中通过CommonJs规范引入gulp-sass模块，并进行简单配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">//1.引入 gulp-sass模块</span></div><div class="line"><span class="keyword">var</span> sass= <span class="built_in">require</span>(<span class="string">'gulp-sass'</span>);</div><div class="line"></div><div class="line"><span class="comment">//2.css 预处理</span></div><div class="line"><span class="keyword">var</span> cssFiles = [</div><div class="line">  <span class="string">'./src/styles/usage/page/**/*'</span></div><div class="line">  <span class="comment">//./src/styles/usage/page目录下的所有文件</span></div><div class="line">];</div><div class="line">gulp.task(<span class="string">'sass'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    gulp.src(cssFiles)</div><div class="line">    .pipe(sass().on(<span class="string">'error'</span>,sass.logError))</div><div class="line">    .pipe(minifyCSS())</div><div class="line">    .pipe(gulp.dest(<span class="string">'./build/prd/styles/'</span>));<span class="comment">//编译后的输出路径</span></div><div class="line">&#125;);</div><div class="line">  </div><div class="line"><span class="comment">//3.对sass文件的修改添加监听事件</span></div><div class="line">gulp.task(<span class="string">'watch'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   gulp.watch(<span class="string">'./src/styles/**/*'</span>,[<span class="string">'sass'</span>]);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">gulp.task(<span class="string">'default'</span>,[<span class="string">'watch'</span>,<span class="string">'webserver'</span>],<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'所有任务队列执行完毕'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>这样，一个简单的sass预处理的task就配置完成了，然后我们还将该task加到gulp.watch()上实现了自动编译（即修改sass文件后保存，则立即执行sass预处理），配合Gulp启动的server则可以实现sass文件修改保存即可在浏览器中查看效果的目的，下一小节会介绍启动本地server。</p>
+<h3 id="Webpack预编译sass-less"><a href="#Webpack预编译sass-less" class="headerlink" title="Webpack预编译sass/less"></a>Webpack预编译sass/less</h3><p>同样以sass为例子：</p>
+<ol>
+<li><p>在项目中通过npm安装一个<strong>sass-loader</strong>和<strong>node-sass</strong>模块，前者是用来加载sass相关文件的，后者是用来编译sass文件的。另外还需要安装另外两个模块<strong>css-loader</strong>和<strong>style-loader</strong>，前者是用来加载css相关文件的，后者是用来将css样式装填到html中的内联样式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install sass-loader node-sass css-loader style-sass -D</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在Webpack的配置文件webpack.config.js中进行简单配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"> <span class="built_in">module</span>:&#123;</div><div class="line">      <span class="attr">loaders</span>:[</div><div class="line">      &#123;</div><div class="line">          <span class="attr">test</span>: <span class="regexp">/\.css$/</span>,<span class="comment">//匹配以.css结尾的文件，如果你项目不需要刻意不配置</span></div><div class="line">          loader: <span class="string">'style!css'</span><span class="comment">//这里顺序必须这样  </span></div><div class="line">      &#125;,</div><div class="line">      &#123;</div><div class="line">          <span class="attr">test</span>: <span class="regexp">/\.scss$/</span>,<span class="comment">//匹配以.scss结尾的文件</span></div><div class="line">          loader: <span class="string">'style!css!sass'</span></div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>前面提到过，Webpack是通过文件的依赖关系进行加载分析的，所以当程序从主入口（js文件）进入后，在依赖的资源文件中发现有sass文件后，就会利用我们配置的<strong>sass-loader</strong>去加载，然后用<strong>node-sass</strong>去解析编译成普通的css语法的样式文件，在然后就是利用<strong>style-loader</strong>将样式以内联样式的形式配置到html中（这里有一个问题，就是css-loader有什么用?我也没搞明白，但是不添加会报错，有知道的可以留言交流一下）。这样Webpack就完成了sass的预处理。</p>
+<h2 id="启动server"><a href="#启动server" class="headerlink" title="启动server"></a>启动server</h2><p>我们都知道在前端开发中，ajax请求是需要启动一个server的。特别是在前后端分离思想中，前端开发不再像以前一样过分依赖于后端开发，以前的那种前端测试ajax请求需要装个tomcat或者其它服务器来启动server的现象已经成为过去式，现在我们可以使用像Gulp这类前端自动构建工具启动一个本地server进行测试，再也不收后端程序员钳制了（开个玩笑，和后端好好沟通才能让前端开发更方便）。那么，我们来分别看一下Gulp和Webpack是怎样实现这个功能的。</p>
+<h3 id="Gulp启动server"><a href="#Gulp启动server" class="headerlink" title="Gulp启动server"></a>Gulp启动server</h3><p>在Gulp中想要启动一个本地serve，只需要以下几步：</p>
+<ol>
+<li><p>在项目中通过npm安装一个<strong>gulp-webserver</strong>的模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install gulp-webserver -D</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在Gulp的配置文件gulpfile.js中通过CommonJs规范引入gulp-webserver模块，并进行简单配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"> <span class="comment">//1.引入 gulp-webserver 模块</span></div><div class="line"><span class="keyword">var</span> webserver = <span class="built_in">require</span>(<span class="string">'gulp-webserver'</span>);</div><div class="line"></div><div class="line"><span class="comment">//2.配置server task</span></div><div class="line">gulp.task(<span class="string">'webserver'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  gulp.src(<span class="string">'./'</span>)</div><div class="line">  .pipe(webserver(&#123;</div><div class="line">      <span class="attr">host</span>:<span class="string">'localhost'</span>,</div><div class="line">      <span class="attr">port</span>:<span class="number">80</span>,</div><div class="line">      <span class="comment">//浏览器自动刷新</span></div><div class="line">      livereload:<span class="literal">true</span>,</div><div class="line">      <span class="comment">//显示文件目录</span></div><div class="line">      directoryListing:&#123;</div><div class="line">        <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">path</span>:<span class="string">'./'</span></div><div class="line">      &#125;,</div><div class="line">    &#125;));</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//3.配置默认task</span></div><div class="line">gulp.task(<span class="string">'default'</span>,[<span class="string">'webserver'</span>],<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'启动任务队列执行完毕'</span>);</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>在命令行中启动server</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ gulp</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>启动成功：<br><img src="/images/gulp/2.png" alt="gulp cli 启动成功"></p>
+<ol>
+<li>在浏览器地址栏中输入<strong>localhost</strong>打开页面验证。</li>
+</ol>
+<p>经过以上这三步，我们就在Gulp中启动了一个server了。在Gulp中启动本地服务有一个很方便的配置，就是<code>livereload:true</code>属性的设置，设置后浏览器会根据你项目中资源的变化自动刷新浏览器（如果你的chrome浏览器设置该属性后在你修改文件并保存时仍没有自动刷新，可能是你的chrome浏览器不支持，可以chrome扩展程序中搜索并安装LiveReload插件），比如：<br>我的gulp测试目录结构：<br><img src="/images/gulp/1.png" alt="gulp测试目录结构"><br>index.html<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">  <span class="meta">&lt;!DOCTYPE html&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">title</span>&gt;</span>Document<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line"></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/src/scripts/app.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>我在app.js文件中输入以下内容，然后保存。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="string">'gulp-webserver livereload'</span>);</div></pre></td></tr></table></figure></p>
+<p>浏览器中控制台上会立刻打印出一下信息：<br><img src="/images/gulp/3.png" alt="gulp测试目录结构"><br>说明浏览器自动刷新工程，这个小功能在我们开发中屡试不爽。但是，这个功能是需要结合上一小节中的<code>gulp.watch()</code>实时监控文件变化，然后执行合并压缩和sass/less编译等操作后，浏览器再刷新时才能保证是我们修改后的内容。所以，<code>livereload:true</code>属性只是监控到我们修改文件后刷新浏览器重新请求文件，如果我们不重新编译修改后的文件，浏览器获取到的还是原文件，并不会展示变化。</p>
+<h3 id="Webpack启动server"><a href="#Webpack启动server" class="headerlink" title="Webpack启动server"></a>Webpack启动server</h3><p>在Webpack中也可以通过插件的形式安装一个<strong>webpack-dev-server</strong>来实现达到启动本地server的目的，具体步骤如下：</p>
+<ol>
+<li><p>在项目中通过npm安装一个<strong>webpack-dev-server</strong>的模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install  -g webpack-dev-server -D</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在Webpack的配置文件webpack.config.js中进行简单配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"> <span class="built_in">module</span>.exports = &#123;</div><div class="line">   <span class="attr">devtool</span>: <span class="string">'eval-source-map'</span>,</div><div class="line">   <span class="comment">//webpack入口文件配置</span></div><div class="line">   entry: &#123;</div><div class="line">   <span class="attr">app</span>:__dirname + <span class="string">"/src/scripts/app.js"</span>,</div><div class="line">   &#125;,</div><div class="line">   <span class="comment">//webpack出口文件配置</span></div><div class="line">   output: &#123;</div><div class="line">       <span class="attr">path</span>: __dirname + <span class="string">"/prd/scripts/"</span>,<span class="comment">//输出文件路径配置</span></div><div class="line">       filename: <span class="string">"bundle.js"</span><span class="comment">//输出文件名配置</span></div><div class="line">   &#125;,</div><div class="line">   <span class="comment">//本地server配置</span></div><div class="line">   devServer: &#123;</div><div class="line">     <span class="attr">contentBase</span>:  __dirname,<span class="comment">//本地服务器所加载的页面所在的目录</span></div><div class="line">     port:<span class="number">8089</span>,<span class="comment">//本地服务端口配置</span></div><div class="line">     colors: <span class="literal">true</span>,<span class="comment">//终端中输出结果为彩色</span></div><div class="line">     historyApiFallback: <span class="literal">true</span>,<span class="comment">//不跳转</span></div><div class="line">     inline: <span class="literal">true</span><span class="comment">//实时刷新</span></div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在命令行中启动server</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ webpack-dev-server</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>然后你就会看见命令行输出内容很多，只要看看保证没有Error就说明成功了。</p>
+<ol>
+<li>在浏览器地址栏中输入<strong>localhost：8089</strong>测试一下。</li>
+</ol>
+<p>Webpack的启动本地服务也顺利实现了，是不是也想实现像Gulp一样浏览器自动刷新呀？那Webpack能不能实现呢？答案是肯定的，Webpack官方提供了一个辅助开发工具，它可以自动监控项目下的文件，一旦有修改保存操作，开发服务器就会自动运行Webpack 打包命令，帮我们自动将开发的代码重新打包。而且，如果需要的话，还能自动刷新浏览器，重新加载资源。理论上好像是这样，但是实现好像有不少限制，比如，HTML文件的自动刷新问题（html-webpack-plugin插件使用老是报错），当本地server启动在非output.path路径之外时则不能自动刷新等问题，等我再学习学习再说，或者有知道的可以留言讨论。</p>
+<p>而这个辅助工具就是<strong>webpack-dev-server</strong>，它主要提供两个功能：一是为静态文件提供server服务，二是自动刷新和热替换(HMR)。所以想实现如Gulp一样的功能也是可以的，只需要在<code>$ webpack-dev-server</code>后面添加<code>--inline --hot</code>即可。需要注意的是<code>--inline</code>是自动刷新，同时在第二部中的devServer属性中有一个<strong>inline:true</strong>需要配置；而<code>--hot</code>是热替换（<a href="https://segmentfault.com/a/1190000003872635" target="_blank" rel="external">详细了解热替换</a>、<a href="https://segmentfault.com/a/1190000006964335" target="_blank" rel="external">了解webpack-dev-server</a>、<a href="http://www.07net01.com/2015/12/1004731.html" target="_blank" rel="external">webpack-dev-server</a>）。</p>
+<p>通过对比来看，好像Webpack的<strong>webpack-dev-server</strong>比Gulp的<strong>gulp-server</strong>功能要强一些。因为通过上面可以看出<strong>webpack-dev-server</strong>有两个大功能：一是为静态文件提供server服务，二是自动刷新（<strong>自动刷新其实需要两步：1.修改文件后，文件自动编译{包括合并压缩或者语法编译等}，2.刷新浏览器请求最新编译后的文件</strong>）和热替换(HMR)；而<strong>gulp-server</strong>虽然提供了启动本地server的能力和仅自动刷新浏览器的能力，缺少一个文件自动编译的能力，这需要借助其他模块实现（上一小节已介绍，结合gulp.watch()实时监控文件变化，并编译）。</p>
+<p>另外需要注意的是，实际开发中发现<strong>webpack-dev-server</strong>实现自动刷新的时候，并没有执行自动编译，只是将修改的内容合并压缩等处理后发送给了浏览器，并造成了已经编译的现象，但是通过build/prd/scripts目录下的bundle.js(合并压缩后的输出文件)文件，可以发现内容并没有编译（对于Webpack还是不熟悉，好多问题等待解决）。</p>
+<h2 id="mock数据"><a href="#mock数据" class="headerlink" title="mock数据"></a>mock数据</h2><p>在现在前后端分离的思想中，前端和后端耦合度越来越小，现在唯一需要前后端密切联系的就是借口的定义和数据格式的确定。一般在项目开始前，前端和后端将项目中的接口和数据格式全部确定下来（当然项目需求变更就需要临时确立这些共识了），然后前端就可以自己mock数据了。</p>
+<h3 id="Gulp实现mock数据"><a href="#Gulp实现mock数据" class="headerlink" title="Gulp实现mock数据"></a>Gulp实现mock数据</h3><p>Gulp中对mock数据的实现使通过NodeJS内置的fs模块和url模块实现的，因为Gulp本身就是基于NodeJS的。还记得第一小节“模块化开发”中目录结构中的那个mock目录吗？那就是用来储存<code>.json</code>文件的mock数据目录。</p>
+<ol>
+<li>配置Gulp的gulpfile.js文件</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//1.引入 fs 和 url 模块</span></div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</div><div class="line"></div><div class="line"><span class="comment">//2.重新配置一下上一小节的server</span></div><div class="line">gulp.task(<span class="string">'webserver'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">   gulp.src(<span class="string">'./'</span>)</div><div class="line">   .pipe(webserver(&#123;</div><div class="line">      <span class="attr">host</span>:<span class="string">'localhost'</span>,</div><div class="line">      <span class="attr">port</span>:<span class="number">80</span>,</div><div class="line">      <span class="attr">livereload</span>:<span class="literal">true</span>,</div><div class="line">      <span class="attr">directoryListing</span>:&#123;</div><div class="line">        <span class="attr">enable</span>: <span class="literal">true</span>,</div><div class="line">        <span class="attr">path</span>:<span class="string">'./'</span></div><div class="line">    &#125;,</div><div class="line"></div><div class="line">    <span class="comment">//mock数据配置</span></div><div class="line">    middleware:<span class="function"><span class="keyword">function</span>(<span class="params">req,res,next</span>)</span>&#123;</div><div class="line">      <span class="keyword">var</span> urlObj = url.parse(req.url,<span class="literal">true</span>);</div><div class="line">      <span class="keyword">switch</span> (urlObj.pathname) &#123;</div><div class="line">          <span class="keyword">case</span> <span class="string">'/pro/getPro'</span>:</div><div class="line">            res.setHeader(<span class="string">'Content-Type'</span>,<span class="string">'application/json;charaset=utf-8'</span>);</div><div class="line">            fs.readFile(<span class="string">'./mock/list.json'</span>,<span class="function"><span class="keyword">function</span>(<span class="params">err,data</span>)</span>&#123;</div><div class="line">              <span class="comment">//上面list.json路径使用相对路径，绝对路径前台无法获取数据</span></div><div class="line">              res.end(data);</div><div class="line">            &#125;);</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">          <span class="keyword">case</span> <span class="string">'/web/getUser'</span>:</div><div class="line">              <span class="comment">//....</span></div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        next();</div><div class="line">      &#125;</div><div class="line">    &#125;));</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>具体来说，就是通过NodeJS拦截http请求，根据请求URL来模拟后端做出处理后返回不同的数据。</p>
+<h3 id="Webpack实现mock数据"><a href="#Webpack实现mock数据" class="headerlink" title="Webpack实现mock数据"></a>Webpack实现mock数据</h3><p>Webpack并没有自带实现mock数据的功能，毕竟Webpack人家本来就是用来打包的，人家并不是流程控制的,我们可以和Gulp对比实现其他功能，是因为其他功能都是在打包过程中实现的(启动server除外)。虽然Webpack没有自带mock数据的功能，但是我们可以借助一些其他手段来实现，比如说<strong><a href="https://github.com/typicode/json-server" target="_blank" rel="external">json-server</a></strong>，它的实现原理就是，启动一个本地3000端口作为mock数据的端口，然后我们在Webpack中配置一个代理，让所有请求代理到3000端口上去，就可以获取到数据了。<br>实现步骤：</p>
+<ol>
+<li><p>在项目中通过npm安装一个<strong>json-server</strong>的模块</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install  -g json-server</div></pre></td></tr></table></figure>
+<p>可以将在任何一个目录下启动json-server,为了统一，我们建议直接在项目根目录启动，将mock数据也放在项目根目录下。</p>
+</li>
+<li><p>启动json-server</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ json-server</div></pre></td></tr></table></figure>
+<p>json-server是一个非常强大的工具，感兴趣的可以自行google。</p>
+</li>
+<li><p>然后在Webpack的配置文件webpack.config.js中进行简单配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"> <span class="built_in">module</span>.exports = &#123;</div><div class="line">   <span class="attr">devtool</span>: <span class="string">'eval-source-map'</span>,</div><div class="line">   <span class="attr">entry</span>: &#123;</div><div class="line">    <span class="attr">app</span>:__dirname + <span class="string">"/src/scripts/app.js"</span>,</div><div class="line">   &#125;,</div><div class="line">   <span class="attr">output</span>: &#123;</div><div class="line">       <span class="attr">path</span>: __dirname + <span class="string">"/prd/scripts/"</span>,</div><div class="line">       <span class="attr">filename</span>: <span class="string">"bundle.js"</span></div><div class="line">   &#125;,</div><div class="line">   <span class="comment">//本地server配置</span></div><div class="line">   devServer: &#123;</div><div class="line">     <span class="attr">contentBase</span>:  __dirname,</div><div class="line">     <span class="attr">port</span>:<span class="number">8089</span>,</div><div class="line">     <span class="attr">colors</span>: <span class="literal">true</span>,</div><div class="line">     <span class="attr">historyApiFallback</span>: <span class="literal">true</span>,</div><div class="line">     <span class="attr">inline</span>: <span class="literal">true</span>,</div><div class="line">     <span class="comment">//重点在这里</span></div><div class="line">     proxy:&#123;</div><div class="line">       <span class="string">'/http://chping.website/*'</span>:&#123;<span class="comment">//为正则表达式，匹配以http://chping.website开头的url</span></div><div class="line">         target: <span class="string">'http://localhost:3000'</span>,<span class="comment">//代理到本地3000端口</span></div><div class="line">         pathRewrite:&#123;</div><div class="line">           <span class="string">'^/http://chping.website'</span>:<span class="string">''</span><span class="comment">//将http://chping.website替换为空字符串</span></div><div class="line">         &#125;</div><div class="line">       &#125;</div><div class="line">     &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>说明：<br>配置项<code>&#39;^/http://chping.website&#39;:&#39;&#39;//将http://chping.website替换为空字符串</code>的目的，举例说明：<br>假设我们项目中访问的是<code>http://chping.website/userlist</code>去获取用户列表，经过此配置项后，url为<code>http://localhost:3000/userlist</code>,否则为<code>http://localhost:3000/http://chping.website/userlist/userlist</code>。</p>
+</li>
+<li>在命令行中重新启动server<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ webpack-dev-server</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><p>对于版本控制，我们在开发过程中，也是一个使用比较频繁的功能，特别是开发团队比较大的时候，这个功能就显得更加重要了。那么Gulp和Webpack是具体怎样实现的呢？</p>
+<h3 id="Gulp实现版本控制"><a href="#Gulp实现版本控制" class="headerlink" title="Gulp实现版本控制"></a>Gulp实现版本控制</h3><ol>
+<li><p>在项目中通过npm安装<strong>gulp-rev</strong>和<strong>gulp-rev-collector</strong>模块，前者用于生成文件的MD5码文件和按MD5码命名的资源文件，后者是利用MD5码，对文件名进行替换。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install  gulp-rev gulp-rev-collector -D</div></pre></td></tr></table></figure>
+</li>
+<li><p>然后在Gulp的配置文件gulpfile.js中进行简单配置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">  <span class="comment">//1.引入连个模块</span></div><div class="line">  <span class="keyword">var</span> rev = <span class="built_in">require</span>(<span class="string">'gulp-rev'</span>);</div><div class="line">  <span class="keyword">var</span> revCollector = <span class="built_in">require</span>(<span class="string">'gulp-rev-collector'</span>);</div><div class="line">  <span class="comment">// 2.版本号控制</span></div><div class="line">  gulp.task(<span class="string">'ver'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    gulp.src(cssFiles)</div><div class="line">    .pipe(rev())<span class="comment">//产生MD5码</span></div><div class="line">    .pipe(gulp.dest(<span class="string">'./build/prd/styles/'</span>))<span class="comment">//重命名文件</span></div><div class="line">    .pipe(rev.manifest())<span class="comment">//产生版本信息的json文件</span></div><div class="line">    .pipe(gulp.dest(<span class="string">'./build/ver/styles/'</span>));</div><div class="line">  gulp.src(jsFiles)</div><div class="line">  .pipe(rev())</div><div class="line">  .pipe(gulp.dest(<span class="string">'./build/prd/scripts/'</span>))</div><div class="line">  .pipe(rev.manifest())</div><div class="line">  .pipe(gulp.dest(<span class="string">'./build/ver/scripts/'</span>));</div><div class="line"> &#125;)</div><div class="line"> <span class="comment">//动态修改html中对css和js文件的修改</span></div><div class="line"> gulp.task(<span class="string">'html'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  gulp.src([<span class="string">'./build/ver/**/*'</span>,<span class="string">'./build/*.html'</span>])</div><div class="line">  .pipe(revCollector())</div><div class="line">  .pipe(gulp.dest(<span class="string">'./build/'</span>));</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>Gulp实现版本控制很方便，将这两个task加入gulp.watch()中，即可实现修改保存文件实时自动修改版本的功能。</p>
+<h3 id="Webpack实现版本控制"><a href="#Webpack实现版本控制" class="headerlink" title="Webpack实现版本控制"></a>Webpack实现版本控制</h3><p>Webpack中需要版本控制的有css、js文件，不过Webpack的版本控制只实现了将css、js文件添加hash值方式命名的文件方式，修改引用路径中的文件名需手动实现。<br>不过实现确实很简单，只需要将webpack.config.js配置文件中的output.filename和plugins中的输出文件名称修改一下即可。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">    <span class="attr">devtool</span>: <span class="string">'eval-source-map'</span>,</div><div class="line">    <span class="attr">entry</span>: &#123;</div><div class="line">    <span class="attr">app</span>:__dirname + <span class="string">"/src/scripts/app.js"</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">output</span>: &#123;</div><div class="line">        <span class="attr">path</span>: __dirname + <span class="string">"/prd/scripts/"</span>,</div><div class="line">        <span class="attr">filename</span>: <span class="string">"[name]-[hash].js"</span><span class="comment">//修改输出文件名</span></div><div class="line">    &#125;,</div><div class="line">    <span class="attr">plugins</span>: [</div><div class="line">        <span class="keyword">new</span> Et(<span class="string">'./styles/[name]-[hash].css'</span>),<span class="comment">//修改输出文件名</span></div><div class="line">    ]</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>这样就解决了。</p>
+<h2 id="组件控制"><a href="#组件控制" class="headerlink" title="组件控制"></a>组件控制</h2><p>组件控制原本应该放在模块化小节或者前后小节，但是由于实在不知道该怎样比较，其实也没啥可比较的，就放在最后了。<br>Gulp和Webpack对各自组件的管理都是使用的npm进行的组件管理，想了解更多npm组件的管理的可自行百度，或者看看这篇文章入个门<a href="http://chping.website/2016/09/12/npm/" target="_blank" rel="external">《npm介绍》</a>。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过以上八个方面的功能对比，Gulp和Webpack基本都能满足前端自动化构建工具的任务，但是还是看出两个工具的侧重点是不通的，Gulp侧重整个过程的控制，Webpack在模块打包方面有特别出众。所以，Gulp + Webpack 组合使用可能更方便。</p>
+<p>很长的一篇总结文章，前前后后花了两天时间终于写完了，还有很多测试没做，并且还有很多疑问没解决。慢慢学习，慢慢在补充修改吧。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>测试功能而已，你非要赏点我就没办法了...</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.JPG" alt="彬仔 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.JPG" alt="彬仔 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Gulp/" rel="tag">#Gulp</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/28/Fekit_commonJs/" rel="next" title="Fekit针对CommonJs规范进行的JS模块包装">
+                <i class="fa fa-chevron-left"></i> Fekit针对CommonJs规范进行的JS模块包装
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/04/前端组件化的认识/" rel="prev" title="前端组件化的认识">
+                前端组件化的认识 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/10/18/gulp和webpack对比/"
+     data-title="Gulp和Webpack对比"
+     data-content=""
+     data-url="https://chping2125.github.io/2016/10/18/gulp和webpack对比/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/18/gulp和webpack对比/"
+           data-title="Gulp和Webpack对比" data-url="https://chping2125.github.io/2016/10/18/gulp和webpack对比/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="彬仔" />
+          <p class="site-author-name" itemprop="name">彬仔</p>
+          <p class="site-description motion-element" itemprop="description">分享前端技术 整理学习笔记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chengping2125" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chping2125" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/" title="阮一峰" target="_blank">阮一峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/TomXu/" title="汤姆大叔" target="_blank">汤姆大叔</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.haorooms.com/" title="Aaron" target="_blank">Aaron</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://segmentfault.com/a/1190000007062464" title="前端资源" target="_blank">前端资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laod.cn/hosts/2016-google-hosts.html" title="老D翻墙" target="_blank">老D翻墙</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanterncn.cn/down" title="蓝灯工作站" target="_blank">蓝灯工作站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Gulp"><span class="nav-number">1.</span> <span class="nav-text">Gulp</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Webpack"><span class="nav-number">2.</span> <span class="nav-text">Webpack</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gulp和Webpack功能实现对比"><span class="nav-number">3.</span> <span class="nav-text">Gulp和Webpack功能实现对比</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本概念"><span class="nav-number">3.1.</span> <span class="nav-text">基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#模块化开发"><span class="nav-number">3.2.</span> <span class="nav-text">模块化开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件合并与压缩"><span class="nav-number">3.3.</span> <span class="nav-text">文件合并与压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gulp合并压缩文件"><span class="nav-number">3.3.1.</span> <span class="nav-text">Gulp合并压缩文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#css的压缩"><span class="nav-number">3.3.1.1.</span> <span class="nav-text">css的压缩</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#js合并压缩"><span class="nav-number">3.3.1.2.</span> <span class="nav-text">js合并压缩</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Webpack的合并压缩"><span class="nav-number">3.3.2.</span> <span class="nav-text">Webpack的合并压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#压缩js和css"><span class="nav-number">3.3.2.1.</span> <span class="nav-text">压缩js和css</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#html的压缩"><span class="nav-number">3.3.2.2.</span> <span class="nav-text">html的压缩</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sass-less预编译"><span class="nav-number">3.4.</span> <span class="nav-text">sass/less预编译</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gulp预编译sass-less"><span class="nav-number">3.4.1.</span> <span class="nav-text">Gulp预编译sass/less</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Webpack预编译sass-less"><span class="nav-number">3.4.2.</span> <span class="nav-text">Webpack预编译sass/less</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#启动server"><span class="nav-number">3.5.</span> <span class="nav-text">启动server</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gulp启动server"><span class="nav-number">3.5.1.</span> <span class="nav-text">Gulp启动server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Webpack启动server"><span class="nav-number">3.5.2.</span> <span class="nav-text">Webpack启动server</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mock数据"><span class="nav-number">3.6.</span> <span class="nav-text">mock数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gulp实现mock数据"><span class="nav-number">3.6.1.</span> <span class="nav-text">Gulp实现mock数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Webpack实现mock数据"><span class="nav-number">3.6.2.</span> <span class="nav-text">Webpack实现mock数据</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#版本控制"><span class="nav-number">3.7.</span> <span class="nav-text">版本控制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Gulp实现版本控制"><span class="nav-number">3.7.1.</span> <span class="nav-text">Gulp实现版本控制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Webpack实现版本控制"><span class="nav-number">3.7.2.</span> <span class="nav-text">Webpack实现版本控制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件控制"><span class="nav-number">3.8.</span> <span class="nav-text">组件控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.9.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彬仔</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/libs/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/libs/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/libs/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/libs/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8oHQTcoEX25FOPclwvl0Fh2A-gzGzoHsz", "QFHjBCnX5GEB8TGU5B6prx90");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

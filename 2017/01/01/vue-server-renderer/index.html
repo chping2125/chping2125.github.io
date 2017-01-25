@@ -1,0 +1,1155 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/libs/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Vue,翻译," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="vue-server-renderer用于 Vue2.0 的服务端渲染
+
+这个包是自动生成的。如果你想合并请求请看 GigHub 上的 src/entries/web-server-renderer.js
+
+这个包提供了基于 Node.js 的 Vue2.0 服务端渲染。
+
+安装
+API
+Renderer 选项
+为什么使用 bundleRenderer?
+服务端打包生成
+组件缓存
+客户端合成">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue-server-renderer 文档翻译">
+<meta property="og:url" content="https://chping2125.github.io/2017/01/01/vue-server-renderer/index.html">
+<meta property="og:site_name" content="前端小开发">
+<meta property="og:description" content="vue-server-renderer用于 Vue2.0 的服务端渲染
+
+这个包是自动生成的。如果你想合并请求请看 GigHub 上的 src/entries/web-server-renderer.js
+
+这个包提供了基于 Node.js 的 Vue2.0 服务端渲染。
+
+安装
+API
+Renderer 选项
+为什么使用 bundleRenderer?
+服务端打包生成
+组件缓存
+客户端合成">
+<meta property="og:image" content="https://chping2125.github.io/images/vue/vue-server-renderer.png">
+<meta property="og:updated_time" content="2017-01-01T08:43:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="vue-server-renderer 文档翻译">
+<meta name="twitter:description" content="vue-server-renderer用于 Vue2.0 的服务端渲染
+
+这个包是自动生成的。如果你想合并请求请看 GigHub 上的 src/entries/web-server-renderer.js
+
+这个包提供了基于 Node.js 的 Vue2.0 服务端渲染。
+
+安装
+API
+Renderer 选项
+为什么使用 bundleRenderer?
+服务端打包生成
+组件缓存
+客户端合成">
+<meta name="twitter:image" content="https://chping2125.github.io/images/vue/vue-server-renderer.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6257465157467768000,
+      author: '彬仔'
+    }
+  };
+</script>
+
+  <title> vue-server-renderer 文档翻译 | 前端小开发 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c8027b8ba4beebe6ebe89d22781de0a1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">前端小开发</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随笔 分享 笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                vue-server-renderer 文档翻译
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-01-01T15:02:40+08:00" content="2017-01-01">
+              2017-01-01
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/Vue/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/01/01/vue-server-renderer/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/01/01/vue-server-renderer/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/01/01/vue-server-renderer/" class="leancloud_visitors" data-flag-title="vue-server-renderer 文档翻译">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="vue-server-renderer"><a href="#vue-server-renderer" class="headerlink" title="vue-server-renderer"></a>vue-server-renderer</h1><p>用于 Vue2.0 的服务端渲染</p>
+<blockquote>
+<p>这个包是自动生成的。如果你想合并请求请看 GigHub 上的 <a href="https://github.com/vuejs/vue/blob/dev/src/entries/web-server-renderer.js" target="_blank" rel="external">src/entries/web-server-renderer.js</a></p>
+</blockquote>
+<p>这个包提供了基于 Node.js 的 Vue2.0 服务端渲染。</p>
+<ul>
+<li><a href="#installation">安装</a></li>
+<li><a href="#api">API</a></li>
+<li><a href="#renderer-options">Renderer 选项</a></li>
+<li><a href="#why-use-bundlerrenderer">为什么使用 bundleRenderer?</a></li>
+<li><a href="#creating-the-server-bundle">服务端打包生成</a></li>
+<li><a href="#component-caching">组件缓存</a></li>
+<li><a href="#client-side-hydration">客户端合成</a></li>
+</ul>
+<a id="more"></a>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a><a name="installation" href="#installation">安装</a></h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install vue-server-rederer</div></pre></td></tr></table></figure>
+<h2 id="API"><a href="#API" class="headerlink" title="API"></a><a name="api">API</a></h2><h3 id="createRenderer-rendererOptions"><a href="#createRenderer-rendererOptions" class="headerlink" title="createRenderer([rendererOptions])"></a>createRenderer([rendererOptions])</h3><p>创建一个<code>randerer</code>实例。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> renderer = <span class="built_in">require</span>(<span class="string">'vue-server-renderer'</span>).createRenderer();</div></pre></td></tr></table></figure></p>
+<h3 id="renderer-renderToString-vm-cb"><a href="#renderer-renderToString-vm-cb" class="headerlink" title="renderer.renderToString(vm,cb)"></a>renderer.renderToString(vm,cb)</h3><p>渲染一个<code>string</code>类型的 Vue 实例。它的回调函数是第一个参数为接受到的<code>error</code>对象的标准 Node.js 的回调函数形式。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> Vue = <span class="built_in">require</span>(<span class="string">'vue'</span>)</div><div class="line"> </div><div class="line"><span class="keyword">const</span> renderer = <span class="built_in">require</span>(<span class="string">'vue-server-renderer'</span>).createRenderer()</div><div class="line"> </div><div class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> Vue(&#123;</div><div class="line">  render (h) &#123;</div><div class="line">    <span class="keyword">return</span> h(<span class="string">'div'</span>, <span class="string">'hello'</span>)</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"> </div><div class="line">renderer.renderToString(vm, (err, html) =&gt; &#123;</div><div class="line">  <span class="built_in">console</span>.log(html) <span class="comment">// -&gt; &lt;div server-rendered="true"&gt;hello&lt;/div&gt; </span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="renderer-renderToStream-vm"><a href="#renderer-renderToStream-vm" class="headerlink" title="renderer.renderToStream(vm)"></a>renderer.renderToStream(vm)</h3><p>渲染一个流模式的 Vue 实例。返回一个 Node.js 的可读流。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 使用 express 的一个例子 </span></div><div class="line">app.get(<span class="string">'/'</span>, (req, res) =&gt; &#123;</div><div class="line">  <span class="keyword">const</span> vm = <span class="keyword">new</span> App(&#123; <span class="attr">url</span>: req.url &#125;)</div><div class="line">  <span class="keyword">const</span> stream = renderer.renderToStream(vm)</div><div class="line"> </div><div class="line">  res.write(<span class="string">`&lt;!DOCTYPE html&gt;&lt;html&gt;&lt;head&gt;&lt;title&gt;...&lt;/title&gt;&lt;/head&gt;&lt;body&gt;`</span>)</div><div class="line"> </div><div class="line">  stream.on(<span class="string">'data'</span>, chunk =&gt; &#123;</div><div class="line">    res.write(chunk)</div><div class="line">  &#125;)</div><div class="line"> </div><div class="line">  stream.on(<span class="string">'end'</span>, () =&gt; &#123;</div><div class="line">    res.end(<span class="string">'&lt;/body&gt;&lt;/html&gt;'</span>)</div><div class="line">  &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="createBundleRenderer-code-rendererOptions"><a href="#createBundleRenderer-code-rendererOptions" class="headerlink" title="createBundleRenderer(code,[rendererOptions])"></a>createBundleRenderer(code,[rendererOptions])</h3><p>通过预打包应用程序代码（请看<a href="#creating-the-servver-bundle">服务端打包生成</a>）来创建一个<code>bundleRenderer</code>实例。对于每一次渲染调用，使用 Node.js 的 vm 模块实现代码在新的上下文中重新执行。这确保了你的应用程序状态是在请求之间是相互隔离的，并且你不用担心为了服务端渲染而在一个限制模式下构建你的应用。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> bundleRenderer = <span class="built_in">require</span>(<span class="string">'vue-server-renderer'</span>).createBundleRenderer(code)</div></pre></td></tr></table></figure>
+<h3 id="bundleRenderer-renderToString-context-cb"><a href="#bundleRenderer-renderToString-context-cb" class="headerlink" title="bundleRenderer.renderToString([context],cb)"></a>bundleRenderer.renderToString([context],cb)</h3><p>渲染一个<code>string</code>类型的打包好的应用。和<code>renderer.renderToString</code>相同的回调接口。这个上下文参数对象将会传递给打包的输出函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">bundleRenderer.renderToString(&#123; <span class="attr">url</span>: <span class="string">'/'</span> &#125;, (err, html) =&gt; &#123;</div><div class="line">  <span class="comment">// ... </span></div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h3 id="bundleRenderer-renderToString-context"><a href="#bundleRenderer-renderToString-context" class="headerlink" title="bundleRenderer.renderToString([context])"></a>bundleRenderer.renderToString([context])</h3><p>渲染一个流模式的打包好的应用。和<code>renderer.renderToStream</code>想用的流式接口。这个上下文对象将会传递给打包的输出函数。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">bundleRenderer</div><div class="line">  .renderToStream(&#123; <span class="attr">url</span>: <span class="string">'/'</span> &#125;)</div><div class="line">  .pipe(writableStream)</div></pre></td></tr></table></figure>
+<h2 id="Renderer-选项"><a href="#Renderer-选项" class="headerlink" title="Renderer 选项"></a><a name="renderer-options">Renderer 选项</a></h2><h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><p>允许你提供一些自定义指令用于服务端渲染的实现。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> renderer = createRenderer(&#123;</div><div class="line">  <span class="attr">directives</span>: &#123;</div><div class="line">    example (vnode, directiveMeta) &#123;</div><div class="line">      <span class="comment">// transform vnode based on directive binding metadata </span></div><div class="line">      <span class="comment">// 基于绑定元数据的指令转化 vnode</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>还有一个例子，<a href="https://github.com/vuejs/vue/blob/dev/src/platforms/web/server/directives/show.js" target="_blank" rel="external">v-show’s server-side implementation</a>。</p>
+<h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>提供了一种<a href="#component-caching">组件缓存</a>的实现。这个缓存对象必须实现下面的接口：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="attr">get</span>: <span class="function">(<span class="params">key: string, [cb: <span class="built_in">Function</span>]</span>) =&gt;</span> string | <span class="keyword">void</span>,</div><div class="line">  <span class="attr">set</span>: <span class="function">(<span class="params">key: string, val: string</span>) =&gt;</span> <span class="keyword">void</span>,</div><div class="line">  has?: <span class="function">(<span class="params">key: string, [cb: <span class="built_in">Function</span>]</span>) =&gt;</span> boolean | <span class="keyword">void</span> <span class="comment">// optional </span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>一个典型的应用是传一个 <a href="https://github.com/isaacs/node-lru-cache" target="_blank" rel="external">lrc-cache</a>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> LRU = <span class="built_in">require</span>(<span class="string">'lru-cache'</span>)</div><div class="line"> </div><div class="line"><span class="keyword">const</span> renderer = createRenderer(&#123;</div><div class="line">  <span class="attr">cache</span>: LRU(&#123;</div><div class="line">    <span class="attr">max</span>: <span class="number">10000</span></div><div class="line">  &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>注意，缓存对象至少应该设置<code>get</code>和<code>set</code>。另外，<code>get</code>方法如果提供了第二个参数作为回调函数那么还可以选择异步使用。这允许缓存使用异步APIs，例如redis client 例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> renderer = createRenderer(&#123;</div><div class="line">  <span class="attr">cache</span>: &#123;</div><div class="line">    <span class="attr">get</span>: <span class="function">(<span class="params">key, cb</span>) =&gt;</span> &#123;</div><div class="line">      redisClient.get(key, (err, res) =&gt; &#123;</div><div class="line">        <span class="comment">// handle error if any </span></div><div class="line">        cb(res)</div><div class="line">      &#125;)</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">set</span>: <span class="function">(<span class="params">key, val</span>) =&gt;</span> &#123;</div><div class="line">      redisClient.set(key, val)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<h2 id="为什么使用-bundleRenderer"><a href="#为什么使用-bundleRenderer" class="headerlink" title="为什么使用 bundleRenderer?"></a><a name="why-use-bundlerrenderer">为什么使用 bundleRenderer?</a></h2><p>在一个典型的 Node.js 应用中，后端服务是一个长时间运行的进程。如果我们直接请求我们的应用代码，实例化模块将会在每个请求中共享。这带了一些不方便的限制在我们构建时：比如我们必须避免使用全局状态单例（例如：Vuex里面的store）,否则每一次状态改变都会导致下一次请求被影响。</p>
+<p>相反，<code>bundleRenderer</code>更容易保证我们的每一个请求在运行的应用程序中都是“新的”（即实例化模块不共享），这样我们不需要去考虑通过每次请求避免状态污染的问题了。这些都是<code>bundleRenderer</code>帮助我们实现的。</p>
+<h2 id="服务端打包生成"><a href="#服务端打包生成" class="headerlink" title="服务端打包生成"></a><a name="creating-the-server-bundle">服务端打包生成</a></h2><p><img src="/images/vue/vue-server-renderer.png" alt="服务端打包生成"></p>
+<p>应用程序的打包可以通过任何构建工具生成，你可以使用很简单的 Webpack + vue-loader 还有 bundleRenderer实现。你需要使用略微不同的 webpack 配置和为了服务端渲染的入口文件，但是这个不同是很小的：</p>
+<ol>
+<li><p>为你的 webpack 配置添加 <code>target:&#39;node&#39;</code> 和 <code>output:{libraryTarget:&#39;commonjs2&#39;}</code> 。这可能是一个比较好的处理你的外部依赖文件的方法。</p>
+</li>
+<li><p>在你的服务端入口文件抛出一个方法。这个方法将会接收到渲染的上下文对象（传递给<code>bundleRenderer.renderToString</code> 或者 <code>bundleRenderer.renderToStream</code>），并且返回一个Promise，这将最终解决应用程序 Vue 根实例的问题。</p>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// server-entry.js </span></div><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'vue'</span></div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./App.vue'</span></div><div class="line"> </div><div class="line"><span class="keyword">const</span> app = <span class="keyword">new</span> Vue(App)</div><div class="line"> </div><div class="line"><span class="comment">// 默认的输出应该是一个接收渲染调用时上文对象的函数。</span></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> context =&gt; &#123;</div><div class="line">  <span class="comment">// data pre-fetching </span></div><div class="line">  <span class="keyword">return</span> app.fetchServerData(context.url).then(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">return</span> app</div><div class="line">  &#125;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="外部依赖"><a href="#外部依赖" class="headerlink" title="外部依赖"></a>外部依赖</h3><p>我们在使用<code>bundleRenderer</code>时，最好在服务端打包时通过默认的打包方式把每一个依赖文件打进我们的应用程序。这意味着在每次请求那些依赖文件时将需要解析和运行一遍，但是在大多数情况下这些是不需要的。</p>
+<p>我们能够通过你打的包来优化这些外部依赖关系。在渲染过程中，任何原始的<code>require()</code>调用都将返回实际的 Node 模块从你的渲染进程中。使用 webpack ，我们可以很简单的通过<code>externals</code>配置选项来列举出那些我们想要处理的外部依赖模块。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// webpack.config.js </span></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="comment">// 这些外部依赖中的所有模块都在你的package.json文件中的 “dependencies” 下面</span></div><div class="line">  externals: <span class="built_in">Object</span>.keys(<span class="built_in">require</span>(<span class="string">'./package.json'</span>).dependencies)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="外部警告"><a href="#外部警告" class="headerlink" title="外部警告"></a>外部警告</h3><p>由于外部依赖模块在每个请求中是共享的，所以你必须保证这些依赖关系是等同的。这样，通过不同的请求应该总是返回相同的结果，并且它不能拥有通过你的应用程序来改变的全局状态（如：使用 Vue 插件）。</p>
+<h2 id="组件缓存"><a href="#组件缓存" class="headerlink" title="组件缓存"></a><a name="component-caching">组件缓存</a></h2><p>你可以容易的通过<code>serverCacheKyy</code>函数来在服务端渲染中来缓存组件：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  <span class="attr">name</span>: <span class="string">'item'</span>, <span class="comment">// required </span></div><div class="line">  props: [<span class="string">'item'</span>],</div><div class="line">  <span class="attr">serverCacheKey</span>: <span class="function"><span class="params">props</span> =&gt;</span> props.item.id,</div><div class="line">  render (h) &#123;</div><div class="line">    <span class="keyword">return</span> h(<span class="string">'div'</span>, <span class="keyword">this</span>.item.id)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意缓存组件<strong>必须配置唯一的“name”选项</strong>。这对于 Vue 在使用打包渲染时确定组件的身份来说是必须的。</p>
+<p>使用唯一的名字来作为缓存组件的的键名：你不用担心两个组件返回相同的键。一个缓存组件的键名应该包含足够的信息来表述它渲染的结果。上面的这种方式是一种很好的实现如果这个渲染结果可以通过<code>props.item.id</code>能完全确定。然而，这个组件随着时间的推移原本的 ID 可能会改变，或者渲染结果还依赖另一个<code>prop</code>,这样你需要去修改你的<code>getCacheKey</code>来实现获取其他的变量在程序中。</p>
+<p>返回一个常数总会被缓存，这对于纯粹的静态组件来说是很好的。</p>
+<h3 id="什么时候使用组件缓存？"><a href="#什么时候使用组件缓存？" class="headerlink" title="什么时候使用组件缓存？"></a>什么时候使用组件缓存？</h3><p>如果渲染器在渲染期间渲染了一个组件，它将直接为真个子树重用缓存结果。所以<strong>不要缓存包含全局状态的子组件</strong>。</p>
+<p>在大多数情况下，你不应该和不需要缓存简单的实例组件。最常见的组件缓存需要大名单。由于这些组件通常是一些由数据库中的对象集合驱动的，他们可以使用一些简单的缓存策略。生成它们的缓存键名使用它们自己的唯一ID加最后更新的时间戳。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">serverCacheKey: <span class="function"><span class="params">props</span> =&gt;</span> props.item.id + <span class="string">'::'</span> + props.item.last_updated</div></pre></td></tr></table></figure>
+<h2 id="客户端合成"><a href="#客户端合成" class="headerlink" title="客户端合成"></a><a name="client-side-hydration">客户端合成</a></h2><p>在服务端渲染输出，根元素将会有一个<code>server-rendered=true</code>的属性标记。在客户端，当你使用这个属性挂载一个 Vue 实例到元素上时，它将尝试合成到现有的DOM实例而不是创建新的DOM节点。</p>
+<p>在开发模型中，Vue 将维护客户端生成的虚拟DOM树来匹配来自服务端渲染的DOM结构。如果不匹配，它将放弃合成，维持现有DOM并且从头开始渲染。<strong>在生产模型下，这种维护是被禁用的为了更高的性能。</strong></p>
+<h2 id="合成警告"><a href="#合成警告" class="headerlink" title="合成警告"></a>合成警告</h2><p>有一些事情需要特别注意，当使用服务端渲染+客户端合成一些特殊HTML结构时，浏览器可能会改变HTML结构。比如，当你写下面这个样的Vue实例的时候：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">table</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">tr</span>&gt;</span><span class="tag">&lt;<span class="name">td</span>&gt;</span>hello word<span class="tag">&lt;/<span class="name">td</span>&gt;</span><span class="tag">&lt;/<span class="name">tr</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">table</span>&gt;</span></div></pre></td></tr></table></figure></p>
+<p>浏览器会自动添加<code>tbody</code>到<code>table</code>中，然而，Vue生成的虚拟DOM不会包含<code>tbody</code>，所以将会导致不匹配。为了确保正确的匹配，请准确书写有效的HTML在你的模板中。</p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>本文为个人在学习 Vue 服务端渲染时，翻译自<a href="https://www.npmjs.com/package/vue-server-renderer" target="_blank" rel="external">npm:vue-server-renderer</a>的README文档，本人初学 Vue 能力有限，翻译有误地方请大家指出。</p>
+<p>另外，如果想学习Vue官方的服务端渲染的例子<a href="">vue-ssr-demo-simple</a>和<a href="https://github.com/vuejs/vue-hackernews-2.0" target="_blank" rel="external">vue-hackernews-2.0</a>的例子，而又对各种webpack配置和英文注释有些迷茫，可以看一下我对官方<a href="https://github.com/chping2125/vue-ssr-demo-simple" target="_blank" rel="external">vue-ssr-demo-simple</a>和<a href="https://github.com/chping2125/vue-hackernews-2.0" target="_blank" rel="external">vue-vue-hackernews-2.0</a>一个注释版本，根据自己的理解加的注释。当然个人能力有限，可能有些地方理解有误，还请谅解</p>
+<ol>
+<li><p><a href="https://github.com/chping2125/vue-ssr-demo-simple" target="_blank" rel="external">vue-ssr-demo-simple 个人理解版本</a></p>
+</li>
+<li><p><a href="https://github.com/chping2125/vue-hackernews-2.0" target="_blank" rel="external">vue-vue-hackernews-2.0 个人理解版本</a></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>测试功能而已，你非要赏点我就没办法了...</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.JPG" alt="彬仔 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.JPG" alt="彬仔 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Vue/" rel="tag">#Vue</a>
+          
+            <a href="/tags/翻译/" rel="tag">#翻译</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/12/17/gitMore/" rel="next" title="同一客户端下使用多个git账号">
+                <i class="fa fa-chevron-left"></i> 同一客户端下使用多个git账号
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2017/01/01/vue-server-renderer/"
+     data-title="vue-server-renderer 文档翻译"
+     data-content=""
+     data-url="https://chping2125.github.io/2017/01/01/vue-server-renderer/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/01/01/vue-server-renderer/"
+           data-title="vue-server-renderer 文档翻译" data-url="https://chping2125.github.io/2017/01/01/vue-server-renderer/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="彬仔" />
+          <p class="site-author-name" itemprop="name">彬仔</p>
+          <p class="site-description motion-element" itemprop="description">分享前端技术 整理学习笔记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chengping2125" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chping2125" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/" title="阮一峰" target="_blank">阮一峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/TomXu/" title="汤姆大叔" target="_blank">汤姆大叔</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.haorooms.com/" title="Aaron" target="_blank">Aaron</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://segmentfault.com/a/1190000007062464" title="前端资源" target="_blank">前端资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laod.cn/hosts/2016-google-hosts.html" title="老D翻墙" target="_blank">老D翻墙</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanterncn.cn/down" title="蓝灯工作站" target="_blank">蓝灯工作站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#vue-server-renderer"><span class="nav-number">1.</span> <span class="nav-text">vue-server-renderer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#API"><span class="nav-number">1.2.</span> <span class="nav-text">API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#createRenderer-rendererOptions"><span class="nav-number">1.2.1.</span> <span class="nav-text">createRenderer([rendererOptions])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#renderer-renderToString-vm-cb"><span class="nav-number">1.2.2.</span> <span class="nav-text">renderer.renderToString(vm,cb)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#renderer-renderToStream-vm"><span class="nav-number">1.2.3.</span> <span class="nav-text">renderer.renderToStream(vm)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#createBundleRenderer-code-rendererOptions"><span class="nav-number">1.2.4.</span> <span class="nav-text">createBundleRenderer(code,[rendererOptions])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bundleRenderer-renderToString-context-cb"><span class="nav-number">1.2.5.</span> <span class="nav-text">bundleRenderer.renderToString([context],cb)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#bundleRenderer-renderToString-context"><span class="nav-number">1.2.6.</span> <span class="nav-text">bundleRenderer.renderToString([context])</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Renderer-选项"><span class="nav-number">1.3.</span> <span class="nav-text">Renderer 选项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#指令"><span class="nav-number">1.3.1.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#缓存"><span class="nav-number">1.3.2.</span> <span class="nav-text">缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么使用-bundleRenderer"><span class="nav-number">1.4.</span> <span class="nav-text">为什么使用 bundleRenderer?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#服务端打包生成"><span class="nav-number">1.5.</span> <span class="nav-text">服务端打包生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#外部依赖"><span class="nav-number">1.5.1.</span> <span class="nav-text">外部依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#外部警告"><span class="nav-number">1.5.2.</span> <span class="nav-text">外部警告</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#组件缓存"><span class="nav-number">1.6.</span> <span class="nav-text">组件缓存</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候使用组件缓存？"><span class="nav-number">1.6.1.</span> <span class="nav-text">什么时候使用组件缓存？</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#客户端合成"><span class="nav-number">1.7.</span> <span class="nav-text">客户端合成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#合成警告"><span class="nav-number">1.8.</span> <span class="nav-text">合成警告</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">1.9.</span> <span class="nav-text">说明</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彬仔</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/libs/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/libs/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/libs/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/libs/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8oHQTcoEX25FOPclwvl0Fh2A-gzGzoHsz", "QFHjBCnX5GEB8TGU5B6prx90");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

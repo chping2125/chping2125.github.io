@@ -1,0 +1,1131 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/libs/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="认识系列,前端," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="昨天一个朋友遇到一个典型的前后端联调的问题，这个问题已经不是第一次有人遇到了，自己多少知道点，就索性写下来吧。
+问题重现：
+
+小刘同学的项目采用的是前后端分离架构，现在前后端程序猿已经碰过面，协商好了一些前端需要的数据接口，于是前后端程序猿同时开工码代码。这时候小刘同学某个页面需要后端数据，但是后端叔叔还没有将该数据的借口开发出来，此时小刘只能做假数据（专业点叫mock数据，^_^），但是小刘的a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="认识一下前后端联调">
+<meta property="og:url" content="https://chping2125.github.io/2016/11/05/前后端联调的基本认识/index.html">
+<meta property="og:site_name" content="前端小开发">
+<meta property="og:description" content="昨天一个朋友遇到一个典型的前后端联调的问题，这个问题已经不是第一次有人遇到了，自己多少知道点，就索性写下来吧。
+问题重现：
+
+小刘同学的项目采用的是前后端分离架构，现在前后端程序猿已经碰过面，协商好了一些前端需要的数据接口，于是前后端程序猿同时开工码代码。这时候小刘同学某个页面需要后端数据，但是后端叔叔还没有将该数据的借口开发出来，此时小刘只能做假数据（专业点叫mock数据，^_^），但是小刘的a">
+<meta property="og:updated_time" content="2016-11-05T12:40:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="认识一下前后端联调">
+<meta name="twitter:description" content="昨天一个朋友遇到一个典型的前后端联调的问题，这个问题已经不是第一次有人遇到了，自己多少知道点，就索性写下来吧。
+问题重现：
+
+小刘同学的项目采用的是前后端分离架构，现在前后端程序猿已经碰过面，协商好了一些前端需要的数据接口，于是前后端程序猿同时开工码代码。这时候小刘同学某个页面需要后端数据，但是后端叔叔还没有将该数据的借口开发出来，此时小刘只能做假数据（专业点叫mock数据，^_^），但是小刘的a">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6257465157467768000,
+      author: '彬仔'
+    }
+  };
+</script>
+
+  <title> 认识一下前后端联调 | 前端小开发 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c8027b8ba4beebe6ebe89d22781de0a1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">前端小开发</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随笔 分享 笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                认识一下前后端联调
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-05T20:29:30+08:00" content="2016-11-05">
+              2016-11-05
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/工程化/" itemprop="url" rel="index">
+                    <span itemprop="name">工程化</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/05/前后端联调的基本认识/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/05/前后端联调的基本认识/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/05/前后端联调的基本认识/" class="leancloud_visitors" data-flag-title="认识一下前后端联调">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>昨天一个朋友遇到一个典型的前后端联调的问题，这个问题已经不是第一次有人遇到了，自己多少知道点，就索性写下来吧。</p>
+<p>问题重现：</p>
+<blockquote>
+<p>小刘同学的项目采用的是前后端分离架构，现在前后端程序猿已经碰过面，协商好了一些前端需要的数据接口，于是前后端程序猿同时开工码代码。<br>这时候小刘同学某个页面需要后端数据，但是后端叔叔还没有将该数据的借口开发出来，此时小刘只能做假数据（专业点叫<strong>mock数据</strong>，^_^），但是小刘的ajax的借口写的是与后端叔叔商量好的绝对路径（域名+请求路径+请求参数，跨域问题已解决），因为这是以后真正的请求路径，所以小刘又不像先写本地相对路径，后期再来修改（万一后台叔叔开发的慢了，鬼知道有多少接口要修改呀）。于是他就迷茫了。。。</p>
+</blockquote>
+<p>仔细看看这其实就是前后端分离中的mock数据和联调的问题，就现在来说能解决的方式有很多种。先说mock数据，gulp，webpack，<a href="http://ued.qunar.com/fekit/" target="_blank" rel="external">fekit</a>（去哪儿网的一款前端自动化构建工具，据说历史比webpack和gulp都要久远）等等自动化构建工具都有mock数据的功能，这不是问题；再说绝对路径的问题，其实只需要做一个host的映射就行了。<br><a id="more"></a><br>进入正题，前后端联调。</p>
+<h1 id="什么是前后联调"><a href="#什么是前后联调" class="headerlink" title="什么是前后联调"></a>什么是前后联调</h1><p>我的理解是<strong>前后端联调</strong>是一种<strong>真实业务数据</strong>和<strong>本地mock数据</strong>之间来回切换以达到前后端分离架构下的不同开发速度时数据交换的一种方式方法（有点绕）。</p>
+<h1 id="为什么要前后端联调"><a href="#为什么要前后端联调" class="headerlink" title="为什么要前后端联调"></a>为什么要前后端联调</h1><p>前面解释前后端联调是可能有些绕，这里举例来说明一下。<br>回到上面小刘的问题，假设小刘现在ajax中的url写的是相对路径（如：./mock/user.json），小刘现在面临的是后端接口没有数据，需要本地mock数据，但是当后端接口开发完成，并且有了测试数据后，小刘是不是需要切换到后端数据呢？答案是肯定的，但是小刘需要在本地mock数据和后端接口数据之间来回切换，为什么呢？很明显吗，本地的mock数据是小刘自己写的，肯定符合前端需求，但是后端接口首先需要测试通不通？还需要测试数据格式对不对？有可能前两部都整好了，但是后端还没有填写足够的数据（比如，列表页，小刘想分页，后端叔叔就写了两条测试数据，你咋整？），所以呀，小刘需要根据后端叔叔对接口的调整不断的来回切换url，这样岂不是还在受后端的影响，还谈毛线前后端分离呀！</p>
+<p>所以当我们在前后端分离架构中，<strong>不断来回切换本地mock数据和后端接口数据时</strong>就遇到了联调的问题。</p>
+<h1 id="实现前后端联调"><a href="#实现前后端联调" class="headerlink" title="实现前后端联调"></a>实现前后端联调</h1><p>首先我们已经知道，在现在流行的<strong>“前后端完全分离”</strong>架构中，前后端联调是一个不可能避免的问题，就我目前对前后端联调的理解来说，我认为需要联调的有以下两个方面的资源：</p>
+<ol>
+<li><strong>css、js、图片等前端静态资源文件。</strong></li>
+<li><strong>ajax获取的后端数据。</strong></li>
+</ol>
+<p>而前后端分离的架构的应用可能也分为两种情况：</p>
+<ol>
+<li><strong>前后端完全分离，前后端分别拥有自己的域名和服务器。</strong></li>
+<li><strong>前后端开发分离，但是部署时是一个域名和一台服务器。</strong></li>
+</ol>
+<p>还有就是需要联调的场景也是两种情况：</p>
+<ol>
+<li><strong>开发阶段</strong></li>
+<li><strong>调试阶段</strong></li>
+</ol>
+<p>针对以上2方面资源和2种应用情况还有2种场景（2到家了。。。），接下来我们看看怎样通过mock数据和host的映射来实现解决这些问题。</p>
+<h2 id="先解释一下-‘222’"><a href="#先解释一下-‘222’" class="headerlink" title="先解释一下 ‘222’"></a>先解释一下 ‘222’</h2><h3 id="2种资源"><a href="#2种资源" class="headerlink" title="2种资源"></a>2种资源</h3><p>为什么我将资源分为两种呢？首先来看css、js文件和图片是通过link、scripts、img标签来引入的（样式中的图片也是一个道理）， 它们是不存在跨域问题的，你在哪里引入都无所谓。</p>
+<p>而ajax获取后端数据是有跨域问题的，虽然说可以解决，但是有可能是该数据（或者后端部署环境）和上面的css、js、图片等静态资源是不在同一台服务器上的，也可能是同一台服务器不同域名下的，如果都在同一域名同一服务器下，开发阶段肯定也不在一起吧！</p>
+<h3 id="2种应用情况"><a href="#2种应用情况" class="headerlink" title="2种应用情况"></a>2种应用情况</h3><p>虽然架构可以采用前后端分离，但是部署有可能就不一样了，这和项目的大小，公司的情况等等都有关系了，一个百八十人用的小系统，还得两台服务器两个域名，你不觉着浪费吗？</p>
+<p>2种不同的部署情况直接导致了前期在设计联调方案的时候就不同了，下面会详细介绍。</p>
+<h3 id="2种开发场景"><a href="#2种开发场景" class="headerlink" title="2种开发场景"></a>2种开发场景</h3><p>这不用多说了，虽然现在主张前后端分离，但也不能不和后端叔叔亲近亲近了呀，不然谁给你数据区，所以说真个开发阶段都可能遇到联调的问题。</p>
+<h2 id="联调开始"><a href="#联调开始" class="headerlink" title="联调开始"></a>联调开始</h2><p>在讲解联调之前，你需要了解主流自动化构建工具本地mock数据的方法，本例以gulp来讲解，不了解的小伙伴可以看看<a href="http://chping.website/2016/10/18/gulp%E5%92%8Cwebpack%E5%AF%B9%E6%AF%94/" target="_blank" rel="external">Gulp和Webpack对比</a>的mock数据部分。</p>
+<h3 id="开发阶段"><a href="#开发阶段" class="headerlink" title="开发阶段"></a>开发阶段</h3><h4 id="两台服务器对应两个域名"><a href="#两台服务器对应两个域名" class="headerlink" title="两台服务器对应两个域名"></a>两台服务器对应两个域名</h4><p>这是最nice的方案，也是联调最舒服的方式。</p>
+<p>在这种方式下，前后和后端各有各的服务器和域名。后端会把他们开发的后端业务代码，实时的上传到服务器上（也可能不是，如放在后端叔叔自己的电脑上，实现是一样的，只不过域名变成了叔叔的ip地址）；而我们前端的代码会实时的上传到我们前端的服务器上（同理也可能在自己的电脑上，开发完一块上传）。</p>
+<p>为了后面方面讲解，前端服务器域名为“chping.website”，后端服务器域名为”chping.site”。</p>
+<h5 id="css、js和图片等静态文件"><a href="#css、js和图片等静态文件" class="headerlink" title="css、js和图片等静态文件"></a>css、js和图片等静态文件</h5><p>此时，我们的静态文件的请求路径建议使用我们前端服务器的绝对路径，为什么呢？因为如果我们写本地的相对路径，等把我们的入口文件交给后端后，路径还是绝对路径，岂不是成了后端服务器的路径了，那就坏菜了，还得一个一个修改成我们前端的绝对路径（如：<code>http://chping.website/css/reset.css</code> ）。</p>
+<p>那可能有小伙伴说，这样的话，我在开发阶段，我们的服务器上还没有自己的静态文件呢，去请求的话，会报404的！</p>
+<p>对的，这时候就该我们的host的出场了，我们知道当进行域名解析的时候，第一步是在浏览器缓存中寻找，如果没找到，第二步在我们系统的缓存中寻找（就是本地的hosts文件），然后….（想详细了解请看<a href="http://chping.website/2016/09/11/netword/" target="_blank" rel="external">网络请求过程扫盲</a>的DNS解析部分）就没有然后了。既然域名解析需要通过hosts文件这一步，那么我们就修改一下它，让访问<code>http://chping.website</code>这个域名的请求，全都访问我们本地的mock数据就好了呀！</p>
+<p>在hosts文件中添加下面这一条<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>    chping.website</div></pre></td></tr></table></figure></p>
+<p>好的，搞定，从此以后所有访问域名<code>http://chping.website</code>的请求都会被映射到本地了，然后再结合gulp的mock数据，就完成了你写的是域名+绝对路径（如：<code>http://chping.website/css/reset.css</code> ），但是请求的却是你本地mock的数据（上面的请求会被映射到<code>http://localhost/css/reser.css</code>）。这样你就不需要来回修改请求路径了^_^。</p>
+<h5 id="ajax后端数据"><a href="#ajax后端数据" class="headerlink" title="ajax后端数据"></a>ajax后端数据</h5><p>开发工程中，静态文件的联调问题可能还是比较少的，特征也不明显。但是通过ajax获取后端数据使用联调的情况可就多了去了，前面<strong>为什么要前后端联调</strong>一节中已经通过小刘的例子说明了，就不在赘述了。</p>
+<p>其实在介绍完<strong>css、js、图片等静态文件</strong>一节，相信你也能猜到了怎么去前后端联调了。很简单，ajax中的请求还是写绝对路径（如：<code>http://chping.site/userlist</code>，获取用户列表），此时后端接口如果没有开发好，和上一节一样通过hosts文件的修改可以实现<code>chping.site</code>域名映射到本地来。如果后端像让你给他测试一下接口获取的数据对不对，你可以在修改一下hosts文件就可以了。</p>
+<p>可能还有小伙伴问了，这样还不是改来改去，麻烦死了。首先来说，相比较你修改多个url地址和修改一个hosts文件，孰轻孰重，一目了然；其次，怎么可能让你去每次都去修改hosts文件呢，麻烦死了。现在向大家推荐一款小插件，在google商店里搜索一下<strong>HostAdmin</strong>就找到它了，下载安装就好了，然后简单配置一下你的hosts地址，就可以愉快地切换hosts的映射了（HostAdmin的使用自行google，干这行岂能不会用软件）。</p>
+<p>好了，两台服务器对应两个不同域名的场景在开发阶段就这样愉快地结束了。但是在实际开发中，中小公司很少给你两台服务器和两个域名的，一般正常情况就是一台服务器一个域名的。</p>
+<h4 id="一台服务器一个域名"><a href="#一台服务器一个域名" class="headerlink" title="一台服务器一个域名"></a>一台服务器一个域名</h4><p>我仔细想一下，此时这个服务器会给谁管理呢？</p>
+<p>想都不用想肯定不是前端，后端叔叔比你对服务器熟悉多了，交给你去管理那是出鬼了（我还真遇到过，不过也是给后端首先使用，最后才把前端的代码放到服务器上），所以说在这种情况下，你就老老实实在本地开发就行了。</p>
+<h5 id="css、js和图片等静态文件-1"><a href="#css、js和图片等静态文件-1" class="headerlink" title="css、js和图片等静态文件"></a>css、js和图片等静态文件</h5><p>这时候的静态文件再开发阶段不需要任何考虑，按照你喜欢的相对路径或者相对于项目的根路径的形式写就行了，因为早晚还得交给后端。但是，需要注意：</p>
+<ol>
+<li>如果你采用<strong>相对项目根路径的书写方式来写你的静态文件路径</strong>时，一定要先和后端叔叔商量好，将来项目部署的时候他会把你的前端整个项目放在哪里？如果不是根目录下，你就挂了。比如：你的reset.css的路径时<code>/exports/styles/common/reset.css</code>，后端叔叔把你前端项目放在了根目录下的<code>frontEnd</code>文件夹下，<code>reset.css</code>文件就报404了。</li>
+<li>如果后端采用的java，你需要特别注意的是，<strong>tomcat的根目录</strong>并不是<code>webapps</code>文件，而后端项目默认是部署在<code>webapps/ROOT</code>文件下的，所以你如果使用了相对项目根路径的书写方式来写你的静态文件路径时，对不起又是404了。</li>
+</ol>
+<h5 id="ajax后端数据-1"><a href="#ajax后端数据-1" class="headerlink" title="ajax后端数据"></a>ajax后端数据</h5><p>因为现在唯一的一台服务器还是在后端叔叔那里，所以此时你还是可以写绝对路径（域名+请求路径），利用hosts文件来改变域名映射实现联调。</p>
+<h4 id="开发阶段小结"><a href="#开发阶段小结" class="headerlink" title="开发阶段小结"></a>开发阶段小结</h4><p>其实在开发阶段做联调的情况还是很少的，一般都在自己的机器上开发，后端会自己做单元测试，根本不用前端来给他做测试的（先别骂，完事一块，哈哈）；而前端更不需要了，都在自己机器上开发。及时有两台服务器和域名，有几个每开发一个功能就上传服务器呀（此服务器指项目上线时部署的服务器），有病吧！所以说，在这个阶段只需要做好hosts映射就行了，不会让你来回切换域名映射的。</p>
+<p>但是接下来的调试阶段就不一样了，项目前后端大体都已经开发完成了，Beta版本已经部署了，这时候如果出现bug就需要频繁的线上线下（真实数据和mock数据）切换了。</p>
+<h3 id="调试阶段"><a href="#调试阶段" class="headerlink" title="调试阶段"></a>调试阶段</h3><p>调试阶段的情况说明刚才提了一下，现在再详细的阐述一下：</p>
+<p>首先，已发布的Beta版本在测试的时候，发现前端页面上有个地方有个小bug，需要你修改一下，于是你访问线上的页面，看了一下这个bug，发现是某个css样式文件里面出错了，于是你希望在本地修改，然后线上版本可以直接查看，这样就可以实时看到你的修改在线上的真实样子了。</p>
+<h4 id="两台服务器两个域名"><a href="#两台服务器两个域名" class="headerlink" title="两台服务器两个域名"></a>两台服务器两个域名</h4><p>这里就不在分静态文件和后端数据分开介绍了，其实道理都一样的，另外此时后端数据都是真实的了，也不需要你管后端了，此时你本地的mock数据已经下岗了。</p>
+<p>首先你只需要打开前面你安装的<strong>HostAdmin</strong>，通过它配置一下你的hosts文件（如果年前面的做了，此时你已经配置好了），然后<code>chping.website</code>这个域名你可以在本地和线上之间来回切换了。</p>
+<p>再具体一点就是：</p>
+<ol>
+<li>启动你本地的项目</li>
+<li><p>将<code>chping.website</code>域名通过HostAdmin设置为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> 127.0.0.1         chping.website</div><div class="line"># 202.201.112.232   chping.website  //假设202.201.112.232是线上服务器的ip</div></pre></td></tr></table></figure>
+</li>
+<li><p>打开浏览器，并清除一下浏览器缓存，重新打开你们开发的网站。此时网站是获取到的静态资源就是从你本地获取的了，但是ajax获取的数据确实后端返回的真是数据。</p>
+</li>
+<li>然后你开始修改bug，这时候线上的版本可以实时查看你修改的前端内容，修改完bug，QA说了OK，你就可以把修改的文件替换掉服务器上的版本就行了。</li>
+</ol>
+<h4 id="一台服务器一个域名-1"><a href="#一台服务器一个域名-1" class="headerlink" title="一台服务器一个域名"></a>一台服务器一个域名</h4><p>这种情况就复杂了，此时只有一个域名，如果你开发阶段是按照我前面说的，写的是相对路径，那么此时你是没有办法实现<strong>两台服务器两个域名</strong>那种线下修改，线上查看的高大上联调的。那该怎么办呢？</p>
+<p>第一种方式就是，你在本地修改，本地查看，测试好了以后上传到服务器，看看线上环境可不可以，OK当然好；不行就本地接着改，然后在上传。</p>
+<p>第二种方式就是，在开发阶段你给静态文件前面加上一个<strong>假的域名</strong>，然后像两个域名一样进行<strong>假的域名</strong>与本地映射配置，然后像两个域名一样开发。等部署的时候，在服务器上也暂时做一个本地映射，你就可以实现同两个域名一样的线下修改，向上查看了。但是，最后真正上线的时候，你就需要收到，把假域名全部删掉。所以说，一台服务器一个域名的时候，前端静态文件做联调是很不方便的。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>总结一下，<strong>前后端联调</strong>是一种<strong>真实业务数据</strong>和<strong>本地mock数据</strong>之间来回切换以达到前后端分离架构下的不同开发速度时数据交换的一种方式方法，而实现就是利用自动化构建工具的mock数据功能和修改域名解析文件hosts来实现的。</p>
+<p>如果你的项目是两台服务器和两个域名，随便你折腾。但是如果你是一台服务器和一个域名的话，就有些麻烦了，而这个麻烦仅对于你前端静态文件联调有影响，需要你好好思考一下怎么解决了，我目前还没找到更好地方法去解决。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>测试功能而已，你非要赏点我就没办法了...</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.JPG" alt="彬仔 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.JPG" alt="彬仔 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/认识系列/" rel="tag">#认识系列</a>
+          
+            <a href="/tags/前端/" rel="tag">#前端</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/04/前端组件化的认识/" rel="next" title="前端组件化的认识">
+                <i class="fa fa-chevron-left"></i> 前端组件化的认识
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/07/认识一下Fetch/" rel="prev" title="认识一下Fetch">
+                认识一下Fetch <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/05/前后端联调的基本认识/"
+     data-title="认识一下前后端联调"
+     data-content=""
+     data-url="https://chping2125.github.io/2016/11/05/前后端联调的基本认识/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/05/前后端联调的基本认识/"
+           data-title="认识一下前后端联调" data-url="https://chping2125.github.io/2016/11/05/前后端联调的基本认识/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="彬仔" />
+          <p class="site-author-name" itemprop="name">彬仔</p>
+          <p class="site-description motion-element" itemprop="description">分享前端技术 整理学习笔记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chengping2125" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chping2125" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/" title="阮一峰" target="_blank">阮一峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/TomXu/" title="汤姆大叔" target="_blank">汤姆大叔</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.haorooms.com/" title="Aaron" target="_blank">Aaron</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://segmentfault.com/a/1190000007062464" title="前端资源" target="_blank">前端资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laod.cn/hosts/2016-google-hosts.html" title="老D翻墙" target="_blank">老D翻墙</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanterncn.cn/down" title="蓝灯工作站" target="_blank">蓝灯工作站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是前后联调"><span class="nav-number">1.</span> <span class="nav-text">什么是前后联调</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要前后端联调"><span class="nav-number">2.</span> <span class="nav-text">为什么要前后端联调</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实现前后端联调"><span class="nav-number">3.</span> <span class="nav-text">实现前后端联调</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#先解释一下-‘222’"><span class="nav-number">3.1.</span> <span class="nav-text">先解释一下 ‘222’</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2种资源"><span class="nav-number">3.1.1.</span> <span class="nav-text">2种资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2种应用情况"><span class="nav-number">3.1.2.</span> <span class="nav-text">2种应用情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2种开发场景"><span class="nav-number">3.1.3.</span> <span class="nav-text">2种开发场景</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#联调开始"><span class="nav-number">3.2.</span> <span class="nav-text">联调开始</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#开发阶段"><span class="nav-number">3.2.1.</span> <span class="nav-text">开发阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#两台服务器对应两个域名"><span class="nav-number">3.2.1.1.</span> <span class="nav-text">两台服务器对应两个域名</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#css、js和图片等静态文件"><span class="nav-number">3.2.1.1.1.</span> <span class="nav-text">css、js和图片等静态文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ajax后端数据"><span class="nav-number">3.2.1.1.2.</span> <span class="nav-text">ajax后端数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一台服务器一个域名"><span class="nav-number">3.2.1.2.</span> <span class="nav-text">一台服务器一个域名</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#css、js和图片等静态文件-1"><span class="nav-number">3.2.1.2.1.</span> <span class="nav-text">css、js和图片等静态文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ajax后端数据-1"><span class="nav-number">3.2.1.2.2.</span> <span class="nav-text">ajax后端数据</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#开发阶段小结"><span class="nav-number">3.2.1.3.</span> <span class="nav-text">开发阶段小结</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#调试阶段"><span class="nav-number">3.2.2.</span> <span class="nav-text">调试阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#两台服务器两个域名"><span class="nav-number">3.2.2.1.</span> <span class="nav-text">两台服务器两个域名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一台服务器一个域名-1"><span class="nav-number">3.2.2.2.</span> <span class="nav-text">一台服务器一个域名</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彬仔</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/libs/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/libs/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/libs/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/libs/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8oHQTcoEX25FOPclwvl0Fh2A-gzGzoHsz", "QFHjBCnX5GEB8TGU5B6prx90");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

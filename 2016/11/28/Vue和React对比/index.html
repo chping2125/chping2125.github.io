@@ -1,0 +1,1162 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/libs/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="MVVM,ReactJs,Vue," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Vue也已经升级到2.0版本了，到现在为止（2016/11/19）比较流行的MVVM框架有AngularJS（也有人认为其为MVC）、ReactJS和VueJS，这三个框架中，以我现在的情况来说（AngularJS2还没有去接触），ReactJS和VueJS的对比应该是比较适合的，感觉这哥俩就是好基友，不管是单向数据流、组件化思想、还是构建大型应用的路由和状态管理都有些许相似之处。而Angular">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue和React对比">
+<meta property="og:url" content="https://chping2125.github.io/2016/11/28/Vue和React对比/index.html">
+<meta property="og:site_name" content="前端小开发">
+<meta property="og:description" content="Vue也已经升级到2.0版本了，到现在为止（2016/11/19）比较流行的MVVM框架有AngularJS（也有人认为其为MVC）、ReactJS和VueJS，这三个框架中，以我现在的情况来说（AngularJS2还没有去接触），ReactJS和VueJS的对比应该是比较适合的，感觉这哥俩就是好基友，不管是单向数据流、组件化思想、还是构建大型应用的路由和状态管理都有些许相似之处。而Angular">
+<meta property="og:image" content="https://chping2125.github.io/images/react&vue/1.png">
+<meta property="og:updated_time" content="2016-11-28T15:30:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vue和React对比">
+<meta name="twitter:description" content="Vue也已经升级到2.0版本了，到现在为止（2016/11/19）比较流行的MVVM框架有AngularJS（也有人认为其为MVC）、ReactJS和VueJS，这三个框架中，以我现在的情况来说（AngularJS2还没有去接触），ReactJS和VueJS的对比应该是比较适合的，感觉这哥俩就是好基友，不管是单向数据流、组件化思想、还是构建大型应用的路由和状态管理都有些许相似之处。而Angular">
+<meta name="twitter:image" content="https://chping2125.github.io/images/react&vue/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6257465157467768000,
+      author: '彬仔'
+    }
+  };
+</script>
+
+  <title> Vue和React对比 | 前端小开发 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c8027b8ba4beebe6ebe89d22781de0a1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">前端小开发</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随笔 分享 笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Vue和React对比
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-28T23:26:18+08:00" content="2016-11-28">
+              2016-11-28
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/ReactJs/" itemprop="url" rel="index">
+                    <span itemprop="name">ReactJs</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/28/Vue和React对比/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/28/Vue和React对比/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/28/Vue和React对比/" class="leancloud_visitors" data-flag-title="Vue和React对比">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Vue也已经升级到2.0版本了，到现在为止（2016/11/19）比较流行的MVVM框架有<strong>AngularJS</strong>（也有人认为其为MVC）、<strong>ReactJS</strong>和<strong>VueJS</strong>，这三个框架中，以我现在的情况来说（AngularJS2还没有去接触），ReactJS和VueJS的对比应该是比较适合的，感觉这哥俩就是好基友，不管是<strong>单向数据流</strong>、<strong>组件化思想</strong>、还是构建大型应用的<strong>路由</strong>和<strong>状态管理</strong>都有些许相似之处。而AngularJS与Jquery对比我个人觉着比较合适。</p>
+<p>为什么现在MVVM框架这么火呢？JQuery挺好用的呀，为什么要去代替它？…</p>
+<p>可能会产生这样的疑问，在我看来，MVVM框架的流行是因为随着前端技术的发展对于要求越来越高和前端面对的场景越来越复杂导致了现实对于前端性能的要求也越来越高，这样像JQuery那样频繁的操作DOM节点的方式显然就不太合适了。所以MVVM开始逐渐流行开来，另外我认为JQuery目前来看还是不会被代替的，因为对于一些对性能要求不是很高的前端项目，是用JQuery来开发还是非常爽的。</p>
+<p>废话有点多了，进入正题。接下来从<strong>数据双向绑定</strong>、<strong>组件及数据流</strong>、<strong>路由</strong>、<strong>状态管理</strong>等方面来分别对比一下怎样去使用Vue和React。</p>
+<a id="more"></a>
+<h1 id="数据双向绑定"><a href="#数据双向绑定" class="headerlink" title="数据双向绑定"></a>数据双向绑定</h1><p>我理解的数据双向绑定是，MVVM框架中的View层和Model层的数据相互影响。那么，那些行为会引起数据变动呢？<br>首先，View层（即页面上）的<strong>表单操作</strong>、<strong>触发事件</strong>可能会引起数据变动；<strong>ajax请求</strong>也可能会引起数据变动，这个变动我认为更多在Model层；还有一种情况就是，<strong>某一数据变动引起另外关联数据</strong>的改变。<br>不管是哪一种数据改变，都会导致View层和Model层的变化，View层变动引起页面变化，Model层变动保存数据。</p>
+<h2 id="Vue的数据双向绑定"><a href="#Vue的数据双向绑定" class="headerlink" title="Vue的数据双向绑定"></a>Vue的数据双向绑定</h2><p>在Vue中，View层中与数据绑定有关的有<strong>插值表达式</strong>、<strong>指令系统</strong>、<strong>*Class和Style</strong>、<strong>事件处理器</strong>和<strong>表单控件</strong>，<strong>ajax请求</strong>和<strong>计算属性</strong>也和数据变化有关，下面我们分别说一下这些知识点设计的一些数据绑定问题。</p>
+<h3 id="插值表达式"><a href="#插值表达式" class="headerlink" title="插值表达式"></a>插值表达式</h3><p>在Vue中，<strong>插值表达式</strong>和<strong>指令</strong>对于数据的操作又称为<strong>模板语法</strong>。</p>
+<blockquote>
+<p>Vue.js 使用了基于 HTML 的模版语法，允许开发者声明式地将 DOM 绑定至底层 Vue 实例的数据。所有 Vue.js 的模板都是合法的 HTML ，所以能被遵循规范的浏览器和 HTML 解析器解析。</p>
+<p>在底层的实现上， Vue 将模板编译成虚拟 DOM 渲染函数。结合响应系统，在应用状态改变时， Vue 能够智能地计算出重新渲染组件的最小代价并应用到 DOM 操作上。</p>
+</blockquote>
+<p>关于插值表达式的使用，在<a href="http://cn.vuejs.org/v2/guide/syntax.html#插值l" target="_blank" rel="external">Vue官网模板语法的插值</a>部分有详细的使用说明，不在赘述，需要注意的是，<strong>过滤器</strong>在插值中的使用有时可以起到意想不到的效果。</p>
+<h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><p>Vue重的指令估计是从Angular那里学来的，有很多相似的地方，但是也不完全相同。<br>Vue中的指令我觉着非常的简单，并且就12个，很容易记忆：</p>
+<ol>
+<li><strong>v-bind</strong>:动态地绑定一个或多个 <em>html属性</em>，或一个组件 <em>prop 到表达式</em>（组件单项数据流使用）。</li>
+<li><strong>v-once</strong>:绑定只渲染元素和组件 <em>一次</em> 的特性或prop表达式。</li>
+<li><strong>v-model</strong>:在表单控件或者组件上创建双向绑定，<em>代替value值</em>。</li>
+<li><strong>v-text</strong>:更新元素的 <em>textContent</em>。</li>
+<li><strong>v-html</strong>:更新元素的 <em>innerHTML</em>。<strong>注意：内容按普通 HTML 插入 - 不会作为 Vue 模板进行编译</strong> 。</li>
+<li><strong>v-on</strong>:绑定事件监听器。</li>
+<li><strong>v-if / v-else / v-show</strong>:条件渲染。</li>
+<li><strong>v-for</strong>:列表渲染。</li>
+<li><strong>v-pre</strong>:跳过这个元素和它的子元素的编译过程。<br>10 <strong>v-cloak</strong>:这个指令保持在元素上直到关联实例结束编译。和 CSS 规则如 <code>[v-cloak] { display: none }</code>一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。</li>
+</ol>
+<p>大概列举一下，详细使用请参考<a href="http://cn.vuejs.org/v2/api/#指令" target="_blank" rel="external">Vue API 指令</a>和<a href="http://cn.vuejs.org/v2/guide/" target="_blank" rel="external">Vue 指南的Class与Style绑定、条件渲染、列表渲染、事件处理器、表单控件绑定</a>部分内容。</p>
+<h3 id="Class与Style绑定"><a href="#Class与Style绑定" class="headerlink" title="Class与Style绑定"></a>Class与Style绑定</h3><p>Vue为了方便操作控制元素的样式，专门增强了<strong>v-bind:class</strong>和<strong>v-bind:style</strong>,通过增强的这两个指令可以实用<strong>对象语法</strong>或者<strong>数组语法</strong>对元素的样式进行变动，这也不是本文重点，<a href="http://cn.vuejs.org/v2/guide/class-and-style.html" target="_blank" rel="external">Vue官方Class与Style绑定</a>已经说得很详细了。</p>
+<h3 id="条件渲染和列表渲染"><a href="#条件渲染和列表渲染" class="headerlink" title="条件渲染和列表渲染"></a>条件渲染和列表渲染</h3><p>条件渲染和列表渲染在Vue模板中动态创建模板很不错，让我里面想到了JSP中的EL表达式和Struts中的JSTL(后端模板语言中基本都有)，这就可以方便的根据后端传过来的数据进行模板创建了。你懂得，详细语法和使用还是参考<a href="http://cn.vuejs.org/v2/guide/conditional.html" target="_blank" rel="external">Vue文档列表渲染和条件渲染</a>，本篇主题是对比，并不是讲解基础语法，Vue的官方文档我觉着非常给力，简单明了。</p>
+<h3 id="事件处理器"><a href="#事件处理器" class="headerlink" title="事件处理器"></a>事件处理器</h3><p>在Vue中我们可以通过<strong>v-on</strong>来给元素注册事件，完成<a href="http://cn.vuejs.org/v2/guide/events.html" target="_blank" rel="external">事件注册</a>，Vue中的事件处理和平时使用的事件处理不同之处就是，既可以绑定数据处理函数，也可以使用内联处理器。并且，Vue还讲常用的事件方法，如<strong>preventDefault()</strong>等通过修饰符的方式来方便使用。</p>
+<h3 id="表单控件"><a href="#表单控件" class="headerlink" title="表单控件"></a>表单控件</h3><p>你可以用<strong>v-model</strong>指令在表单控件元素上创建双向数据绑定。它会根据控件类型自动选取正确的方法来更新元素。</p>
+<p>Vue中对于<a href="http://cn.vuejs.org/v2/guide/forms.html" target="_blank" rel="external">表单控件</a>提供的<em>v-model*</em>指令非常的使用，可以方便的返回或者设置表单控件的信息。</p>
+<h3 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h3><p>在Vue中引入了<strong>计算属性</strong>来处理模板中放入太多的逻辑会让模板过重且难以维护的问题，这样不但解决了上面的问题，而且也同时让模板和业务逻辑更好的分离。<br><a href="http://cn.vuejs.org/v2/guide/computed.html" target="_blank" rel="external">Vue计算属性</a></p>
+<h3 id="ajax数据请求"><a href="#ajax数据请求" class="headerlink" title="ajax数据请求"></a>ajax数据请求</h3><p>在Vue1.x的版本中，官方推荐的ajax数据请求库是<strong>vue-resource</strong>，但是在Vue2.0的版本中，不再推荐使用，该推荐使用<strong><a href="https://github.com/mzabriskie/axios" target="_blank" rel="external">axios</a></strong>。</p>
+<p>其实这些ajax数据请求的使用都大差不差，随你选择，并且<strong>vue-resource</strong>还是继续支持使用的，在Vue2.0中。</p>
+<p>以上八个方面，我个人认为都是和数据绑定相关的一些Vue基本项，只是简单列举，具体内容请查看<a href="http://cn.vuejs.org/v2/guide" target="_blank" rel="external">Vue文档</a>或者<a href="http://cn.vuejs.org/v2/api/" target="_blank" rel="external">API</a>。<br>为什么这么多呢？因为Vue中有个<strong>模板</strong>的概念，所以，数据和模板进行数据绑定需要分别来做，而在接下来的React中，你会发现，React的数据绑定虽然也是这八项，但是，不会展开八项来说明。</p>
+<h2 id="React中的数据双向绑定"><a href="#React中的数据双向绑定" class="headerlink" title="React中的数据双向绑定"></a>React中的数据双向绑定</h2><p>在上面的Vue中，我们已经提及了有八个方面可以影响到数据的改变，但是React中就没有必要展开了说明了，因为在React中没有Vue中模板的概念，因为人家有一个JSX语法呀，可以将HTML和JS还有CSS混合写在一起呀，，这样写成的<strong>组件</strong>感觉还不错，<strong>组件化</strong>也是ReactJS的重要特点之一。</p>
+<p>React中通过将<strong>state</strong>（Model层） 与View层数据进行双向绑定达到数据的实时更新变化，具体来说就是在View层直接写JS代码将Model层中的数据拿过来渲染，一旦像<strong>表单操作</strong>、<strong>触发事件</strong>、<strong>ajax请求</strong>等触发数据变化，则进行双向同步。</p>
+<p>所以说React的特点是<strong>组件化</strong>，也就是说，接下来的小节才是React的重点部分。</p>
+<h1 id="组件及数据流"><a href="#组件及数据流" class="headerlink" title="组件及数据流"></a>组件及数据流</h1><p>前端发展到现在，为了提高开发效率，组件化已经成为一个必然的趋势。而MVVM框架中，如果没有组件化的思想，它都不敢说拿出来宣传（纯属个人意淫，哈哈）。下面我们再分别简单介绍一下VueJS和ReactJS中<strong>组件思想</strong>和<strong>组件之间的数据流</strong>。</p>
+<h2 id="React中的组件和数据流"><a href="#React中的组件和数据流" class="headerlink" title="React中的组件和数据流"></a>React中的组件和数据流</h2><p>上一节中提到过，React中的组件化是其重要的特点之一，因为在Angular1.x的出现，并没有明确提出组件的思想，只是有一个类似的<strong>指令思想</strong>来实现组件化的方式。所以，当React中明确提出<strong>组件</strong>思想后，前端好像重生了（吹的有点大了）。</p>
+<h3 id="创建组件"><a href="#创建组件" class="headerlink" title="创建组件"></a>创建组件</h3><p>React中实现组件有两种方式，一种是<strong>createClass</strong>方法，另一种是通过ES2015的思想<strong>类继承React.Component</strong>来实现。</p>
+<h4 id="createClass方式实现"><a href="#createClass方式实现" class="headerlink" title="createClass方式实现"></a>createClass方式实现</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> React.createClass(&#123;</div><div class="line">   render() &#123;</div><div class="line">     <span class="keyword">return</span> (</div><div class="line">       <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span>hello5<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></div><div class="line">     )</div><div class="line">   &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p>这样，一个组件就创建完成，并且通过ES2015的模块化思想将其暴露出去了，其他组件就可以引入并使用了。如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> ReactDom <span class="keyword">from</span> <span class="string">'react-dom'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> Hello <span class="keyword">from</span> <span class="string">'./hello.jsx'</span>;</div><div class="line"></div><div class="line">ReactDom.render(</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">Hello</span>/&gt;</span></span>,</div><div class="line">  <span class="built_in">document</span>.getElementById(<span class="string">'app'</span>);</div><div class="line">);</div></pre></td></tr></table></figure></p>
+<p>OK，这样就使用简单使用了一个组件。</p>
+<h4 id="类继承React-Component来实现"><a href="#类继承React-Component来实现" class="headerlink" title="类继承React.Component来实现"></a>类继承React.Component来实现</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentItem</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"comment"</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123; this.props.author &#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123; this.props.date &#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123; this.props.children &#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">export</span> &#123; CommentItem <span class="keyword">as</span> <span class="keyword">default</span> &#125;;</div></pre></td></tr></table></figure>
+<p>需要注意的是，这样创建组件的时候，组件名称首字母必须大写（如：CommentItem）。同样，我们使用一下这个组件。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> CommentItem <span class="keyword">from</span> <span class="string">'./comment-item'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentList</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">let</span> CommentNodes = <span class="keyword">this</span>.props.data.map(<span class="function">(<span class="params">comment, index</span>) =&gt;</span> &#123;</div><div class="line">      <span class="keyword">return</span> (</div><div class="line">        <span class="xml"><span class="tag">&lt;<span class="name">CommentItem</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span> <span class="attr">author</span>=<span class="string">&#123;comment.author&#125;</span> <span class="attr">date</span>=<span class="string">&#123;comment.date&#125;</span>&gt;</span></span></div><div class="line">          &#123;comment.content&#125;</div><div class="line">        <span class="tag">&lt;/<span class="name">CommentItem</span>&gt;</span></div><div class="line">      )</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></div><div class="line">        &#123; CommentNodes &#125;</div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">export</span> &#123; CommentList <span class="keyword">as</span> <span class="keyword">default</span> &#125;;</div></pre></td></tr></table></figure></p>
+<p>这样我们又创建了一个组件，并且在这个组件中我们使用了上面创建的那个组件。</p>
+<h3 id="组件之间的数据流"><a href="#组件之间的数据流" class="headerlink" title="组件之间的数据流"></a>组件之间的数据流</h3><p>在上面<strong>类继承React.Component来实现</strong>一节中，我们可以看出例子中出现了组件嵌套的情况，仔细想想，组件之间传递信息肯定是必然的。那么React是怎样进行<strong>组件之间的数据通信</strong>的呢？</p>
+<p>回答这个问题之前，我们需要考虑一下，组件之间有几种数据通信。首先，第一种比较容易想到，那就是<strong>父子组件</strong>之间的数据通信。第二种也就自然而然的出来了—-<strong>非父子组件</strong>之间的数据通信。</p>
+<h4 id="父子组件数据通信"><a href="#父子组件数据通信" class="headerlink" title="父子组件数据通信"></a>父子组件数据通信</h4><p>父子组件之间的数据通信细分其实还有两种：<strong>父与子之间</strong>和<strong>子与父之间</strong>。</p>
+<p>在React中，<strong>父与子</strong>之间的数据通信是通过<strong>props属性</strong>就行传递的；<br>而<strong>子与父</strong>之间的数据通信可以通过<strong>父组件定义事件，子组件触发父组件中的事件时，通过实参的形式来改变父组件中的数据</strong>来通信;</p>
+<p>下面我们来分别通过例子来再现一下这种场景：<br><strong>父组件</strong>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> CommentItem <span class="keyword">from</span> <span class="string">'./comment-item'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentList</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">let</span> CommentNodes = <span class="keyword">this</span>.props.data.map(<span class="function">(<span class="params">comment, index</span>) =&gt;</span> &#123;</div><div class="line">      <span class="keyword">return</span> (</div><div class="line">        <span class="xml"><span class="tag">&lt;<span class="name">CommentItem</span> <span class="attr">key</span>=<span class="string">&#123;index&#125;</span> <span class="attr">author</span>=<span class="string">&#123;comment.author&#125;</span> <span class="attr">date</span>=<span class="string">&#123;comment.date&#125;</span>&gt;</span></span></div><div class="line">          &#123;comment.content&#125;</div><div class="line">        <span class="tag">&lt;/<span class="name">CommentItem</span>&gt;</span></div><div class="line">      )</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></div><div class="line">        &#123; CommentNodes &#125;</div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">export</span> &#123; CommentList <span class="keyword">as</span> <span class="keyword">default</span> &#125;;</div></pre></td></tr></table></figure></p>
+<p><strong>子组件</strong>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentItem</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"comment"</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123; this.props.author &#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">span</span>&gt;</span>&#123; this.props.date &#125;<span class="tag">&lt;/<span class="name">span</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123; this.props.children &#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">export</span> &#123; CommentItem <span class="keyword">as</span> <span class="keyword">default</span> &#125;;</div></pre></td></tr></table></figure></p>
+<p>通过上面我们可以看出，子组件CommentItem需要父组件传过来的值进行展示，而父组件是这样的：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;CommentItem key=&#123;index&#125; author=&#123;comment.author&#125; date=&#123;comment.date&#125;&gt; &#123;comment.content&#125; &lt;<span class="regexp">/CommentItem&gt;</span></div></pre></td></tr></table></figure></p>
+<p>在父组件中添加了<code>key</code>、<code>author</code>、<code>date</code>属性来向子组件传值。想对象的，子组件通过props对象来获取父组件传过来的值，如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;span&gt;&#123; this.props.author &#125;&lt;/span&gt;</div><div class="line">&lt;span&gt;&#123; this.props.date &#125;&lt;/span&gt;</div><div class="line">&lt;div&gt;&#123; this.props.children &#125;&lt;/div&gt;</div></pre></td></tr></table></figure></p>
+<p>好的，我们再来看一下另一种<strong>子与父</strong>之间的通信。</p>
+<p><strong>父组件</strong>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> CommentList <span class="keyword">from</span> <span class="string">'./comment-list'</span>;</div><div class="line"><span class="keyword">import</span> CommentForm <span class="keyword">from</span> <span class="string">'./comment-form'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentBox</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(props) &#123;</div><div class="line">    <span class="keyword">super</span>(props);</div><div class="line">    <span class="keyword">this</span>.state = &#123;<span class="attr">data</span>: []&#125;;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  handleCommentSubmit(comment) &#123;</div><div class="line">    <span class="keyword">let</span> comments = <span class="keyword">this</span>.state.data;</div><div class="line">    comments.push(comment);</div><div class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">data</span>: comments&#125;);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;div className="m-index"&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">          &lt;h1&gt;评论&lt;/h1&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;CommentList data=&#123;this.state.data&#125; /&gt;</div><div class="line">        &lt;CommentForm onCommentSubmit=&#123;this.handleCommentSubmit.bind(this)&#125; /&gt;</div><div class="line">      &lt;/div&gt;</div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">export &#123; CommentBox as default &#125;;</div></pre></td></tr></table></figure></p>
+<p><strong>子组件</strong>:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">CommentForm</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line"></div><div class="line">  handleClick()&#123;</div><div class="line">    <span class="keyword">let</span> author = <span class="keyword">this</span>.refs.author.value,</div><div class="line">        content = <span class="keyword">this</span>.refs.content.value;</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.props.onCommentSubmit(&#123;author, content, <span class="attr">date</span>:<span class="keyword">new</span> <span class="built_in">Date</span>().getTime()&#125;);</div><div class="line"></div><div class="line">    <span class="keyword">this</span>.refs.author.value = <span class="string">""</span>;</div><div class="line">    <span class="keyword">this</span>.refs.content.value = <span class="string">""</span>;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">"yo-list yo-list-a"</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">className</span>=<span class="string">"item item-input"</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">className</span>=<span class="string">"yo-input flex"</span> <span class="attr">ref</span>=<span class="string">"author"</span> <span class="attr">placeholder</span>=<span class="string">"发布人"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">label</span> <span class="attr">className</span>=<span class="string">"item item-input"</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">textarea</span> <span class="attr">className</span>=<span class="string">"yo-input flex"</span> <span class="attr">ref</span>=<span class="string">"content"</span> <span class="attr">placeholder</span>=<span class="string">"留言内容"</span>&gt;</span><span class="tag">&lt;/<span class="name">textarea</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">label</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">button</span> <span class="attr">onClick</span>=<span class="string">&#123;this.handleClick.bind(this)&#125;</span> <span class="attr">className</span>=<span class="string">"yo-btn yo-btn-l"</span>&gt;</span>发表评论<span class="tag">&lt;/<span class="name">button</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">label</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">export &#123; CommentForm as default &#125;;</div></pre></td></tr></table></figure></p>
+<p>简单解释一下，子组件是一个表单组件，父组件中引用了该表单子组件，然后子组件中点击button按钮，触发子组件中的处理函数，处理函数通过<strong>refs</strong>获取到表单输入值然后调用父组件中传过来的函数，从而触发父组件中的函数执行改变data数据，data数据变动直接影响的是另一个组件CommentList的变化。</p>
+<p>需要注意的是，在获取表单控件内的数据时，我们利用了一个<strong>refs</strong>对象，该对象用于获取真实DOM结构。具体来说就是，在React中组件并不是真实的 DOM 节点，而是存在于内存之中的一种数据结构，叫做虚拟 DOM （virtual DOM，这是React探索性的创新）。只有当它插入文档以后，才会变成真实的 DOM 。根据 React 的设计，所有的 DOM 变动，都先在虚拟 DOM 上发生，然后再将实际发生变动的部分，反映在真实 DOM上，这种算法叫做 DOM diff （详细了解<a href="http://www.infoq.com/cn/articles/react-dom-diff" target="_blank" rel="external">diff 算法</a>），它可以极大提高网页的性能表现。<br>在这里点击button时，input和textarea元素还是虚拟DOM，所以违法获取到输入的值，需要通过<strong>refs</strong>对象获取一下。</p>
+<h4 id="非父子组件之间的通信"><a href="#非父子组件之间的通信" class="headerlink" title="非父子组件之间的通信"></a>非父子组件之间的通信</h4><p>React中在处理<strong>非父子组件之间的通信</strong>时，简单的，嵌套不深的非父子组件（如：兄弟组件）可以仍然使用上一节<strong>非父子组件之间通信</strong>中的<strong>事件函数，传形参</strong>的方式来实现。如子组件<strong>CommentList </strong>和子组件<strong>CommentFrom</strong>之间的通信就是这样实现的。</p>
+<p>如果，需要通信的两个非父子组件之间嵌套比较深，可以使用Flux和Redux来实现状态管理，这里不做详细阐述，下面会详细对比vue的状态管理进行说明。想先了解的可以看一下阮一峰老师的blog：</p>
+<blockquote>
+<p><a href="http://www.ruanyifeng.com/blog/2016/01/flux.html" target="_blank" rel="external">Flux 架构入门教程</a><br><a href="http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_one_basic_usages.html" target="_blank" rel="external">Redux 入门教程（一）：基本用法</a><br><a href="http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_two_async_operations.html" target="_blank" rel="external">Redux 入门教程（二）：中间件与异步操作</a><br><a href="http://www.ruanyifeng.com/blog/2016/09/redux_tutorial_part_three_react-redux.html" target="_blank" rel="external">Redux 入门教程（三）：React-Redux 的用法</a></p>
+</blockquote>
+<h3 id="组件的声明周期"><a href="#组件的声明周期" class="headerlink" title="组件的声明周期"></a>组件的声明周期</h3><p><img src="/images/react&amp;vue/1.png" alt="react 组件的声明周期"></p>
+<p>上面这张图已经很清楚的展示了react组件的声明周期了，就不过多介绍了。这张图摘自<a href="http://www.jianshu.com/p/4784216b8194" target="_blank" rel="external">React组件生命周期小结</a>，对于理解React组件的声明周期钩子函数很有帮助。</p>
+<h2 id="Vue中的组件和数据流"><a href="#Vue中的组件和数据流" class="headerlink" title="Vue中的组件和数据流"></a>Vue中的组件和数据流</h2><p>Vue比React出来的要晚一些，自然顺应了前端组件化的大潮，并且个人觉得借鉴了部分React的思想来实现其组件化思想。</p>
+<p>Vue默认的是单向数据流，这是Vue直接提出来说明的，父组件默认可以向子组件传递数据，但是子组件向父组件传递数据就需要额外设置了。</p>
+<p><strong>父子组件</strong>之间的数据通信是通过<strong>Prop</strong>和<strong>自定义事件</strong>实现的，而<strong>非父子组件</strong>可以使用<strong>订阅/发布</strong>模式实现（类似于Angualr中的非父子指令之间的通信），再复杂一点也是建议使用状态管理（vuex）。</p>
+<p>我一直觉得Vue的官方文档是我看过最直接、易懂的技术文档，所以就直接给大家贴一个中文链接，自己去跟随尤雨溪学习吧。</p>
+<blockquote>
+<p><a href="https://vuefe.cn/v2/guide/components.html" target="_blank" rel="external">Vue 中的组件和数据流</a></p>
+</blockquote>
+<h1 id="状态管理"><a href="#状态管理" class="headerlink" title="状态管理"></a>状态管理</h1><p>上面对比React和Vue的<strong>组件及数据流</strong>的时候，都提到了<strong>当非父子组件之间嵌套过深</strong>的时候都建议使用状态管理来维护数据的变化，那么到底它们之间的状态管理有什么区别呢？</p>
+<h2 id="Vue中的状态管理–vuex"><a href="#Vue中的状态管理–vuex" class="headerlink" title="Vue中的状态管理–vuex"></a>Vue中的状态管理–vuex</h2><p>先放个<a href="https://vuex.vuejs.org/zh-cn/" target="_blank" rel="external">官方中文链接</a>，还是建议直接看官方文档。然后在放一下小例子去体会一下。</p>
+<p>先简单说明一下，vuex状态管理的几个核心概念：</p>
+<ol>
+<li>State: Vuex 使用 <strong>单一状态树</strong> —— 是的，用一个对象就包含了全部的应用层级状态。至此它便作为一个『唯一数据源(<a href="https://en.wikipedia.org/wiki/Single_source_of_truth" target="_blank" rel="external">SSOT</a>)』而存在。这也意味着，每个应用将仅仅包含一个 store 实例。</li>
+<li>Getters: 从state中获取状态值</li>
+<li>Mutation: 更改 Vuex 的 store 中的状态的唯一方法是提交 mutation。Vuex 中的 mutations 非常类似于事件：每个 mutation 都有一个字符串的 <strong>事件类型 (type)</strong> 和 一个 <strong>回调函数 (handler)</strong>。这个回调函数就是我们实际进行状态更改的地方，并且它会接受 state 作为第一个参数</li>
+<li>Action:  类似于 mutation，不同在于：Action 提交的是 mutation，而不是直接变更状态；Action 可以包含任意异步操作。</li>
+</ol>
+<p>例子来了：<br><strong>store.js</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'../libs/vue.js'</span>;</div><div class="line"><span class="keyword">import</span> Vuex <span class="keyword">from</span> <span class="string">'../libs/vuex.min.js'</span>;</div><div class="line">Vue.use(Vuex);</div><div class="line"><span class="keyword">const</span> state = &#123;</div><div class="line">  <span class="attr">loginPrePath</span>:[<span class="string">'/'</span>]</div><div class="line">&#125;;</div><div class="line"><span class="keyword">const</span> mutations =&#123;</div><div class="line">  LOGINPREPATH(state,path)&#123;</div><div class="line">    state.loginPrePath.unshift(path);</div><div class="line">  &#125;,</div><div class="line">  LOGINPREPATHSHIFT(state)&#123;</div><div class="line">    state.loginPrePath.shift();</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">new</span> Vuex.Store(&#123;</div><div class="line">  state,</div><div class="line">  mutations</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p><strong>actions.js:</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  <span class="attr">loginPrePath</span>: <span class="function">(<span class="params">&#123;dispatch,state&#125;,path</span>)=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'actions loginPrePath:'</span> +path);</div><div class="line">    dispatch(<span class="string">'LOGINPREPATH'</span>,path);</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">loginPrePathShift</span>: <span class="function">(<span class="params">&#123;dispatch,state&#125;</span>)=&gt;</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">'delete....'</span>);</div><div class="line">    dispatch(<span class="string">'LOGINPREPATHSHIFT'</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>getter.js:</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  <span class="attr">loginPrePath</span>: <span class="function"><span class="params">state</span> =&gt;</span> state.loginPrePath</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p><strong>login.vue:</strong><br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">...</div><div class="line">&lt;/template&gt;</div><div class="line">&lt;script&gt;</div><div class="line">import Vue from '../libs/vue.js';</div><div class="line">import VueResource from '../libs/vue-resource.js';</div><div class="line">import Vuex from '../vuex/actions.js';</div><div class="line">import VuexGet from '../vuex/getters.js';</div><div class="line"></div><div class="line">Vue.use(VueResource);</div><div class="line">export default &#123;</div><div class="line">  data()&#123;</div><div class="line">    return &#123;</div><div class="line">      username: '',</div><div class="line">      password: '',</div><div class="line">      loginBtn: 0</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  vuex: &#123;</div><div class="line">    actions: &#123;</div><div class="line">      setLoginPrePath: Vuex.loginPrePath</div><div class="line">    &#125;,</div><div class="line">    getters:&#123;</div><div class="line">      getLoginPrePath: VuexGet.loginPrePath</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  methods: &#123;</div><div class="line">    forget()&#123;</div><div class="line">      //使用vuex，修改状态值</div><div class="line">      this.setLoginPrePath(&#123;path:this.$route.path,title:'忘记密码'&#125;);</div><div class="line">      this.$router.go(&#123;path:'/index2/forget.json'&#125;);</div><div class="line">    &#125;,</div><div class="line">    submit()&#123;</div><div class="line">      if(this.loginBtn === 3)&#123;</div><div class="line">        if(this.checked)&#123;</div><div class="line">          this.$http.post('/zhixiao/password.json',&#123;password:this.password&#125;).then(</div><div class="line">            (res)=&gt;&#123;</div><div class="line">              if(res.ok)&#123;</div><div class="line">                console.log("注册成功，正在跳转登录页面");</div><div class="line">                setTimeout(()=&gt;&#123;</div><div class="line">                  //获取状态值，通过getter</div><div class="line">                  var path = this.getLoginPrePath[0].path;</div><div class="line">                  this.loginPrePathShift();</div><div class="line">                  this.$router.go(path);</div><div class="line">                &#125;,1500);</div><div class="line">              &#125;</div><div class="line">            &#125;,(res)=&gt;&#123;</div><div class="line">              console.log('网络错误，请稍后重试');</div><div class="line">            &#125;</div><div class="line">          )</div><div class="line">        &#125;else&#123;</div><div class="line">          console.log('请选择同意用户协议');</div><div class="line">        &#125;</div><div class="line">      &#125;else&#123;</div><div class="line">        console.log('请填写验证码');</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">&lt;/script&gt;</div></pre></td></tr></table></figure></p>
+<p>上面的例子并无实际效果，是我从以前项目中拼出来的（vuex1.0），只是为了说明<strong>loginPrePath</strong>这个状态值在vuex中的使用方式。详细请看Vue官方文档。</p>
+<h2 id="React中的状态管理–Flux"><a href="#React中的状态管理–Flux" class="headerlink" title="React中的状态管理–Flux"></a>React中的状态管理–Flux</h2><p>React中官方提供的状态管理是<strong>Flux</strong>，但是貌似现在第三方开发的<strong>Redux</strong>更强大，但是相比较使用的难度和学习曲线就有点陡峭了。</p>
+<p>个人感觉<strong>Flux</strong>和Vue中的<strong>vuex</strong>思想基本相同，因为Vuex就是借鉴的Flux。<br>所以说，现在再来说<strong>Flux</strong>就简单了。</p>
+<p>回想一下，在vuex中如果我们想修改一个状态值，我们应该怎么办呢？<br>在组件中配置vuex对象属性里面的<strong>actions</strong>和<strong>getters</strong>属性数组，然后配置的实际上是调用了<strong>Actions</strong>中的方法，<strong>Actions</strong>作用是将修改操作派生给<strong>store中的mutations</strong>,<strong>mutations</strong>真正处理业务逻辑并且修改状态值。</p>
+<p>其实<strong>Flux</strong>也是如此，只不过在vuex中的<strong>Actions</strong>层执行了一个dispatcher方法将状态操作转发给了<strong>mutations</strong>，在Flux中直接需要显示的配置一层<strong>Dispatcher</strong>层进行转发。并且实现方式有所不同，vuex中<strong>mutations</strong>中隐藏了一些事件触发的操作，而Flux中直接通过我们自己编写代码实现，毕竟Flux是年纪大了，不如小弟vuex年轻呀。</p>
+<p>例子：<br><strong>components.js</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> MyButton <span class="keyword">from</span> <span class="string">'./MyButton.jsx'</span>;</div><div class="line"><span class="keyword">import</span> ButtonActions <span class="keyword">from</span> <span class="string">'../actions/ButtonActions.js'</span>;</div><div class="line"><span class="keyword">import</span> ListStore <span class="keyword">from</span> <span class="string">'../stores/ListStore.js'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> React.createClass(&#123;</div><div class="line">  getInitialState() &#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">items</span>: ListStore.getAll()</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  createNewItem() &#123;</div><div class="line">    ButtonActions.addNewItem(<span class="string">'New Item'</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  componentDidMount() &#123;</div><div class="line">    ListStore.addChangeListener(<span class="keyword">this</span>._onChange);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  componentWillUnmount() &#123;</div><div class="line">    ListStore.removeChangeListener(<span class="keyword">this</span>._onChange);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  _onChange() &#123;</div><div class="line">    <span class="keyword">this</span>.setState(&#123;</div><div class="line">      <span class="attr">items</span>: ListStore.getAll()</div><div class="line">    &#125;)</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">MyButton</span> <span class="attr">onClick</span>=<span class="string">&#123;this.createNewItem&#125;</span> <span class="attr">items</span>=<span class="string">&#123;this.state.items&#125;</span> /&gt;</span></span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p><strong>ButtonActions.js:</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> AppDispatcher <span class="keyword">from</span> <span class="string">'../dispatchers/AppDispatcher.js'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">  addNewItem(text) &#123;</div><div class="line">    AppDispatcher.dispatch(&#123;</div><div class="line">      <span class="attr">actionType</span>: <span class="string">'ADD_NEW_ITEM'</span>,</div><div class="line">      <span class="attr">text</span>: text</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><strong>AppDispatcher.js’：</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; Dispatcher &#125; <span class="keyword">from</span> <span class="string">'flux'</span>;</div><div class="line"><span class="keyword">import</span> ListStore <span class="keyword">from</span> <span class="string">'../stores/ListStore.js'</span>;</div><div class="line"></div><div class="line"><span class="keyword">let</span> AppDispatcher = <span class="keyword">new</span> Dispatcher();</div><div class="line"></div><div class="line">AppDispatcher.register(<span class="function"><span class="params">action</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">switch</span>( action.actionType ) &#123;</div><div class="line">    <span class="keyword">case</span> <span class="string">'ADD_NEW_ITEM'</span>:</div><div class="line">      ListStore.addNewItemHandle(action.text);</div><div class="line">      ListStore.emitChange();</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> AppDispatcher;</div></pre></td></tr></table></figure></p>
+<p><strong>ListStore.js: </strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> &#123; EventEmitter &#125; <span class="keyword">from</span> <span class="string">'events'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="built_in">Object</span>.assign(&#123;&#125;, EventEmitter.prototype, &#123;</div><div class="line">  <span class="attr">items</span>: [],</div><div class="line"></div><div class="line">  getAll()&#123;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.items;</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  addNewItemHandler(text) &#123;</div><div class="line">    <span class="keyword">this</span>.items.push(text);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  emitChange() &#123;</div><div class="line">    <span class="keyword">this</span>.emit(<span class="string">'change'</span>);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  addChangeListener(callback) &#123;</div><div class="line">    <span class="keyword">this</span>.on(<span class="string">'change'</span>, callback);</div><div class="line">  &#125;,</div><div class="line"></div><div class="line">  removeChangeListener(callback) &#123;</div><div class="line">    <span class="keyword">this</span>.removeListener(<span class="string">'change'</span>, callback);</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>仔细按照例子走一遍工作流程，相信你就理解<strong>Flux</strong>实现状态管理的思想了。</p>
+<h1 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h1><p>要想实现SPA，路由是个不可避免的话题，作为主流的MVVM框架，怎么可能没有官方路由呢，两者的路由也很相似，都是利用各自的组件实现思想来实现的。</p>
+<h2 id="Vue中的路由"><a href="#Vue中的路由" class="headerlink" title="Vue中的路由"></a>Vue中的路由</h2><p>还是先贴<a href="https://router.vuejs.org/zh-cn/" target="_blank" rel="external">官方链接</a>，简单易懂。<br>再给个例子(vue-router1.0)，仔细看一下：<br><strong>app.js</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//引用component</span></div><div class="line"><span class="keyword">import</span> index <span class="keyword">from</span> <span class="string">'./components/index.vue'</span>;</div><div class="line"><span class="keyword">import</span> main <span class="keyword">from</span> <span class="string">'./components/main.vue'</span>;</div><div class="line"><span class="keyword">import</span> my <span class="keyword">from</span> <span class="string">'./components/my.vue'</span>;</div><div class="line"></div><div class="line"><span class="comment">//APP route</span></div><div class="line"><span class="keyword">import</span> Vue <span class="keyword">from</span> <span class="string">'./libs/vue.js'</span>;</div><div class="line"><span class="keyword">import</span> VueRouter <span class="keyword">from</span> <span class="string">'./libs/vue-router.js'</span>;</div><div class="line"></div><div class="line">Vue.use(VueRouter);</div><div class="line"></div><div class="line">router.map(&#123;</div><div class="line">  <span class="string">'/'</span>:&#123;</div><div class="line">    <span class="attr">component</span>: index,</div><div class="line">    <span class="attr">subRoutes</span>:&#123;</div><div class="line">      <span class="string">'/'</span>:&#123;</div><div class="line">        <span class="attr">component</span>: main</div><div class="line">      &#125;,</div><div class="line">      <span class="string">'/my'</span>:&#123;</div><div class="line">        <span class="attr">name</span>:<span class="string">'my'</span>,</div><div class="line">        <span class="attr">component</span>: my</div><div class="line">      &#125;,</div><div class="line">      <span class="string">'/results/:key'</span>:&#123;</div><div class="line">        <span class="attr">name</span>:<span class="string">'results'</span>,</div><div class="line">        <span class="attr">component</span>:results</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="comment">//启动router</span></div><div class="line">router.start(App,<span class="string">'body'</span>);</div></pre></td></tr></table></figure></p>
+<p><strong>index.vue</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">&lt;template&gt;</div><div class="line">  <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"box"</span>&gt;</span></span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"index-container"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">router-view</span>&gt;</span></div><div class="line"></div><div class="line">      <span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">footer</span> <span class="attr">id</span>=<span class="string">"footer"</span>&gt;</span></div><div class="line">      <span class="tag">&lt;<span class="name">ul</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-bind:class</span>=<span class="string">"getIndex == $index ? 'active' : ''"</span></span></div><div class="line">            <span class="attr">v-for</span>=<span class="string">"data in navList"</span></div><div class="line">            <span class="attr">v-on:click</span>=<span class="string">"changePage($index)"</span></div><div class="line">            <span class="attr">v-link</span>=<span class="string">"&#123;path:data.path,exact: true&#125;"</span>&gt;</div><div class="line">          <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"iconfont"</span>&gt;</span>&#123;&#123;&#123;data.icon&#125;&#125;&#125;<span class="tag">&lt;/<span class="name">i</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;&#123;data.name&#125;&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">li</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">footer</span>&gt;</span></div><div class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></div><div class="line"></div><div class="line">&lt;script&gt;</div><div class="line">  <span class="keyword">var</span> Vue = <span class="built_in">require</span>(<span class="string">'../libs/vue.js'</span>);</div><div class="line">  <span class="keyword">var</span> VueResource = <span class="built_in">require</span>(<span class="string">'../libs/vue-resource.js'</span>);</div><div class="line">  <span class="keyword">import</span> &#123;getIndex&#125; <span class="keyword">from</span> <span class="string">'../vuex/getters.js'</span>;</div><div class="line">  <span class="keyword">import</span> &#123;changeIndexPage&#125; <span class="keyword">from</span> <span class="string">'../vuex/actions.js'</span>;</div><div class="line">  Vue.use(VueResource);</div><div class="line"></div><div class="line">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</div><div class="line">    <span class="attr">vuex</span>: &#123;</div><div class="line">      <span class="attr">actions</span>:&#123;</div><div class="line">        changeIndexPage</div><div class="line">      &#125;,</div><div class="line">      <span class="attr">getters</span>:&#123;</div><div class="line">        getIndex</div><div class="line">      &#125;</div><div class="line">    &#125;,</div><div class="line">    data()&#123;</div><div class="line">      <span class="keyword">return</span> &#123;</div><div class="line">        <span class="attr">cur</span>: <span class="number">0</span>,</div><div class="line">        <span class="attr">navList</span>:[</div><div class="line">          &#123;<span class="attr">path</span>:<span class="string">'/'</span>,<span class="attr">icon</span>:<span class="string">'&amp;#xe6bb;'</span>,<span class="attr">name</span>:<span class="string">'主页'</span>&#125;,</div><div class="line">          &#123;<span class="attr">path</span>:<span class="string">'/lee'</span>,<span class="attr">icon</span>:<span class="string">'&amp;#xe664;'</span>,<span class="attr">name</span>:<span class="string">'排行榜'</span>&#125;,</div><div class="line">          &#123;<span class="attr">path</span>:<span class="string">'/search'</span>,<span class="attr">icon</span>:<span class="string">'&amp;#xe65c;'</span>,<span class="attr">name</span>:<span class="string">'发现'</span>&#125;,</div><div class="line">          &#123;<span class="attr">path</span>:<span class="string">'/my'</span>,<span class="attr">icon</span>:<span class="string">'&amp;#xe735;'</span>,<span class="attr">name</span>:<span class="string">'我的'</span>&#125;</div><div class="line">        ]</div><div class="line">      &#125;</div><div class="line">    &#125;,</div><div class="line">    <span class="attr">methods</span>:&#123;</div><div class="line">      <span class="attr">changePage</span>:<span class="function"><span class="keyword">function</span>(<span class="params">i</span>)</span>&#123;</div><div class="line">        <span class="keyword">this</span>.changeIndexPage(i);</div><div class="line">        <span class="keyword">this</span>.cur = <span class="keyword">this</span>.getIndex;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&lt;<span class="regexp">/script&gt;</span></div></pre></td></tr></table></figure></p>
+<p>大概就这样，感觉像是配置的感觉，其实这就是利用的vue中组件思想来实现的，详细看官方文档。</p>
+<h2 id="React中的路由"><a href="#React中的路由" class="headerlink" title="React中的路由"></a>React中的路由</h2><p>React中的路由只需要安装插件<strong>react-router</strong>即可。<br>再来看例子：<br><strong>app.jsx</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"><span class="keyword">import</span> <span class="string">'../styles/usage/page/app.scss'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">'react-dom'</span>;</div><div class="line"></div><div class="line"><span class="comment">// import router</span></div><div class="line"><span class="keyword">import</span> &#123; Router, Route, hashHistory, IndexRoute, Redirect &#125; <span class="keyword">from</span> <span class="string">'react-router'</span>;</div><div class="line"></div><div class="line"><span class="comment">// router components</span></div><div class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">'./components/router/router-app.jsx'</span>;</div><div class="line"><span class="keyword">import</span> TV <span class="keyword">from</span> <span class="string">'./components/router/router-tv.jsx'</span>;</div><div class="line"><span class="keyword">import</span> Shows <span class="keyword">from</span> <span class="string">'./components/router/router-show.jsx'</span>;</div><div class="line"><span class="keyword">import</span> ShowIndex <span class="keyword">from</span> <span class="string">'./components/router/router-show-index.jsx'</span>;</div><div class="line"></div><div class="line"><span class="keyword">let</span> app = <span class="built_in">document</span>.getElementById(<span class="string">'app'</span>);</div><div class="line"></div><div class="line"><span class="keyword">let</span> handleEnter = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'entered'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> handleLeave = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'leaved'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">ReactDOM.render((</div><div class="line">  &lt;Router history=&#123;hashHistory&#125;&gt;</div><div class="line">    &lt;Route path="/" component=&#123;App&#125;&gt;</div><div class="line">      &lt;Route path="tv" component=&#123;TV&#125;&gt;</div><div class="line">        &lt;IndexRoute component=&#123;ShowIndex&#125;&gt;&lt;/IndexRoute&gt;</div><div class="line">        &lt;Route path="/shows/:id" onEnter=&#123;handleEnter&#125; onLeave=&#123;handleLeave&#125; component=&#123;Shows&#125; /&gt;</div><div class="line">        &lt;Redirect from="shows/:id" to="/shows/:id" /&gt;</div><div class="line">      &lt;/Route&gt;</div><div class="line">    &lt;/Route&gt;</div><div class="line">  &lt;/Router&gt;</div><div class="line">), app);</div></pre></td></tr></table></figure></p>
+<p><strong>router-app.jsx:</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="string">'ure strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="comment">// import router</span></div><div class="line"><span class="keyword">import</span> &#123; Link &#125; <span class="keyword">from</span> <span class="string">'react-router'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> React.createClass(&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">div</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"/"</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">Link</span>&gt;</span> | </div><div class="line">          <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"/tv"</span>&gt;</span>电视剧<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">        &#123;this.props.children&#125;</div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p><strong>router-tv.jsx</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> React.createClass(&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></div><div class="line">        &#123;this.props.children&#125;</div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p><strong>router-show.jsx</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> React.createClass(&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">h1</span>&gt;</span></span></div><div class="line">        节目内容 &#123;this.props.params.id&#125;</div><div class="line">      <span class="tag">&lt;/<span class="name">h1</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p><strong>router-show-index.jsx</strong><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"></div><div class="line"><span class="keyword">import</span> &#123; Link &#125; <span class="keyword">from</span> <span class="string">'react-router'</span>;</div><div class="line"></div><div class="line"><span class="keyword">export</span> <span class="keyword">default</span> React.createClass(&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></div><div class="line">        <span class="tag">&lt;<span class="name">Link</span> <span class="attr">to</span>=<span class="string">"tv/shows/2"</span>&gt;</span>电视节目列表<span class="tag">&lt;/<span class="name">Link</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<p>例子很简单，但是将常用的路由操作基本都涵盖了。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>大概通过自己的理解，对比了一下Vue和React的一些主要概念和实现方式，主要是为了加深自己理解，有些东西自己水平有限，不好表述，大概就是堆砌一些知识点而已。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>测试功能而已，你非要赏点我就没办法了...</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.JPG" alt="彬仔 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.JPG" alt="彬仔 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MVVM/" rel="tag">#MVVM</a>
+          
+            <a href="/tags/ReactJs/" rel="tag">#ReactJs</a>
+          
+            <a href="/tags/Vue/" rel="tag">#Vue</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/24/Angular基础入门-数据绑定和指令/" rel="next" title="Angular基础入门--数据绑定和指令">
+                <i class="fa fa-chevron-left"></i> Angular基础入门--数据绑定和指令
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/30/JavaScript原型链深入理解/" rel="prev" title="JavaScript原型链深入理解">
+                JavaScript原型链深入理解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/28/Vue和React对比/"
+     data-title="Vue和React对比"
+     data-content=""
+     data-url="https://chping2125.github.io/2016/11/28/Vue和React对比/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/28/Vue和React对比/"
+           data-title="Vue和React对比" data-url="https://chping2125.github.io/2016/11/28/Vue和React对比/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="彬仔" />
+          <p class="site-author-name" itemprop="name">彬仔</p>
+          <p class="site-description motion-element" itemprop="description">分享前端技术 整理学习笔记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chengping2125" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chping2125" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/" title="阮一峰" target="_blank">阮一峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/TomXu/" title="汤姆大叔" target="_blank">汤姆大叔</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.haorooms.com/" title="Aaron" target="_blank">Aaron</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://segmentfault.com/a/1190000007062464" title="前端资源" target="_blank">前端资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laod.cn/hosts/2016-google-hosts.html" title="老D翻墙" target="_blank">老D翻墙</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanterncn.cn/down" title="蓝灯工作站" target="_blank">蓝灯工作站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据双向绑定"><span class="nav-number">1.</span> <span class="nav-text">数据双向绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue的数据双向绑定"><span class="nav-number">1.1.</span> <span class="nav-text">Vue的数据双向绑定</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#插值表达式"><span class="nav-number">1.1.1.</span> <span class="nav-text">插值表达式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#指令"><span class="nav-number">1.1.2.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Class与Style绑定"><span class="nav-number">1.1.3.</span> <span class="nav-text">Class与Style绑定</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件渲染和列表渲染"><span class="nav-number">1.1.4.</span> <span class="nav-text">条件渲染和列表渲染</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件处理器"><span class="nav-number">1.1.5.</span> <span class="nav-text">事件处理器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#表单控件"><span class="nav-number">1.1.6.</span> <span class="nav-text">表单控件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#计算属性"><span class="nav-number">1.1.7.</span> <span class="nav-text">计算属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ajax数据请求"><span class="nav-number">1.1.8.</span> <span class="nav-text">ajax数据请求</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React中的数据双向绑定"><span class="nav-number">1.2.</span> <span class="nav-text">React中的数据双向绑定</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#组件及数据流"><span class="nav-number">2.</span> <span class="nav-text">组件及数据流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#React中的组件和数据流"><span class="nav-number">2.1.</span> <span class="nav-text">React中的组件和数据流</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建组件"><span class="nav-number">2.1.1.</span> <span class="nav-text">创建组件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#createClass方式实现"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">createClass方式实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类继承React-Component来实现"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">类继承React.Component来实现</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件之间的数据流"><span class="nav-number">2.1.2.</span> <span class="nav-text">组件之间的数据流</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#父子组件数据通信"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">父子组件数据通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非父子组件之间的通信"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">非父子组件之间的通信</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#组件的声明周期"><span class="nav-number">2.1.3.</span> <span class="nav-text">组件的声明周期</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue中的组件和数据流"><span class="nav-number">2.2.</span> <span class="nav-text">Vue中的组件和数据流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#状态管理"><span class="nav-number">3.</span> <span class="nav-text">状态管理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue中的状态管理–vuex"><span class="nav-number">3.1.</span> <span class="nav-text">Vue中的状态管理–vuex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React中的状态管理–Flux"><span class="nav-number">3.2.</span> <span class="nav-text">React中的状态管理–Flux</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#路由"><span class="nav-number">4.</span> <span class="nav-text">路由</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue中的路由"><span class="nav-number">4.1.</span> <span class="nav-text">Vue中的路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#React中的路由"><span class="nav-number">4.2.</span> <span class="nav-text">React中的路由</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彬仔</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/libs/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/libs/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/libs/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/libs/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8oHQTcoEX25FOPclwvl0Fh2A-gzGzoHsz", "QFHjBCnX5GEB8TGU5B6prx90");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

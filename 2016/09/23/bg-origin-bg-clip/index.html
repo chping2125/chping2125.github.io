@@ -1,0 +1,1141 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/libs/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="CSS3," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="CSS3对background新加了3个属性，background-origin、background-clip、background-size,在学习过程中，发现background-origin和background-clip之间可能产生一些化学反应，同时还可能影响background-size的百分比取值，本篇文章将记录一下对background-origin、background-clip">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CSS3-background扩展属性">
+<meta property="og:url" content="https://chping2125.github.io/2016/09/23/bg-origin-bg-clip/index.html">
+<meta property="og:site_name" content="前端小开发">
+<meta property="og:description" content="CSS3对background新加了3个属性，background-origin、background-clip、background-size,在学习过程中，发现background-origin和background-clip之间可能产生一些化学反应，同时还可能影响background-size的百分比取值，本篇文章将记录一下对background-origin、background-clip">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img1.png">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img2.png">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img4.png">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img3.png">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img5.png">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img6.png">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img7.png">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img5.png">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img8.png">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img10.png">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img10.png">
+<meta property="og:image" content="https://chping2125.github.io/images/background/img9.png">
+<meta property="og:updated_time" content="2016-09-24T04:00:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CSS3-background扩展属性">
+<meta name="twitter:description" content="CSS3对background新加了3个属性，background-origin、background-clip、background-size,在学习过程中，发现background-origin和background-clip之间可能产生一些化学反应，同时还可能影响background-size的百分比取值，本篇文章将记录一下对background-origin、background-clip">
+<meta name="twitter:image" content="https://chping2125.github.io/images/background/img1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6257465157467768000,
+      author: '彬仔'
+    }
+  };
+</script>
+
+  <title> CSS3-background扩展属性 | 前端小开发 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c8027b8ba4beebe6ebe89d22781de0a1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">前端小开发</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随笔 分享 笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                CSS3-background扩展属性
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-09-23T16:48:19+08:00" content="2016-09-23">
+              2016-09-23
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/09/23/bg-origin-bg-clip/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/09/23/bg-origin-bg-clip/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/09/23/bg-origin-bg-clip/" class="leancloud_visitors" data-flag-title="CSS3-background扩展属性">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>CSS3对background新加了3个属性，<code>background-origin</code>、<code>background-clip</code>、<code>background-size</code>,在学习过程中，发现background-origin和background-clip之间可能产生一些化学反应，同时还可能影响background-size的百分比取值，本篇文章将记录一下对background-origin、background-clip和background-size的基本认识。<br><a id="more"></a><br>在开始使用background-origin和background-clip之前，我们先回顾一下盒子模型。<br>首先盒子模型是由contentBox、paddingBox、borderBox、marginBox四部分组成。其次CSS盒子模型分为两种：标准盒模型和怪异盒模型（IE），其中标准盒模型：</p>
+<blockquote>
+<p>盒子的总宽度/高度 = width/height + paddingBox + borderBox + marginBox = contentBox + paddingBox + borderBox + marginBox</p>
+</blockquote>
+<p>而怪异盒模型：</p>
+<blockquote>
+<p>盒子的总宽度/高度 = width/height + marginBox = contentBox + paddingBox + borderBox + marginBox</p>
+</blockquote>
+<p>另外，在CSS3中引入了box-sizing属性来使开发者根据不同场景规定盒子模型的大小，这一点在移动开发至关重要。</p>
+<h1 id="background-clip"><a href="#background-clip" class="headerlink" title="background-clip"></a>background-clip</h1><p>clip：剪，剪掉的意思。CSS3中引入background-clip主要是来确定背景的裁剪区域的，也可以理解为背景从盒子模型的那一部分进行展示。<br>语法：</p>
+<blockquote>
+<p>background-clip: content-box || padding-box || border-box</p>
+</blockquote>
+<p>我们来看一下这几个取值的具体意思：</p>
+<ul>
+<li>content-box：盒子模型的背景从content部分的外边缘开始裁剪，使得除了content部分，其以外的背景都不会显示出来。</li>
+<li>padding-box：盒子模型的背景从padding部分的外边缘开始裁剪，使得除了padding部分，其以外的背景都不会显示出来。</li>
+<li>border-box：盒子模型的背景从border部分的外边缘开始裁剪，使得除了border部分，其以外的背景都不会显示出来。<strong>默认值</strong></li>
+</ul>
+<p>上面的文字可能不是很清楚，我们来看几张图片：<br><img src="/images/background/img1.png" alt="background-clip不同取值"><br>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">&lt;!--html--&gt;</div><div class="line">&lt;div class=&quot;div7&quot;&gt;clip:content-box&lt;/div&gt;</div><div class="line">&lt;div class=&quot;div8&quot;&gt;clip:padding-box&lt;/div&gt;</div><div class="line">&lt;div class=&quot;div9&quot;&gt;clip:border-box&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;!--css--&gt;</div><div class="line">div&#123;</div><div class="line">	background: #f00;</div><div class="line">	width: 100px;</div><div class="line">	height: 100px;</div><div class="line">	padding: 20px;</div><div class="line">	border: 20px dotted #000;</div><div class="line">	margin: 20px;</div><div class="line">	display: inline-block;</div><div class="line">&#125;</div><div class="line"></div><div class="line">.div7&#123;</div><div class="line">	background-clip: content-box;</div><div class="line">&#125;</div><div class="line">.div8&#123;</div><div class="line">	background-clip: padding-box;</div><div class="line">&#125;</div><div class="line">.div9&#123;</div><div class="line">	background-clip: border-box;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>再来看看图片背景的效果：<br><img src="/images/background/img2.png" alt="background-clip不同取值"><br>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">&lt;!--html--&gt;</div><div class="line">&lt;div class=&quot;div7 img&quot;&gt;clip:content-box&lt;/div&gt;</div><div class="line">&lt;div class=&quot;div8 img&quot;&gt;clip:padding-box&lt;/div&gt;</div><div class="line">&lt;div class=&quot;div9 img&quot;&gt;clip:border-box&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;!--css--&gt;</div><div class="line">div&#123;</div><div class="line">	background: #f00;</div><div class="line">	width: 100px;</div><div class="line">	height: 100px;</div><div class="line">	padding: 20px;</div><div class="line">	border: 20px dotted #000;</div><div class="line">	margin: 20px;</div><div class="line">	display: inline-block;</div><div class="line">&#125;</div><div class="line">.img&#123;</div><div class="line">	background: url(sourse/day16_img1.jpg) no-repeat;</div><div class="line">	color: red;</div><div class="line">&#125;</div><div class="line">.div7&#123;</div><div class="line">	background-clip: content-box;</div><div class="line">&#125;</div><div class="line">.div8&#123;</div><div class="line">	background-clip: padding-box;</div><div class="line">&#125;</div><div class="line">.div9&#123;</div><div class="line">	background-clip: border-box;</div><div class="line">	background-origin: border-box;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>相信通过上面背景色和图片的例子，应该很容易可以看出background-clip的作用了，就不过多啰嗦了。<br><small style="color:#a7a7a7;">注：图片背景的例子和背景色的例子中有点不同，在.div9中，图片的例子多了一句<code>background-origin：border</code>,这是为什么呢？带着这个问题，在本文的下一个主角background-origin中解答。</small></p>
+<p>关于background-clip上面已经介绍完了，但是在webkit内核的浏览器中还有一个关于background-clip好玩的扩展，就是可以给文本设置背景图片。通过设置background-clip:text，并配合其私有属性-webkit-text-fill-color: transparent来实现。<br><img src="/images/background/img4.png" alt="background-clip:text"><br>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">width: 200px;</div><div class="line">-webkit-background-clip: text;</div><div class="line">-webkit-text-fill-color: transparent;</div><div class="line">font-size: 40px;</div><div class="line">font-weight: bold;</div><div class="line">line-height: 50px;</div><div class="line">text-align: center;</div></pre></td></tr></table></figure></p>
+<p>webkit总是那么时尚潮流，再比如webkit的box-reflect也是其他浏览器实现起来很复杂的小特效。这些webkit的小特效在使用的时候注意兼容性的问题，在Safari、Chorme和最新版的Opera以及Edge上是没问题的，但是在IE和Firefox就完蛋了。</p>
+<p><strong>background-clip使用小例子</strong><br>Facebook弹出窗口，边框带有透明并能显示底下的内容如下图所示：<br><img src="/images/background/img3.png" alt="Facebook弹出窗口"><br>平时我们制作这样的效果都是靠给弹出层的背景加上opacity属性，并设置一定的padding，但大家都知道opacity会直接影响到其子元素的效果。<br>现在我们完全可以使用background-clip把元素背景控制在padding或content区域内，这样一来，只需一个盒子。我们在这个盒子上加上<strong>透明边框</strong>，并配合background-clip把背景超过padding或content的边缘外的背景色直接裁剪掉,具体CSS代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">.facebook &#123;</div><div class="line">	background: #3B5A98;</div><div class="line">	border: 20px solid rgba(134,134,134,0.8);</div><div class="line">	padding: 10px;</div><div class="line">	color: #fff;</div><div class="line">	text-align: center;</div><div class="line">	width: 150px;</div><div class="line">	height: 65px;</div><div class="line">	line-height: 65px;</div><div class="line">	-moz-border-radius: 15px;</div><div class="line">	-webkit-border-radius: 15px;</div><div class="line">	border-radius: 15px;</div><div class="line">	font: bold 25px Airal;</div><div class="line">	-moz-background-clip: padding;</div><div class="line">	-webkit-background-clip: padding-box;</div><div class="line">	-o-background-clip: padding-box;</div><div class="line">	background-clip: padding-box;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<h1 id="background-origin"><a href="#background-origin" class="headerlink" title="background-origin"></a>background-origin</h1><p>origin：起源，原点的意思，通过它的翻译我们可以推断出它的作用是，规定背景的原点，或者说是规定背景在盒子模型中的起始位置（刚学习的时候我也是这样认为的）。<br>语法：</p>
+<blockquote>
+<p>background-origin: content-box || padding-box || border-box</p>
+</blockquote>
+<p>我们来看一下这几个取值的具体意思（暂时）：</p>
+<ul>
+<li>content-box：盒子模型的背景从content部分的左上角开始绘制。</li>
+<li>padding-box：盒子模型的背景从padding部分的左上角开始绘制。<strong>默认值</strong></li>
+<li>border-box：盒子模型的背景从border部分的左上角开始绘制。</li>
+</ul>
+<p>我们来看几张图片对比一下：<br><img src="/images/background/img5.png" alt="background-origin"><br>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">&lt;!--html--&gt;</div><div class="line">&lt;div class=&quot;div2 img&quot;&gt;origin：content-box&lt;/div&gt;</div><div class="line">&lt;div class=&quot;div3 img&quot;&gt;origin：padding-box&lt;/div&gt;</div><div class="line">&lt;div class=&quot;div4 img&quot;&gt;origin：border-box&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;!--css--&gt;</div><div class="line">.img&#123;</div><div class="line">	background: url(sourse/day16_img1.jpg) no-repeat;</div><div class="line">	color: red;</div><div class="line">&#125;</div><div class="line">.div2&#123;</div><div class="line">	background-origin: content-box;</div><div class="line">&#125;</div><div class="line">.div3&#123;</div><div class="line">	background-origin: padding-box;</div><div class="line">&#125;</div><div class="line">.div4&#123;</div><div class="line">	background-origin: border-box;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>通过上面的图片背景，我们好像可以看出背景被background-origin限制绘制起点了，还有一点美中不足就是起点是限制了，但是好像终点并没有被限制，右下角任然进入了外层的盒子（比如background-origin：content-box，起点是从contentx-box的左上角开始绘制的，但是右下角明显进入了paddingBox和borderBox），这个问题不急，在下面解释（好熟悉的赶脚）。</p>
+<p>我们再来看一下背景为颜色时候的样子：<br><img src="/images/background/img6.png" alt="background-origin"><br>代码：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&lt;!--html--&gt;</div><div class="line">&lt;div class=&quot;div2&quot;&gt;origin：content-box&lt;/div&gt;</div><div class="line">&lt;div class=&quot;div3&quot;&gt;origin：padding-box&lt;/div&gt;</div><div class="line">&lt;div class=&quot;div4&quot;&gt;origin：border-box&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;!--css--&gt;</div><div class="line">.div2&#123;</div><div class="line">	background-origin: content-box;</div><div class="line">&#125;</div><div class="line">.div3&#123;</div><div class="line">	background-origin: padding-box;</div><div class="line">&#125;</div><div class="line">.div4&#123;</div><div class="line">	background-origin: border-box;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这就不对了，什么鬼？怎么都一样，不是设置不同背景起点了吗?<br>这就是一开始我提到“刚学习的时候我也是这样认为的”，但是通过查资料发现，人家CCS3规定的background-origin是用来管<strong>图片起始绘制点</strong>的，根本没有颜色背景的事。<br>OK，问题解决。还记得我们在background-clip中.div9中添加的哪一个<code>background-origin:border-box</code>吗？现在应该知道它是干什么的了吧。<br>还是再解释一下吧，.div9那个盒子是用来测试background-clip对borderBox的裁剪作用，但是background-clip的默认属性为paddingBox，不设置一下就看不出上面的效果了，成这样了：<br><img src="/images/background/img7.png" alt="background"><br>看到这样的图，根本就无法说明background-clip的作用了。</p>
+<p>但是通过这个例子我们可以发现一个问题，<strong>就是background-origin和background-clip是相互影响的，有时候你但设置其中一个属性，没有达到你想要的结果，可能就是另一个的默认属性（或者你自定义的）影响了。多多去实验就会发现很多好玩的东西</strong></p>
+<p>是不是还有一个问题没解释，就是background-origin的这张图的右下角进入其他盒子的现象。<br><img src="/images/background/img5.png" alt="background-origin"><br>其实我觉着没必要解释了。</p>
+<h1 id="background-size"><a href="#background-size" class="headerlink" title="background-size"></a>background-size</h1><p>在CSS3之前，我们在使用背景图片的时候会经常遇到下图中的两个问题：<br><img src="/images/background/img8.png" alt="background-size"><br>对于这种问题，background-size的出现就是一个福音，它可以让开发者随意改变引入的背景图片的大小。<br>语法：</p>
+<blockquote>
+<p>background: auto || length || percentage || cover || contain</p>
+</blockquote>
+<p>我们针对这几个属性在说明一下：</p>
+<ul>
+<li><p>auto：此值为<strong>默认值</strong>，保持背景图片的原始高度和宽度；</p>
+</li>
+<li><p>length：此值设置具体的值，可以改变背景图片的大小；</p>
+</li>
+<li><p>percentage：此值为百分值，可以是0％-100％之间任何值，但此值只能应用在块元素上，所设置百分值将使用背景图片大小根据所在元素的宽度的百分比来计算（个人认为这种说法有些问题）。</p>
+</li>
+<li><p>cover：此值是将图片放大，以适合铺满整个容器，这个主要运用在，当图片小于容器时，又无法使用background-repeat来实现时，我们就可以采用cover;将背景图片放大到适合容器的大小，但这种方法会使用背景图片失真；</p>
+</li>
+<li><p>contain：此值刚好与cover相反，其主要是将背景图片缩小，以适合铺满整个容器，这个主要运用在，当背景图片大于元素容器时，而又需要将背景图片全部显示出来，此时我们就可以使用contain将图片缩小到适合容器大小为止，这种方法同样会使用图片失真。</p>
+</li>
+<li><p><strong>当background-size取值为length和percentage时可以设置两个值，也可以设置一个值，当只取一个值时，第二个值相当于auto，但这里的auto并不会使背景图片的高度保持自己原始高度，而会与第一个值相同。</strong></p>
+</li>
+</ul>
+<p>针对background-size已经有很详细的使用说明了，懒得做图片展示了，很好理解，自己去试试就好了。我想强调的是background-size的百分比取值，因为我发现他受background-origin的影响。</p>
+<h1 id="background的origin影响size"><a href="#background的origin影响size" class="headerlink" title="background的origin影响size"></a>background的origin影响size</h1><p>按照上面对于background-size取百分比值的说法（网上大部分也这样认为，W3School说的更模糊），是根据图片所在元素的宽度的百分比来计算的，同时我们文章一开始也说明了盒子模型的总宽度（按标准盒模型）可以写成:</p>
+<blockquote>
+<p>width + paddingBox + borderBox + marginBox</p>
+</blockquote>
+<p>所以我们可以理解为background-size设置的百分比的值就是上面公式中的width的百分比，如果一个盒子的width固定，background-size固定，岂不是图片大小就固定了，像下图这样：<br><img src="/images/background/img10.png" alt="background-size"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;!--html--&gt;</div><div class="line">&lt;div&gt;&lt;/div&gt;</div><div class="line"></div><div class="line">&lt;!--css--&gt;</div><div class="line">div&#123;</div><div class="line">	width: 100px;</div><div class="line">	background: url(sourse/day16_img1.jpg) no-repeat;</div><div class="line">	background-size: 100%;</div><div class="line">	height: 100px;</div><div class="line">	padding: 20px;</div><div class="line">	border: 20px dotted #000;</div><div class="line">	margin: 20px;</div><div class="line">	display: inline-block;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>但是，此时如果我们在设置一下background-origin（clip为默认值），情况就不一样了。</p>
+<p><strong>background-origin: border-box:</strong><br><img src="/images/background/img10.png" alt="background-size"><br><strong>background-origin: content-box:</strong><br><img src="/images/background/img9.png" alt="background-size"><br>很明显图片的大小改变了，所以我认为，<strong>background-size百分比取值会受background-origin影响。<br>可能还有人会认为，我这是不是设置background-clip也会影响？回答是肯定的，只不过clip影响的是显示区域，图片大小并没有改变。</strong></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>通过上面的介绍，我们新认识了CSS3的三个属性<code>background-clip</code>、<code>background-origin</code>、<code>background-size</code>，同时我们发现了他们之间的相互影响。</p>
+<ol>
+<li>background-clip用来规定背景（颜色和图片）的展示区域（绘制区域）。</li>
+<li>background-origin用来规定背景图片的起始绘制点。</li>
+<li>background-size用来规定背景图片的大小。</li>
+<li>background-origin会影响background-size的百分比取值。</li>
+<li>背景属性可能会相互影响，出现神来之笔的效果，也可能让你抓狂。</li>
+</ol>
+<p>本文参考</p>
+<blockquote>
+<p><a href="http://www.w3cplus.com/content/css-background-origin" target="_blank" rel="external">http://www.w3cplus.com/content/css-background-origin</a><br><a href="http://www.w3cplus.com/content/css3-background-clip" target="_blank" rel="external">http://www.w3cplus.com/content/css3-background-clip</a><br><a href="http://www.w3cplus.com/content/css3-background-size" target="_blank" rel="external">http://www.w3cplus.com/content/css3-background-size</a><br><a href="http://www.w3school.com.cn/cssref/pr_background-size.asp" target="_blank" rel="external">http://www.w3school.com.cn/cssref/pr_background-size.asp</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>测试功能而已，你非要赏点我就没办法了...</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.JPG" alt="彬仔 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.JPG" alt="彬仔 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/CSS3/" rel="tag">#CSS3</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/22/animation2/" rel="next" title="用CSS开启硬件加速提高网站性能">
+                <i class="fa fa-chevron-left"></i> 用CSS开启硬件加速提高网站性能
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/09/24/stroage/" rel="prev" title="Storage.js">
+                Storage.js <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/09/23/bg-origin-bg-clip/"
+     data-title="CSS3-background扩展属性"
+     data-content=""
+     data-url="https://chping2125.github.io/2016/09/23/bg-origin-bg-clip/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/09/23/bg-origin-bg-clip/"
+           data-title="CSS3-background扩展属性" data-url="https://chping2125.github.io/2016/09/23/bg-origin-bg-clip/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="彬仔" />
+          <p class="site-author-name" itemprop="name">彬仔</p>
+          <p class="site-description motion-element" itemprop="description">分享前端技术 整理学习笔记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chengping2125" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chping2125" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/" title="阮一峰" target="_blank">阮一峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/TomXu/" title="汤姆大叔" target="_blank">汤姆大叔</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.haorooms.com/" title="Aaron" target="_blank">Aaron</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://segmentfault.com/a/1190000007062464" title="前端资源" target="_blank">前端资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laod.cn/hosts/2016-google-hosts.html" title="老D翻墙" target="_blank">老D翻墙</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanterncn.cn/down" title="蓝灯工作站" target="_blank">蓝灯工作站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#background-clip"><span class="nav-number">1.</span> <span class="nav-text">background-clip</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#background-origin"><span class="nav-number">2.</span> <span class="nav-text">background-origin</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#background-size"><span class="nav-number">3.</span> <span class="nav-text">background-size</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#background的origin影响size"><span class="nav-number">4.</span> <span class="nav-text">background的origin影响size</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彬仔</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/libs/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/libs/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/libs/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/libs/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8oHQTcoEX25FOPclwvl0Fh2A-gzGzoHsz", "QFHjBCnX5GEB8TGU5B6prx90");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>

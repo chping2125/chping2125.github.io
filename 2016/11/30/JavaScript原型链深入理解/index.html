@@ -1,0 +1,1168 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/libs/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JavaScript基础," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="在JS中，原型链是一个重要的概念，不管是继承还是属性值的查找中，都用到了原型链的基本知识，有些朋友经常问我一些关于原型链的问题，今天整理一下自己对原型链的理解，下次我就不用在去解释了，直接看文章。
+首先，大家都知道在JS中有六种基本数据类型和一种复杂类型。六种基本数据类型：
+
+
+String
+Number
+Boolean
+null
+undefined
+Symbol（ES2015新加入，解决属性名的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript原型链深入理解">
+<meta property="og:url" content="https://chping2125.github.io/2016/11/30/JavaScript原型链深入理解/index.html">
+<meta property="og:site_name" content="前端小开发">
+<meta property="og:description" content="在JS中，原型链是一个重要的概念，不管是继承还是属性值的查找中，都用到了原型链的基本知识，有些朋友经常问我一些关于原型链的问题，今天整理一下自己对原型链的理解，下次我就不用在去解释了，直接看文章。
+首先，大家都知道在JS中有六种基本数据类型和一种复杂类型。六种基本数据类型：
+
+
+String
+Number
+Boolean
+null
+undefined
+Symbol（ES2015新加入，解决属性名的">
+<meta property="og:image" content="https://chping2125.github.io/images/prototype/1.jpg">
+<meta property="og:image" content="https://chping2125.github.io/images/prototype/2.jpg">
+<meta property="og:image" content="https://chping2125.github.io/images/prototype/3.jpg">
+<meta property="og:image" content="https://chping2125.github.io/images/prototype/4.png">
+<meta property="og:image" content="https://chping2125.github.io/images/prototype/5.png">
+<meta property="og:image" content="https://chping2125.github.io/images/prototype/6.jpg">
+<meta property="og:updated_time" content="2016-11-30T03:58:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript原型链深入理解">
+<meta name="twitter:description" content="在JS中，原型链是一个重要的概念，不管是继承还是属性值的查找中，都用到了原型链的基本知识，有些朋友经常问我一些关于原型链的问题，今天整理一下自己对原型链的理解，下次我就不用在去解释了，直接看文章。
+首先，大家都知道在JS中有六种基本数据类型和一种复杂类型。六种基本数据类型：
+
+
+String
+Number
+Boolean
+null
+undefined
+Symbol（ES2015新加入，解决属性名的">
+<meta name="twitter:image" content="https://chping2125.github.io/images/prototype/1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6257465157467768000,
+      author: '彬仔'
+    }
+  };
+</script>
+
+  <title> JavaScript原型链深入理解 | 前端小开发 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?c8027b8ba4beebe6ebe89d22781de0a1";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">前端小开发</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">随笔 分享 笔记</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="#" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup">
+ <span class="search-icon fa fa-search"></span>
+ <input type="text" id="local-search-input">
+ <div id="local-search-result"></div>
+ <span class="popup-btn-close">close</span>
+</div>
+
+
+    </div>
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaScript原型链深入理解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-11-30T11:51:08+08:00" content="2016-11-30">
+              2016-11-30
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/前端/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/11/30/JavaScript原型链深入理解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/11/30/JavaScript原型链深入理解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/11/30/JavaScript原型链深入理解/" class="leancloud_visitors" data-flag-title="JavaScript原型链深入理解">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在JS中，原型链是一个重要的概念，不管是继承还是属性值的查找中，都用到了原型链的基本知识，有些朋友经常问我一些关于原型链的问题，今天整理一下自己对原型链的理解，下次我就不用在去解释了，直接看文章。</p>
+<p>首先，大家都知道在JS中有六种<strong>基本数据</strong>类型和一种<strong>复杂类型</strong>。<br>六种基本数据类型：</p>
+<blockquote>
+<ol>
+<li>String</li>
+<li>Number</li>
+<li>Boolean</li>
+<li>null</li>
+<li>undefined</li>
+<li>Symbol（ES2015新加入，解决属性名的冲突问题。<a href="http://es6.ruanyifeng.com/#docs/symbol" target="_blank" rel="external">详情</a>）</li>
+</ol>
+</blockquote>
+<p>另外一种复杂类型自然而然就是<strong>Object</strong>，有的人也说JS中<strong>一切皆是对象</strong>。上面的六种基本数据类型中，除了null和undefined没有构造函数外，其他4种都对应有其构造函数对象，有时利用这些构造函数可以强制转换数据类型。</p>
+<p>要想讲清楚原型链的一些问题，还有一个特殊的Object对象必须事先说清楚，那就是<strong>Function</strong>对象。它也是对象，只不过比其他普通对象复杂点罢了。</p>
+<a id="more"></a>
+<h1 id="组合继承"><a href="#组合继承" class="headerlink" title="组合继承"></a>组合继承</h1><p>首先我们先写一个大家熟悉的组合继承(原型链+构造函数)，然后根据这个组合继承去了解原型链到底是怎样连接起来的。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//父类</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span>(<span class="keyword">this</span> <span class="keyword">instanceof</span> Person)&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">  &#125;<span class="keyword">else</span> &#123;</div><div class="line">    Person.call(<span class="keyword">this</span>,name,age);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Person.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'我叫'</span> + <span class="keyword">this</span>.name +<span class="string">'，今年'</span> + <span class="keyword">this</span>.age + <span class="string">'岁了！'</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//子类</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">name,age,gride</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span>(<span class="keyword">this</span> <span class="keyword">instanceof</span> Student)&#123;</div><div class="line">    Person.call(<span class="keyword">this</span>,name,age);</div><div class="line">    <span class="keyword">this</span>.gride = gride;</div><div class="line">  &#125;<span class="keyword">else</span> &#123;</div><div class="line">    Student.call(<span class="keyword">this</span>,name,age,gride);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Student.prototype = <span class="keyword">new</span> Person();</div><div class="line">Student.prototype.constructor = Student;</div><div class="line"></div><div class="line">Student.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'我叫'</span> + <span class="keyword">this</span>.name +<span class="string">'，今年'</span> + <span class="keyword">this</span>.age + <span class="string">'岁了，考试考了'</span> + <span class="keyword">this</span>.gride + <span class="string">'分！'</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> stu = <span class="keyword">new</span> Student(<span class="string">'chping'</span>,<span class="number">23</span>,<span class="number">100</span>);</div><div class="line">stu.say();</div></pre></td></tr></table></figure></p>
+<p>此时会输出<strong>我叫chping，今年23岁了，考试考了100分！</strong>，这说明我们的组合继承就实现了，下面可以根据这个例子逐句解释一下原型链的相关问题，顺便讲解这个组合继承了。</p>
+<h2 id="第一个问题：安全使用构造函数"><a href="#第一个问题：安全使用构造函数" class="headerlink" title="第一个问题：安全使用构造函数"></a>第一个问题：安全使用构造函数</h2><p>首先可能你对<strong>Person</strong>和<strong>Student</strong>里面的那个判断有些疑问，你可能是下面这样写构造函数：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>&#123;</div><div class="line">   <span class="keyword">this</span>.name = name;</div><div class="line">   <span class="keyword">this</span>.age = age;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>不这样写，主要是<strong>防止构造函数被执行</strong>，因为一旦构造函数执行，其内的属性值会被挂载到window上面去了（当构造函数执行的时候，里面的<strong>this</strong>是指向window的）。</p>
+<p>好的，这个问题解决了，在看第二个问题。</p>
+<h2 id="第二个问题：prototype对象"><a href="#第二个问题：prototype对象" class="headerlink" title="第二个问题：prototype对象"></a>第二个问题：prototype对象</h2><p>接着我们来体会一下下面这句话：</p>
+<p><strong>每一个函数对象都有一个prototype属性，该属性指向其prototype对象</strong>。</p>
+<p>这句话相信你已经听了很多遍了，可能并不是这样说的，但是就是这么个意思。那么这句话应该怎么理解呢？</p>
+<p>其实也不难，先看前半部分<strong>每一个函数对象都有一个prototype属性</strong>。这半句就是说<strong>函数对象</strong>默认有一个属性，这个属性叫<strong>prototype</strong>。另外，函数对象就是指用<strong>function</strong>声明的对象（补充一下：在ES2015之前，有两种声明变量的方式，<strong>function</strong>用来声明函数变量，<strong>var</strong> 用来声明普通变量。但是在ES2015中新加了<strong>let</strong>和<strong>const</strong>）。</p>
+<p>再看一下后半部分<strong>该属性指向其prototype对象</strong>。后半句的意思就是说<strong>prototype</strong>属性指向的是一个也叫<strong>prototype</strong>的对象，该对象是随着函数对象而产生的。也就是说，只要通过<strong>function</strong>定义一个函数对象，就会生成一个<strong>prototype对象</strong>，并在函数上生成一个<strong>prototype属性</strong>来指向该<strong>prototype属性</strong>。用图来表示一下就是下面的样子：<br><img src="/images/prototype/1.jpg" alt="构造函数与其prototype对象">;</p>
+<p>从图中你可以看到还有一个知识点，就是<strong>prototype对象</strong>中还有一个<strong>constructor</strong>对象，该对象又指向了构造函数，这也是一个需要注意的知识点，后面我们在展开来说，这里先记一下。</p>
+<p>通过上面的这句话，我们可以联想到，Object好像也是一个构造函数，Function好像也是一个函数，他们是不是也是这样的呢？回答是肯定的，他们也是这样的。如下图：<br><img src="/images/prototype/2.jpg" alt="Object的构造函数与其prototype对象">;<br><img src="/images/prototype/3.jpg" alt="Function的构造函数与其prototype对象">;</p>
+<h2 id="第三个问题：-proto-属性"><a href="#第三个问题：-proto-属性" class="headerlink" title="第三个问题：__proto__属性"></a>第三个问题：<code>__proto__</code>属性</h2><p>先说明一下，<code>__proto__</code>的写法是前后各两个英文输入法下的下划线，不是一个。<br>然后我们再来看这样一句话：</p>
+<p><strong>每一个对象都有一个<code>__protto__</code>属性，该属性指向创建这个对象的构造函数的prototype对象</strong>。</p>
+<p>这句话稍微有点绕，我再来解释一下这句话。这句话的前半部分比较好理解，就是说JS中的每一个对象都有一个属性，这个属性的名字叫做<code>__proto__</code>，还要再说的话，就是注意<strong>JS中一切皆是对象</strong>这句话。</p>
+<p>这句话后半部分有点绕，我们把它分成两句话去理解：</p>
+<ol>
+<li><strong>创建这个对象的构造函数</strong></li>
+<li><strong>的prototype对象</strong></li>
+</ol>
+<p>这样就明白了，但是创建这个对象的构造函数怎么确定呢？这是个问题，不好解释，我也解释不好。就总结一下:</p>
+<ol>
+<li><strong>function定义的函数对象的<code>__proto__</code>属性指向Function对象的prototype对象</strong>。</li>
+<li><strong>非function定义的对象的<code>__proto__</code>属性指向创建它的构造函数的prototype对象</strong>。（就是都指向Object的prototype对象）</li>
+<li><strong>Object的prototype对象的<code>__proto__</code>指向null</strong>。</li>
+</ol>
+<p>还是看图吧：</p>
+<p><img src="/images/prototype/4.png" alt="对象的__proto__属性">;</p>
+<p>相信通过图你已经看懂了<code>__proto__</code>属性的指向问题了。</p>
+<h2 id="思考组合继承"><a href="#思考组合继承" class="headerlink" title="思考组合继承"></a>思考组合继承</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//父类</span></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name,age</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span>(<span class="keyword">this</span> <span class="keyword">instanceof</span> Person)&#123;</div><div class="line">    <span class="keyword">this</span>.name = name;</div><div class="line">    <span class="keyword">this</span>.age = age;</div><div class="line">  &#125;<span class="keyword">else</span> &#123;</div><div class="line">    Person.call(<span class="keyword">this</span>,name,age);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="comment">//上面通过function声明了一个函数对象，那么该对象的肯定有一个prototype属性，</span></div><div class="line"><span class="comment">//并且指向其prototype对象。我们可以打印验证一下</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(Person.prototype);</div><div class="line"><span class="comment">/*打印结果如下</span></div><div class="line">&#123;</div><div class="line">  constructor: function Person(name,age)</div><div class="line">    arguments:null</div><div class="line">    caller:null</div><div class="line">    length:2</div><div class="line">    name:"Person"</div><div class="line">    prototype:Object</div><div class="line">    __proto__:function()  </div><div class="line">  ,</div><div class="line">  __proto__: Object</div><div class="line">&#125;</div><div class="line">*/</div></pre></td></tr></table></figure>
+<p>这说明<strong>prototype对象</strong>就是一个空对象添加了一个<strong>constructor属性</strong>。<br>另外，也看到了<strong>prototype</strong>对象有一个<code>__proto__</code>属性，指向Object，先记住。<br>此外，我们也看到了<strong>constructor</strong>指向的Person函数确实存在prototype属性和<code>__proto__</code>属性，以及其指向问题，我们同时也可以打印验证一下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(Person.prototype.constructor === Person);<span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(Person.prototype.__proto__=== <span class="built_in">Object</span>.prototype);<span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(Person.__proto__=== <span class="built_in">Function</span>.prototype);<span class="comment">//true</span></div></pre></td></tr></table></figure>
+<p>我们再来验证一下<strong>Object</strong>和<strong>Function</strong>的prototype属性，constructor属性还有<code>__proto__</code>属性<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype);</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.constructor === <span class="built_in">Object</span>);<span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.__proto__ === <span class="literal">null</span>);<span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.__proto__ === <span class="built_in">Function</span>.prototype);<span class="comment">//true</span></div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Function</span>.prototype);</div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Function</span>.prototype.constructor === <span class="built_in">Function</span>);<span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Function</span>.prototype.__proto__ === <span class="built_in">Object</span>.prototype);<span class="comment">//true</span></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Function</span>.__proto__ === <span class="built_in">Function</span>.prototype);<span class="comment">//true</span></div></pre></td></tr></table></figure></p>
+<p>OK，相信大家对原型链有了一定了解了。我们接着往下看。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Person.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'我叫'</span> + <span class="keyword">this</span>.name +<span class="string">'，今年'</span> + <span class="keyword">this</span>.age + <span class="string">'岁了！'</span>)</div><div class="line">&#125;</div><div class="line"><span class="string">`</span></div></pre></td></tr></table></figure></p>
+<p>在Person的<strong>prototype对象</strong>上添加了一个say方法，和给普通对象添加方法并没有区别，只不过在稍后使用的时候才会展现出它的与众不同。</p>
+<p>接下来是Student类:<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Student</span>(<span class="params">name,age,gride</span>)</span>&#123;</div><div class="line">  <span class="keyword">if</span>(<span class="keyword">this</span> <span class="keyword">instanceof</span> Student)&#123;</div><div class="line">    Person.call(<span class="keyword">this</span>,name,age);</div><div class="line">    <span class="keyword">this</span>.gride = gride;</div><div class="line">  &#125;<span class="keyword">else</span> &#123;</div><div class="line">    Student.call(<span class="keyword">this</span>,name,age,gride);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>在此时，Student和Person以<code>Person.call(this,name,age);</code>这一句代码产生了联系，此时Student仅仅是通过构造函数继承的方式调用了Person，这并不是本文重点，我们此时可以认为原型链上Student和Person并没有任何联系，让它们在原型链上产生联系的是下面这条语句。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Student.prototype = <span class="keyword">new</span> Person();</div><div class="line">Student.prototype.constructor = Student;</div></pre></td></tr></table></figure></p>
+<p>我们来想想这两条语句都干了啥？<br>首先我们知道，Student函数对象在被<strong>function</strong>声明的时候已经生成了其<strong>prototype</strong>对象，并且通过<strong>prototype属性</strong>建立了联系。<br>这里的第一条语句居然是，<strong>改变了Student函数对象的prototype属性指向，不再指向function声明时自动生成的prototype对象，而是指向Person函数对象的一个实例对象。</strong>让我们用图展示一下，就成了下面这样：</p>
+<p><img src="/images/prototype/5.png" alt="原型链继承关键步骤图解">;</p>
+<p>OK，原型链继承就这样实现了。但是由于我们让<strong>Student</strong>函数对象的<strong>prototype</strong>属性重新指向了一个<strong>Person</strong>函数对象的实例，而这个实例对象里面是不可能有<strong>constructor</strong>属性的，自然也不会指向<strong>Student</strong>（为什么没有呢？前面已经说了，因为只有用<strong>function</strong>声明函数对象的时候，自动生成的<strong>prototype对象</strong>中才默认有<strong>constructor属性</strong>，其他对象不会有）。</p>
+<p>接下来就是在Student函数对象新指向的prototype对象上添加say方法：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Student.prototype.say = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="string">'我叫'</span> + <span class="keyword">this</span>.name +<span class="string">'，今年'</span> + <span class="keyword">this</span>.age + <span class="string">'岁了，考试考了'</span> + <span class="keyword">this</span>.gride + <span class="string">'分！'</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个就没有说的必要了，就是在对象上加了一个方法，只不过这个对象有些特别罢了。然后就是通过Student构造函数来生成实例：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> stu = <span class="keyword">new</span> Student(<span class="string">'chping'</span>,<span class="number">23</span>,<span class="number">100</span>);</div><div class="line">stu.say();</div></pre></td></tr></table></figure></p>
+<p>此时，我们还是要看看这两句干了啥？<br>先看第一句，<code>new Student(&#39;chping&#39;,23,100);</code>，其中我们必须先得知道关键字<strong>new</strong>做了什么：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> obj = &#123;&#125;</div><div class="line">Student.call(<span class="keyword">this</span>,<span class="string">'chping'</span>,<span class="number">23</span>,<span class="number">100</span>);</div><div class="line">obj.__proto__ = Student.prototype;</div><div class="line"><span class="keyword">return</span> obj;</div></pre></td></tr></table></figure></p>
+<p>这样相信你就明白，第一句干的活了:</p>
+<ol>
+<li>首先创建一个空对象。</li>
+<li>将属性挂载到该空对象上。</li>
+<li>将空对象的<code>__proto__</code>属性连接到Student函数对象的prototype对象上，来生成原型链。</li>
+<li>返回该对象给stu变量。</li>
+</ol>
+<p>接下来就是第二句<code>stu.say()</code>，这句话的意思就是<strong>stu实例</strong>对象调用<strong>say方法</strong>，但是在查找的时候发现，<strong>stu实例</strong>对象上并没有这个方法，于是<strong>原型链</strong>就来了。此时他会根据其<code>__proto__</code>属性来查找<strong>Student</strong>函数对象的<strong>prototype对象</strong>上有没有<strong>say方法</strong>，然后它发现正好有一个<strong>say方法</strong>，于是就可以执行该方法了。</p>
+<p>此时又产生一个问题，在执行Student函数对象的prototype上的say方法时，里面的<strong>this</strong>指向谁呢？<br>可以想一下，此时<strong>say</strong>方法是被谁调用的，很明显是<strong>stu</strong>实例对象，所以<strong>this</strong>指向<strong>stu</strong>，所以，<code>this.name</code>、<code>this.age</code>、<code>this.gride</code>就是实例对象<strong>stu</strong>上面的<code>chping</code>、<code>23</code>、<code>100</code>了。</p>
+<p>下面我们再来看一下完整的原型链继承的图解，如果你能完全看懂这张图，那么你对原型链的理解也就差不多了。<br><img src="/images/prototype/6.jpg" alt="原型链继承图解">;</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>原型链的基础知识差不多通过上面这个例子就介绍完了，我们来总结一下：</p>
+<ol>
+<li><strong>每一个函数对象都有一个prototype属性，该属性指向其prototype对象</strong>。</li>
+<li><strong>每一个对象都有一个<code>__protto__</code>属性，该属性指向创建这个对象的构造函数的prototype对象</strong>。<ol>
+<li><strong>function定义的函数对象的<strong>proto</strong>属性指向Function对象的prototype对象</strong>。</li>
+<li><strong>非function定义的对象的<strong>proto</strong>属性指向创建它的构造函数的prototype对</strong>。（就是都指向Object的prototype对象）</li>
+<li><strong>Object的prototype对象的<strong>proto</strong>指向null</strong>。</li>
+</ol>
+</li>
+</ol>
+<p>然后在看看下面几个常见的原型链的小题目，相信你对原型链会有一个新的认识了。</p>
+<h2 id="第一题"><a href="#第一题" class="headerlink" title="第一题"></a>第一题</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.name = <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> Person();</div><div class="line">Person.prototype.name =<span class="number">2</span>;</div><div class="line"><span class="built_in">console</span>.log(person1.name); </div><div class="line"><span class="built_in">console</span>.log(person1.__proto__.name); </div><div class="line"></div><div class="line">Person.prototype = &#123;</div><div class="line">  <span class="attr">name</span>:<span class="number">3</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(person1.name); </div><div class="line"><span class="built_in">console</span>.log(person1.__proto__.constructor);</div><div class="line"><span class="built_in">console</span>.log(person1.__proto__.name);</div><div class="line"></div><div class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person();</div><div class="line"><span class="built_in">console</span>.log(person2.__proto__.name); </div><div class="line"><span class="built_in">console</span>.log(person2.__proto__.constructor == <span class="built_in">Object</span>);</div><div class="line"><span class="built_in">console</span>.log(person2.name);</div></pre></td></tr></table></figure>
+<p>上面的<code>console.log</code>会打印什么？<br>这个题考察的是对prototype对象的理解。</p>
+<h2 id="第二题"><a href="#第二题" class="headerlink" title="第二题"></a>第二题</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Outer</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.a = <span class="number">1</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Inner</span>(<span class="params"></span>) </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> outer = <span class="keyword">new</span> Outer();</div><div class="line">Inner.prototype = outer;</div><div class="line"><span class="keyword">var</span> inner = <span class="keyword">new</span> Inner();</div><div class="line"></div><div class="line">inner.a = inner.a + <span class="number">1</span>;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(inner);</div><div class="line"><span class="built_in">console</span>.log(outer);</div></pre></td></tr></table></figure>
+<p>猜猜上面会是什么结果？<br>这个题考察的是对实例对象上属性的理解。</p>
+<h2 id="第三题"><a href="#第三题" class="headerlink" title="第三题"></a>第三题</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> animal = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line"><span class="keyword">var</span> dog =<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</div><div class="line">animal.price = <span class="number">2000</span>;</div><div class="line">dog.prototype = animal;</div><div class="line"><span class="keyword">var</span> dd = <span class="keyword">new</span> dog();</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(dog.price);</div><div class="line"><span class="built_in">console</span>.log(dd.price);</div></pre></td></tr></table></figure>
+<p>在分析一下这个题目的输出结果？<br>这个题目考察的是<code>__proto__</code>属性的理解。</p>
+<h2 id="第四题"><a href="#第四题" class="headerlink" title="第四题"></a>第四题</h2><p>下面放大招了，这个题目可能不完全是原型链的问题，对JS基础知识的一个综合考察，可以试一试：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="keyword">new</span> <span class="built_in">Object</span>();</div><div class="line">a.param = <span class="number">123</span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  get = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">1</span>);</div><div class="line">  &#125;;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">this</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo.get = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="number">2</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">foo.prototype.get = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="number">3</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">var</span> get = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="number">4</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">get</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(<span class="number">5</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line">foo.get();</div><div class="line">get();</div><div class="line">foo().get();</div><div class="line">get();</div><div class="line"><span class="keyword">new</span> foo.get();</div><div class="line"><span class="keyword">new</span> foo().get();</div><div class="line"><span class="keyword">new</span> <span class="keyword">new</span> foo().get();</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>测试功能而已，你非要赏点我就没办法了...</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixin.JPG" alt="彬仔 WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/alipay.JPG" alt="彬仔 Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript基础/" rel="tag">#JavaScript基础</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/28/Vue和React对比/" rel="next" title="Vue和React对比">
+                <i class="fa fa-chevron-left"></i> Vue和React对比
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/12/17/gitMore/" rel="prev" title="同一客户端下使用多个git账号">
+                同一客户端下使用多个git账号 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/11/30/JavaScript原型链深入理解/"
+     data-title="JavaScript原型链深入理解"
+     data-content=""
+     data-url="https://chping2125.github.io/2016/11/30/JavaScript原型链深入理解/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/11/30/JavaScript原型链深入理解/"
+           data-title="JavaScript原型链深入理解" data-url="https://chping2125.github.io/2016/11/30/JavaScript原型链深入理解/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="彬仔" />
+          <p class="site-author-name" itemprop="name">彬仔</p>
+          <p class="site-description motion-element" itemprop="description">分享前端技术 整理学习笔记</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">38</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/chengping2125" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/chping2125" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              推荐链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.ruanyifeng.com/" title="阮一峰" target="_blank">阮一峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.zhangxinxu.com/" title="张鑫旭" target="_blank">张鑫旭</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.liaoxuefeng.com/" title="廖雪峰" target="_blank">廖雪峰</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.cnblogs.com/TomXu/" title="汤姆大叔" target="_blank">汤姆大叔</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.haorooms.com/" title="Aaron" target="_blank">Aaron</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://segmentfault.com/a/1190000007062464" title="前端资源" target="_blank">前端资源</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.nowcoder.com/" title="牛客网" target="_blank">牛客网</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://laod.cn/hosts/2016-google-hosts.html" title="老D翻墙" target="_blank">老D翻墙</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://lanterncn.cn/down" title="蓝灯工作站" target="_blank">蓝灯工作站</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#组合继承"><span class="nav-number">1.</span> <span class="nav-text">组合继承</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一个问题：安全使用构造函数"><span class="nav-number">1.1.</span> <span class="nav-text">第一个问题：安全使用构造函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二个问题：prototype对象"><span class="nav-number">1.2.</span> <span class="nav-text">第二个问题：prototype对象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三个问题：-proto-属性"><span class="nav-number">1.3.</span> <span class="nav-text">第三个问题：__proto__属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思考组合继承"><span class="nav-number">1.4.</span> <span class="nav-text">思考组合继承</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#结语"><span class="nav-number">2.</span> <span class="nav-text">结语</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一题"><span class="nav-number">2.1.</span> <span class="nav-text">第一题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二题"><span class="nav-number">2.2.</span> <span class="nav-text">第二题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三题"><span class="nav-number">2.3.</span> <span class="nav-text">第三题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第四题"><span class="nav-number">2.4.</span> <span class="nav-text">第四题</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2015 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">彬仔</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/libs/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/libs/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/libs/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"chping"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/libs/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js"></script>
+    
+  
+
+
+
+
+
+  
+  
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length == 0) {
+       search_path = "search.xml";
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    function proceedsearch() {
+      $("body").append('<div class="popoverlay">').css('overflow', 'hidden');
+      $('.popup').toggle();
+
+    }
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        async: true,
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            isfetched = true;
+            $('.popup').detach().appendTo('.header-inner');
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var matchcounts = 0;
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length > 1) {
+                // perform local searching
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '' && data_content != '') {
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        matchcounts += 1;
+                        str += "<li><a href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 50;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substring(start, end);
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<b class=\"search-keyword\">"+keyword+"</b>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        str += "</li>";
+                    }
+                })};
+                str += "</ul>";
+                if (matchcounts == 0) { str = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>' }
+                if (keywords == "") { str = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>' }
+                $resultContent.innerHTML = str;
+            });
+            proceedsearch();
+        }
+    });}
+
+    // handle and trigger popup window;
+    $('.popup-trigger').mousedown(function(e) {
+      e.stopPropagation();
+      if (isfetched == false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+
+    });
+
+    $('.popup-btn-close').click(function(e){
+      $('.popup').hide();
+      $(".popoverlay").remove();
+      $('body').css('overflow', '');
+    });
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+  </script>
+
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("8oHQTcoEX25FOPclwvl0Fh2A-gzGzoHsz", "QFHjBCnX5GEB8TGU5B6prx90");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script type="text/javascript" async src="//push.zhanzhang.baidu.com/push.js">
+</script>
+
+
+</body>
+</html>
